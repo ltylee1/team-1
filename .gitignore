@@ -12,6 +12,8 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+backend/bin
+backend/lib
 
 # mac stuff
 *.DS_Store

@@ -13,3 +13,4 @@ For frontend, run
 npm install - install the dependencies
 npm start - start server also opens up the webpage
 npm run build:dev - development stage
+
