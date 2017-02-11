@@ -14,6 +14,7 @@ build/
 tests/report/
 backend/bin
 backend/lib
+backend/app_support/.idea
 
 /build/
 /benchpress-build/
