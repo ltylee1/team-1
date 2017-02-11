@@ -7,3 +7,9 @@
 pip install
 	`django, mysqlclient`
 
+
+[Angular 2 starter pack](https://github.com/AngularClass/angular2-webpack-starter)
+For frontend, run 
+npm install - install the dependencies
+npm start - start server also opens up the webpage
+npm run build:dev - development stage
