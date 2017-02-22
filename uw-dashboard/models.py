@@ -18,7 +18,7 @@ class Program(models.Model):
     focus_area = models.CharField(max_length=128)
     strategic_outcome = models.CharField(max_length=128)
     funding_stream = models.CharField(max_length=128)
-    allocation = models.IntegerField(max_length=128)
+    allocation = models.IntegerField(default=0)
     year = models.IntegerField(default=2016)
     website = models.CharField(max_length=128)
 
