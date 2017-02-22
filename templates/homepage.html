@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>United Way</title>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script
+  src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en&libraries=drawing"></script>
+    <script src="controllers/controller.js"></script>
+</head>
+
+<body>
+	<header>
+	<table width="100%" cellspacing="0">
+    <tbody><tr>
+      <td>
+      	<a class="pad-header-left header-text" href="upload.html">Upload</a>
+      </td>
+      <td class="col-md-5">
+        <a class="pad-header-left header-text" href="addUser.html">Add User</a>
+      </td>
+      <td class="col-md-2 col-md-offset-10">
+      	<div>
+      	<a class="pad-header-left header-text" href="map.html">Agency Map</a>
+        </div>
+      </td>
+    </tr>
+  </tbody></table>	
+	</header>
+	<div class="container">
+		<div >
+    		<img class="united-way-logo" src="dashboard.jpg"/>
+    	</div>
+    	<div class="text-center title-text">United Way Program and Agency Database</div>
+    	<div class="text-center filter-text"><a class="header-text" href="search-results.html">~ Filter Database By ~</a></div>
+    </div>
+
+<div class="row col-centered" ng-controller="AppCtrl">
+  <div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Funding Year
+    <span class="caret"></span>
+    </button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="2015-16"> 2015/2016</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="2016-17"> 2016/2017</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="2017-18"> 2017/2018</label></a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Target Population
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Early Childhood</label></a></li>
+    	<li><a tabindex="0"> <label class="checkbox"> <input type="checkbox" value="">Middle Years</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value=""> Families</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Seniors</label></a></li>
+    	<li><a tabindex="0"> <label class="checkbox"> <input type="checkbox" value="">Parent/Caregivers</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Youth</label>	</a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Immigrant Refugees</label></a></li>
+    	<li><a tabindex="0"> <label class="checkbox"> <input type="checkbox" value="">Women</label></a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Aboriginal/First Nations</label>	</a></li>
+    	<li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="">Others</label>	</a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Focus Area
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">All the Kids Can Be</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Giving Young Children a Healthy Start</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Helping School-aged Children Succeed</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Poverty to Possibility</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Giving Skills to Feed Families</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Strong Communities</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Helping Seniors to Live independently</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Other</label></a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Program Elements
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Learning Support</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Science/Tech/Math</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Language/literacy/reading</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Tutoring/Homework Clubs</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Other</label></a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Geographic Focus Area
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">First Nations Territory</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">First Nations Territory</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Fraser Valley Regional District</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Abbotsford</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Chilliwack</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Mission</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Hope</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Kent</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Harrison Hot Springs</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Boston Bar/North Bend</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Other</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Metero Vancouver Regional District</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Anmore</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Belcara Rock</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Bowen Island</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Burnaby</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Coquitlam</label></a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-2">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Donor Engagement
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">UW Speaker</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Day of Caring</label></a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Volunteer Opportunities</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Agency Tour</label></a></li>
+    	<li><a tabindex="0"> <label class="option-child"> <input type="checkbox" value="">Agency Fair</label></a></li>
+    	<li><a tabindex="0"><label class="option-group"><input type="checkbox" value="">Impact Story</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-child"><input type="checkbox" value="">Other</label></a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row col-centered">
+<div class="dropdown col-sm-4 col-sm-offset-3">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">City Groupings
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Abbotsford</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">Burnaby</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Chilliwack</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Delta</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">First Nation Territories</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Fraser Cascade</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Langley</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Maple Ridge/Pitt Meadows</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">Mission</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">North Shore</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Richmond</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">Sea to Sky</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Sunshine Coast</label>	</a></li>
+    	<li><a tabindex="0"><label class="ooption-parent"><input type="checkbox" value="">Surrey/White Rock</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Tri-Cities</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Vancouver</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">Other Areas in BC</label></a></li>
+    </ul>
+  </div>
+
+<div class="dropdown col-sm-1">
+    <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Money Invested
+    <span class="caret"></span></button>
+    <ul class="multiselect-container dropdown-menu">
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">less than $5,000</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">$5,000 - $10,000</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">$10,000 - $50,000</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">$50,000 - $100,000</label></a></li>
+    	<li><a tabindex="0"> <label class="option-parent"> <input type="checkbox" value="">$100,000 - $250,000</label></a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">$250,000 - $500,000</label>	</a></li>
+    	<li><a tabindex="0"><label class="option-parent"><input type="checkbox" value="">$500,000+</label></a></li>
+    </ul>
+  </div>
+</div>	
+		</div>
+        <div>
+
+        </div>
+
+</body>
+</html>

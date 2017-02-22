@@ -1,0 +1,3143 @@
+.text-right {
+    text-align: right!important;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.text-center {
+	text-align: center!important;
+}
+
+.title-text {
+	font-size: 35px;
+    line-height: 45px;
+    font-weight: bold;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.filter-text {
+	font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto;
+    color: #808080
+}
+
+
+.container {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.united-way-logo {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	height: 300px;
+}
+
+.filter-select {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.filters {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+
+
+
+
+/* Hide Address on More Info
+--------------------------------------------------------------------------------*/
+.custom-field-783 {
+  display:none;
+}
+
+
+
+
+/* Text logo
+--------------------------------------------------------------------------------*/
+
+.text-logo a {
+  color:#333;
+  text-decoration:none;
+}
+
+.desktop-logo .text-logo {
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+/* Buttons
+--------------------------------------------------------------------------------*/
+.btn-standard, .btn-default {
+    background-color: #000;
+    color: #fff;
+    font-family: "FC Kaiser Cond";
+	text-transform: uppercase;
+	font-size: 24px;
+    letter-spacing: 1px;
+    border-radius: 0;
+}
+
+.btn-standard:hover, #btn-standard_hover, .btn-default:hover {
+    background-color: #ffdf14;
+    color: #000;
+  	border-color: #000;
+}
+
+.btn-alternate {
+/*    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff; */
+    background-color: #999;
+    color: #fff;
+    font-family: "FC Kaiser Cond";
+	text-transform: uppercase;
+	font-size: 24px;
+    letter-spacing: 1px;
+    border-radius: 0;
+}
+
+.btn-alternate:hover, #btn-alternate_hover {
+    background: #999;
+    color: #fff;
+  	cursor: default;
+}
+
+.btn-default {
+	width: ;
+}
+
+
+/* BRIGHTWELL ADDITIONS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------*/
+
+
+
+
+#registrant-form { height: 100%; }
+
+
+
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+/* Will this fix the cache issue? */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+
+html {
+	font-family: sans-serif; /* 1 */
+	-ms-text-size-adjust: 100%; /* 2 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+	position: relative;
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+	margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+	display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+	display: inline-block; /* 1 */
+	vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+	display: none;
+	height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+	display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+	background-color: transparent;
+}
+
+/**
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
+ */
+
+a:active,
+a:hover {
+	outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+b,
+strong {
+	font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+dfn {
+	font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+	font-size: 2em;
+	margin: .67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+	background: #ff0;
+	color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+	font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sup {
+	top: -.5em;
+}
+
+sub {
+	bottom: -.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+	border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+svg:not(:root) {
+	overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+figure {
+	margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+	overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	color: inherit; /* 1 */
+	font: inherit; /* 2 */
+	margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+	overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+	text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button; /* 2 */
+	cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+	cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+	line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box; /* 1 */
+	padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
+ */
+
+input[type="search"] {
+	-webkit-appearance: textfield; /* 1 */
+	box-sizing: content-box; /* 2 */
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: .35em .625em .75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+	border: 0; /* 1 */
+	padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+	overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+	font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+td,
+th {
+	padding: 0;
+}
+
+.tickets .main-nav,
+.tickets .footer-nav,
+.tickets .social {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.clearfix:after,
+.tickets .container:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.ellipsis {
+	white-space: nowrap; /* 1 */
+	text-overflow: ellipsis; /* 2 */
+	overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   1. Embedded fonts styles
+   2. General reset
+   3. Common site styles
+   ---------------------------------------------------------*/
+
+/* ---------------------------------------------------------
+   2. General reset
+   ---------------------------------------------------------*/
+
+html {
+	box-sizing: border-box;
+	height: 100%;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+* {
+	max-height: 1000000px;
+}
+
+/*
+ * set default text color
+ * set default font size, line height and font family
+ * set default background
+ */
+
+body {
+	height: 100%;
+	color: #000;
+	background: #fff;
+     /* originally 15px with no letter-spacing */
+	font: 300 17px/20px "FC Zizou Sans";
+	letter-spacing: 0.5px;
+	min-width: 320px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.radio label { font-weight: 300; }
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.gm-style img {
+	max-width: none;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .h {
+	font-family: inherit;
+	font-weight: bold;
+	margin: 0 0 .5em;
+	color: inherit;
+}
+h1, .h1 { font-size: 30px; }
+h2, .h2 { font-size: 27px; }
+h3, .h3 { font-size: 24px; }
+h4, .h4 { font-size: 21px; }
+h5, .h5 { font-size: 17px; }
+h6, .h6 { font-size: 15px; }
+
+p {
+	margin: 0 0 1em;
+}
+
+/* set styles for default page links */
+
+a {
+	color: #808285;
+	text-decoration: none;
+}
+
+a:hover,
+a:focus {
+	text-decoration: none;
+	color: #a8a9ab;
+}
+
+form,
+fieldset {
+	margin: 0;
+	padding: 0;
+	border-style: none;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+textarea {
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+	border: 1px solid #999;
+	padding: .4em .7em;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+	border-color: #000;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="tel"]::-webkit-input-placeholder,
+input[type="email"]::-webkit-input-placeholder,
+input[type="search"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	color: #999;
+}
+
+input[type="text"]::-moz-placeholder,
+input[type="tel"]::-moz-placeholder,
+input[type="email"]::-moz-placeholder,
+input[type="search"]::-moz-placeholder,
+input[type="password"]::-moz-placeholder,
+textarea::-moz-placeholder {
+	opacity: 1;
+	color: #999;
+}
+
+input[type="text"]:-moz-placeholder,
+input[type="tel"]:-moz-placeholder,
+input[type="email"]:-moz-placeholder,
+input[type="search"]:-moz-placeholder,
+input[type="password"]:-moz-placeholder,
+textarea:-moz-placeholder {
+	color: #999;
+}
+
+input[type="text"]:-ms-input-placeholder,
+input[type="tel"]:-ms-input-placeholder,
+input[type="email"]:-ms-input-placeholder,
+input[type="search"]:-ms-input-placeholder,
+input[type="password"]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+	color: #999;
+}
+
+input[type="text"].placeholder,
+input[type="tel"].placeholder,
+input[type="email"].placeholder,
+input[type="search"].placeholder,
+input[type="password"].placeholder,
+textarea.placeholder {
+	color: #999;
+}
+
+select {
+	-webkit-border-radius: 0;
+}
+
+textarea {
+	resize: vertical;
+	vertical-align: top;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="file"],
+input[type="submit"] {
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+	cursor: pointer;
+}
+
+/* ---------------------------------------------------------
+   1. Embedded fonts styles
+   ---------------------------------------------------------*/
+
+@font-face {
+	font-family: "FC Zizou Slab";
+	font-weight: 500;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-black-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-black-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-black-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-black-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Zizou Slab";
+	font-weight: 300;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-light-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-light-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-light-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-light-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Zizou Slab";
+	font-weight: 200;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-thin-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-thin-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-thin-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-thin-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Zizou Slab";
+	font-weight: 400;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-medium-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-medium-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-medium-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_slab-medium-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Zizou Sans";
+	font-weight: 300;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-regular-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-regular-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-regular-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Zizou Sans";
+	font-weight: 400;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-bold-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-bold-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fczizou_sans-bold-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Kaiser Cond";
+	font-weight: 200;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-extralight-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-extralight-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-extralight-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-extralight-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Kaiser Cond";
+	font-weight: 300;
+	src: url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser_cond-regular-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser_cond-regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser_cond-regular-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser_cond-regular-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Kaiser Cond";
+	font-weight: 400;
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-medium-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-medium-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-medium-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fckaiser_cond-medium-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "FC Kaiser";
+	font-weight: 400;
+	src: url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser-medium-webfont.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser-medium-webfont.eot?#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser-medium-webfont.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/578fbe6336926/fckaiser-medium-webfont.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "fontello";
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fontello.eot");
+	src: url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fontello.eot#iefix") format("embedded-opentype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fontello.woff") format("woff"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fontello.ttf") format("truetype"), url("https://swoogo.s3.amazonaws.com/themes/5769801fe9e22/fontello.svg#fontello") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+	font-family: "fontello";
+	font-style: normal;
+	font-weight: normal;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* original icons...
+
+.icon-facebook:before {
+	content: "\e800";
+}
+
+.icon-twitter:before {
+	content: "\e801";
+}
+
+.icon-ticket:before {
+	content: "\e802";
+}
+
+.icon-star:before {
+	content: "\e803";
+}
+
+.icon-ok-2:before {
+	content: "\e804";
+}
+
+.icon-question:before {
+	content: "\e805";
+}
+
+.icon-down:before {
+	content: "\e806";
+}
+
+.icon-up:before {
+	content: "\e807";
+}
+
+.icon-close:before {
+	content: "\e808";
+}
+
+.icon-arrow:before {
+	content: "\e809";
+}
+
+*/
+
+
+/* BRIGHTWELL EDITS */
+
+.icon-dot-circled:before {
+	content: "\e800";
+}
+
+.icon-certificate:before {
+	content: "\e801";
+}
+
+.icon-facebook:before {
+	content: "\e802";
+}
+
+.icon-twitter:before {
+	content: "\e803";
+}
+
+.icon-ticket:before {
+	content: "\e804";
+}
+
+.icon-star:before {
+	content: "\e805";
+}
+
+.icon-ok-2:before {
+	content: "\e806";
+}
+
+.icon-question:before {
+	content: "\e807";
+}
+
+.icon-down:before {
+	content: "\e808";
+}
+
+.icon-up:before {
+	content: "\e809";
+}
+
+.icon-close:before {
+	content: "\e80a";
+}
+
+.icon-arrow:before {
+	content: "\e80b";
+}
+
+/* BRIGHTWELL EDITS */
+
+
+/*! fancyBox v2.1.5 fancyapps.com | fancyapps.com/fancybox/#license */
+
+.fancybox-wrap,
+.fancybox-skin,
+.fancybox-outer,
+.fancybox-inner,
+.fancybox-image,
+.fancybox-wrap iframe,
+.fancybox-wrap object,
+.fancybox-nav,
+.fancybox-nav span,
+.fancybox-tmp {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	outline: none;
+	vertical-align: top;
+}
+
+.fancybox-wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 8020;
+}
+
+.fancybox-skin {
+	position: relative;
+	background: #f9f9f9;
+	color: #444;
+	text-shadow: none;
+}
+
+.fancybox-opened {
+	z-index: 8030;
+}
+
+.fancybox-outer,
+.fancybox-inner {
+	position: relative;
+}
+
+.fancybox-inner {
+	overflow: hidden;
+}
+
+.fancybox-type-iframe .fancybox-inner {
+	-webkit-overflow-scrolling: touch;
+}
+
+.fancybox-error {
+	color: #444;
+	font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 15px;
+	white-space: nowrap;
+}
+
+.fancybox-image,
+.fancybox-iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.fancybox-image {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#fancybox-loading,
+.fancybox-close,
+.fancybox-prev span,
+.fancybox-next span {
+	background-image: url("../images/fancybox/fancybox_sprite.png");
+}
+
+#fancybox-loading {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -22px;
+	margin-left: -22px;
+	background-position: 0 -108px;
+	opacity: .8;
+	cursor: pointer;
+	z-index: 8060;
+}
+
+#fancybox-loading div {
+	width: 44px;
+	height: 44px;
+	background: url("../images/fancybox/fancybox_loading.gif") center center no-repeat;
+}
+
+.fancybox-close {
+	position: absolute;
+	top: -18px;
+	right: -18px;
+	width: 36px;
+	height: 36px;
+	cursor: pointer;
+	z-index: 8040;
+}
+
+.fancybox-nav {
+	position: absolute;
+	top: 0;
+	width: 40%;
+	height: 100%;
+	cursor: pointer;
+	text-decoration: none;
+	background: transparent url("../images/fancybox/blank.gif"); /* helps IE */
+	-webkit-tap-highlight-color: transparent;
+	z-index: 8040;
+}
+
+.fancybox-prev {
+	left: 0;
+}
+
+.fancybox-next {
+	right: 0;
+}
+
+.fancybox-nav span {
+	position: absolute;
+	top: 50%;
+	width: 36px;
+	height: 34px;
+	margin-top: -18px;
+	cursor: pointer;
+	z-index: 8040;
+	visibility: hidden;
+}
+
+.fancybox-prev span {
+	left: 10px;
+	background-position: 0 -36px;
+}
+
+.fancybox-next span {
+	right: 10px;
+	background-position: 0 -72px;
+}
+
+.fancybox-nav:hover span {
+	visibility: visible;
+}
+
+.fancybox-tmp {
+	position: absolute;
+	top: -99999px;
+	left: -99999px;
+	visibility: hidden;
+	max-width: 99999px;
+	max-height: 99999px;
+	overflow: visible !important;
+}
+
+/* Overlay helper */
+
+.fancybox-lock {
+	overflow: hidden !important;
+	width: auto;
+}
+
+.fancybox-lock body {
+	overflow: hidden !important;
+}
+
+.fancybox-lock-test {
+	overflow-y: hidden !important;
+}
+
+.fancybox-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	display: none;
+	z-index: 8010;
+	background: url("../images/fancybox/fancybox_overlay.png");
+}
+
+.fancybox-overlay-fixed {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+.fancybox-lock .fancybox-overlay {
+	overflow: auto;
+	overflow-y: scroll;
+}
+
+/* Title helper */
+
+.fancybox-title {
+	visibility: hidden;
+	font: normal 13px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	position: relative;
+	text-shadow: none;
+	z-index: 8050;
+}
+
+.fancybox-opened .fancybox-title {
+	visibility: visible;
+}
+
+.fancybox-title-float-wrap {
+	position: absolute;
+	bottom: 0;
+	right: 50%;
+	margin-bottom: -35px;
+	z-index: 8050;
+	text-align: center;
+}
+
+.fancybox-title-float-wrap .child {
+	display: inline-block;
+	margin-right: -100%;
+	padding: 2px 20px;
+	background: transparent; /* Fallback for web browsers that doesn't support RGBa */
+	background: rgba(0, 0, 0, .8);
+	text-shadow: 0 1px 2px #222;
+	color: #fff;
+	font-weight: bold;
+	line-height: 24px;
+	white-space: nowrap;
+}
+
+.fancybox-title-outside-wrap {
+	position: relative;
+	margin-top: 10px;
+	color: #fff;
+}
+
+.fancybox-title-inside-wrap {
+	padding-top: 10px;
+}
+
+.fancybox-title-over-wrap {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: #fff;
+	padding: 10px;
+	background: #000;
+	background: rgba(0, 0, 0, .8);
+}
+
+/* ---------------------------------------------------------
+   3. Ð¡ommon site styles
+   ---------------------------------------------------------*/
+
+/* main container styles */
+
+.tickets #wrapper {
+	height: 100%;
+	width: 100%;
+	display: table;
+	table-layout: fixed;
+}
+
+.tickets .container {
+	max-width: 750px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.tickets #header {
+	background: #ffdf14;
+}
+
+.tickets .header-holder {
+	padding: 12px 42px 9px;
+}
+
+.tickets .logo-holder {
+	position: relative;
+}
+
+.tickets .logo-holder .time {
+	position: absolute;
+	top: auto;
+	bottom: 5px;
+	left: auto;
+	right: 20px;
+	text-transform: uppercase;
+	line-height: 1em;
+	width: 57%;
+	font-size: 15px;
+	font-family: "FC Kaiser Cond";
+	font-weight: 500;
+}
+
+.tickets .logo {
+	margin: 0 auto;
+	width: 233px;
+}
+
+
+
+.tickets #nav {
+	background: #000;
+	overflow: hidden;
+}
+
+.tickets .main-nav {
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 16px;
+	font-family: "FC Zizou Slab";
+	font-size: 14px;	color: white; 
+}
+
+.tickets .main-nav li {
+	display: none;
+	position: relative;
+}
+
+.tickets .main-nav li.welcome {
+	display: block;
+	color: #ffdf14;
+ }
+
+.tickets .main-nav a {
+	color: #fff;
+}
+
+.tickets .main-nav a:hover {
+	color: #ffdf14;
+}
+
+.tickets #main {
+	overflow: hidden;
+}
+
+.tickets .info-area {
+	padding: 0 20px 63px;
+}
+
+.tickets .info-area .header {
+	text-align: center;
+	padding: 61px 0 40px;
+}
+
+.tickets .info-area h1 {
+	margin: 0;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	line-height: 38px;
+	font-family: "FC Kaiser Cond";
+	font-weight: 500;
+	font-size: 40px;
+}
+
+.tickets .info-area table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.tickets .info-area table i {
+	display: inline-block;
+	vertical-align: top;
+	letter-spacing: 0;
+	line-height: 1em;
+	font-size: 30px;
+}
+
+.tickets .info-area table i.icon-ok-2 {
+	font-size: 15px;
+}
+
+.tickets .info-area table .col1 {
+	width: 29%;
+}
+
+.tickets .info-area table .col2 {
+	width: 23.6%;
+}
+
+.tickets .info-area table .col3 {
+	width: 23.8%;
+}
+
+.tickets .info-area table .last {
+	width: auto;
+}
+
+
+
+/* BRIGHTWELL EDITS */
+
+.tickets .container {
+	max-width: 960px;
+ }
+
+.header-holder.container {
+	max-width: 750px;
+ }
+
+.tickets .info-area table .sub-text a { color:#999; text-decoration:underline; }
+.tickets .info-area table .sub-text a:hover { color:black; }
+
+.tickets .info-area table .col1 {
+	width: 24%;
+}
+
+.tickets .info-area table .col2 {
+	width: 19%;
+}
+
+.tickets .info-area table .col3 {
+	width: 19%;
+}
+
+.tickets .info-area table .col4 {
+	width: 19%;
+}
+
+.tickets .info-area table .last {
+	width: auto;
+}
+
+.tickets .info-area table .col3 .sub-text { color: white; }
+.tickets .info-area table .col4 .sub-text, #post-2 .sub-text, #post-3 .sub-text { color: #ffdf14 !important; }
+
+/* END BRIGHTWELL EDITS */
+
+
+
+.tickets .info-area table thead .col1 {
+	background-color: #fafafa;
+	background: -webkit-linear-gradient(left, #fafafa 0%, #fff 100%);
+	background: linear-gradient(to right, #fafafa 0%, #fff 100%);
+}
+
+.tickets .info-area table th {
+	font-weight: normal;
+	padding: 20px 10px 22px;
+}
+
+/* .tickets .info-area table td {
+	border-top: 1px solid #000;
+	text-transform: capitalize;
+	font-weight: 300;
+	text-align: center;
+	padding: 15px 14px;
+} */
+
+.tickets .info-area table td.col1 {
+	text-align: left;
+}
+
+.tickets .info-area table .yellow {
+	background: #ffdf14;
+}
+
+.tickets .info-area table .cararra {
+	background: #ebebeb;
+	border-color: #d3d3d3;
+}
+
+.tickets .info-area table .heading {
+	color: #010101;
+	margin: 0 0 8px;
+	display: block;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	line-height: 32px;
+	font-family: "FC Kaiser Cond";
+	font-weight: 500;
+	font-size: 28px;
+}
+
+.tickets .info-area table span {
+	display: block;
+}
+
+.tickets .info-area table .sub-text {
+	color: #80720a;
+	font-weight: 300;
+}
+
+.tickets .info-area table .sub-text.gunsmoke {
+	color: #808285;
+}
+
+.tickets .info-area table .sub-text.add a {
+	text-decoration: underline;
+	color: #80720a;}
+
+.tickets .info-area table .sub-text.add a:hover {
+	color: #000;}
+
+.tickets .info-area table .icon-holder {
+	position: relative;
+	padding: 0 0 17px;
+	margin: 0 0 8px;
+}
+
+.tickets .info-area table .icon-holder.star:before {
+	position: absolute;
+	top: 2px;
+	bottom: auto;
+	left: 47px;
+	right: auto;
+	content: "\e805";
+	line-height: 1em;
+	font-family: "fontello";
+	font-size: 25px;
+}
+
+.tickets .info-area table .icon-holder.star i:after {
+	position: absolute;
+	top: 2px;
+	bottom: auto;
+	left: auto;
+	right: 48px;
+	content: "\e805";
+	line-height: 1em;
+	font-family: "fontello";
+	font-size: 25px;
+	font-style: normal;
+}
+
+.tickets .info-area table .icon-holder:after {
+	position: absolute;
+	top: auto;
+	bottom: 0;
+	left: 50%;
+	right: auto;
+	border-bottom: 2px dashed #000;
+	content: "";
+	width: 102px;
+	margin: 0 0 0 -51px;
+}
+
+.tickets .info-area table .icon-question {
+	display: inline-block;
+	vertical-align: top;
+	letter-spacing: 0;
+	color: #989898;
+	border: none;
+	padding: 0;
+	margin: 0 0 -2px 3px;
+	font-size: 17px;
+	line-height: 1em;
+}
+
+.tickets .info-area table .icon-question:hover {
+	color: #000;
+}
+
+.tickets .info-area table tbody {
+	color: #231f20;
+	line-height: 15px;
+}
+
+/* .tickets .info-area table tbody tr:last-child td {
+	padding: 17px 14px;
+} */
+
+.tickets .info-area .btn-holder {
+	text-align: center;
+	padding: 0 12px;
+}
+
+.tickets .info-area .btn-holder a {
+	background: #000;
+	color: #fff;
+	letter-spacing: 2px;
+	margin: 0 10px 15px;
+	min-width: 237px;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 24px;
+	padding: 9px 10px;
+	display: block;
+	font-family: "FC Kaiser Cond";
+	font-weight: 500;
+	font-size: 20px;
+}
+
+.tickets .info-area .btn-holder a:hover {
+	background: rgba(0, 0, 0, .8);
+}
+
+.tickets .table-area {
+	border-color: #000;
+	border-style: solid;
+	border-width: 2px 0;
+	padding: 10px 0;
+	margin: 0 0 39px;
+}
+
+.tickets .tooltip-text {
+	background: #fff;
+	border: 4px solid #000;
+	width: 530px;
+	line-height: 21px;
+	padding: 30px;
+	position: relative;
+	left: 20px;
+	font-family: "FC Zizou Slab";
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.tickets .tooltip-text:before {
+	position: absolute;
+	top: 50%;
+	bottom: auto;
+	left: auto;
+	right: 100%;
+	content: "";
+	width: 0;
+	height: 0;
+	border-bottom: 20px solid #000;
+	border-left: 20px solid transparent;
+	margin: -7px 0 0;
+}
+
+.tickets .open-close {
+	margin: 0 0 10px;
+}
+
+.tickets .open-close:last-child {
+	margin: 0;
+}
+
+.tickets .open-close.active .opener .opener-link:after {
+	content: "\e809";
+}
+
+.tickets .open-close table tbody tr:last-child td {
+	padding: 15px 7px;
+}
+
+.tickets .open-close table tr:first-child td {
+	border: none;
+}
+
+.tickets .open-close table td {
+	border-color: #e5e5e5;
+	padding: 15px 7px;
+}
+
+.tickets .open-close table td.col1 {
+	width: 71%;
+}
+
+.tickets .open-close .opener {
+	background: #ffdf14;
+	color: #000;
+	display: block;
+	position: relative;
+	padding: 17px 0 12px;
+}
+
+.tickets .open-close .opener:before {
+	position: absolute;
+	top: 8px;
+	bottom: 10px;
+	left: 52px;
+	right: auto;
+	border-right: 2px dashed #000;
+	content: "";
+}
+
+.tickets .open-close .opener .opener-link {
+	font-size: 0;
+	left: 0;
+	color: #000;
+	position: absolute;
+	right: 15px;
+	bottom: 17px;
+	position: absolute;
+	top: auto;
+	bottom: 10px;
+	left: auto;
+	right: 18px;
+}
+
+.tickets .open-close .opener .opener-link:after {
+	content: "\e808";
+	text-indent: 0;
+	line-height: 1em;
+	font-family: "fontello";
+	font-size: 22px;
+}
+
+.tickets .open-close .icon {
+	float: left;
+	width: 54px;
+	padding: 0 0 0 11px;
+	position: relative;
+}
+
+.tickets .open-close .icon.star:after {
+	position: absolute;
+	top: 5px;
+	bottom: auto;
+	left: auto;
+	right: 6px;
+	content: "\e805";
+	line-height: 1em;
+	font-family: "fontello";
+	font-size: 20px;
+}
+
+.tickets .open-close .icon i {
+	font-size: 30px;
+	line-height: 1em;
+}
+
+.tickets .open-close .text {
+	overflow: hidden;
+	padding: 0 50px 0 10px;
+}
+
+.tickets .open-close h2 {
+	color: #010101;
+	margin: 0 0 9px;
+	text-transform: uppercase;
+	line-height: 32px;
+	letter-spacing: 1px;
+	font-family: "FC Kaiser Cond";
+	font-weight: 500;
+	font-size: 28px;
+}
+
+.tickets .open-close span {
+	display: block;
+}
+
+.tickets .open-close .sub-text {
+	color: #80720a;
+	font-weight: 300;
+}
+
+.tickets .open-close .sub-text.add a {
+	text-decoration: underline;
+	color: #808285;
+}
+
+.tickets .open-close .sub-text.add a:hover {
+	color: #000;
+}
+
+.tickets .open-close .slide-holder {
+	padding: 0 0 7px;
+}
+
+.tickets #footer {
+	background: #000;
+	width: 100%;
+	height: 1%;
+	display: table-footer-group;
+	overflow: hidden;
+	text-align: center;
+}
+
+.tickets #footer .container {
+	padding: 42px 20px 45px;
+}
+
+.tickets .footer-logo-area .logo {
+	width: 200px;
+	margin: 0 auto 65px;
+}
+
+.tickets .footer-nav-area {
+	margin: 0 0 49px;
+}
+
+.tickets .footer-nav {
+	text-transform: uppercase;
+	font-weight: 500;
+	line-height: 26px;
+	margin: 0 0 12px;
+	letter-spacing: 1px;
+	font-family: "FC Kaiser Cond";
+	font-size: 18px;
+}
+
+.tickets .footer-nav a {
+	color: #fff;
+}
+
+.tickets .footer-nav a:hover {
+	color: rgba(255, 255, 255, .8);
+}
+
+.tickets .social {
+	letter-spacing: -4px;
+}
+
+.tickets .social li {
+	display: inline-block;
+	vertical-align: middle;
+	letter-spacing: 0;
+	padding: 0 9px 10px;
+}
+
+.tickets .social a {
+	color: #fff;
+	display: block;
+	font-size: 17px;
+	line-height: 1em;
+}
+
+.tickets .social a.icon-twitter {
+	font-size: 22px;
+}
+
+.tickets .social a:hover {
+	color: rgba(255, 255, 255, .8);
+}
+
+.tickets .by {
+	color: #a9a9a9;
+	text-decoration: underline;
+	font-family: "FC Zizou Slab";
+	font-size: 16px;
+	font-weight: 300;
+}
+
+.tickets .by:hover {
+	color: #a9a9a9;
+	text-decoration: none;
+}
+
+/* popup holder styles */
+
+.popup-holder {
+	position: relative;
+	overflow: hidden;
+	height: 0;
+}
+
+/* lightbox styles */
+
+.lightbox {
+	border: 4px solid #000;
+	line-height: 22px;
+	padding: 29px 20px 20px;
+	font-family: "FC Zizou Slab";
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.lightbox .close {
+	position: absolute;
+	top: 7px;
+	bottom: auto;
+	left: auto;
+	right: 8px;
+	color: #000;
+	font-size: 23px;
+	line-height: 1em;
+}
+
+.lightbox .close:hover {
+	opacity: .8;
+}
+
+.lightbox p {
+	margin: 0;
+}
+
+
+
+
+@media (min-width: 480px) {
+	.tickets .logo-holder .time {
+		width: 52%;
+	}
+}
+
+@media (min-width: 768px) {
+	.tickets .header-holder {
+		padding: 28px 101px 20px 103px;
+	}
+
+	.tickets .logo-holder .time {
+		right: 47px;
+		bottom: 14px;
+		font-size: 35px;
+		width: 57%;
+	}
+
+	.tickets .logo {
+		width: 544px;
+	}
+
+	.tickets .main-nav {
+		display: table;
+		width: 100%;
+		table-layout: fixed;
+		height: 52px;
+	}
+
+	.tickets .main-nav li.welcome {
+		display: table-cell;
+	}
+
+	.tickets .main-nav li {
+		display: table-cell;
+		vertical-align: middle;
+		padding: 0 20px;
+	}
+
+	.tickets .main-nav li:first-child:before,
+	.tickets .main-nav li:first-child:after {
+		display: none;
+	}
+
+	.tickets .main-nav li:before {
+		position: absolute;
+		top: -1px;
+		bottom: auto;
+		left: -12px;
+		right: auto;
+		color: #ffdf14;
+		content: "\e80b";
+		line-height: 1em;
+		font-family: "fontello";
+		font-size: 58px;
+	}
+
+	.tickets .main-nav li.active a {
+		color: #ffdf14;
+	}
+
+	.tickets .info-area {
+		padding: 0 0 68px;
+	}
+
+	.tickets .info-area .header {
+		padding: 61px 0 55px;
+	}
+
+	.tickets .info-area .btn-holder {
+		letter-spacing: -6px;
+	}
+
+	.tickets .info-area .btn-holder a {
+		display: inline-block;
+		vertical-align: top;
+		letter-spacing: 0;
+		letter-spacing: 2px;
+		margin: 0 10px 10px;
+	}
+
+	.tickets .table-area {
+		margin: 0 0 41px;
+	}
+
+	.tickets .open-close-area {
+		display: none;
+	}
+
+	.tickets #footer {
+		text-align: left;
+	}
+
+	.tickets #footer .container {
+		padding: 88px 0 108px;
+	}
+
+	.tickets .footer-logo-area {
+		float: left;
+		width: 27%;
+		padding: 2px 0 0;
+	}
+
+	.tickets .footer-logo-area .logo {
+		margin: 0 0 76px;
+	}
+
+	.tickets .footer-nav-area {
+		float: right;
+		text-align: right;
+		width: 73%;
+		margin: 0;
+	}
+
+	.tickets .footer-nav {
+		letter-spacing: -4px;
+		font-size: 20px;
+		margin: 0 0 64px;
+	}
+
+	.tickets .footer-nav li {
+		display: inline-block;
+		vertical-align: top;
+		letter-spacing: 0;
+		padding: 0 1px 10px 23px;
+	}
+
+	.tickets .social li {
+		padding: 0 0 10px 20px;
+	}
+}
+
+@media only screen and (min-width: 1025px) {
+	a[href^=tel],
+	a[href^=skype],
+	a[href^=sms] {
+		cursor: default;
+		pointer-events: none;
+	}
+}
+
+@media (max-width: 767px) {
+	.tickets .main-nav .welcome {
+		display: block;
+		padding: 18px 10px;
+	}
+/*	.tickets .info-area .table {
+		display: none;
+	}*/
+}
+
+
+
+
+
+/* General Alterations
+--------------------------------------------------------------------------------*/
+
+.checkbox label, .radio label { font-weight: 300; }
+
+div.required label.control-label:first-child::after { color: #ec008c; }
+
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label,
+.has-error .help-block, .has-error .radio, .has-error .radio-inline,
+.has-error.checkbox label, .has-error.checkbox-inline label,
+.has-error.radio label, .has-error.radio-inline label { color: #ec008c; }
+
+.has-error .form-control { border-color: #ec008c; }
+
+.input-group-btn>.btn {
+  	text-transform: uppercase;
+  	border: 1px solid black;
+  	border-radius: 0;
+}
+
+
+/* Container Hack
+--------------------------------------------------------------------------------*/
+
+#main-wrap .content, #main-wrap .alert {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 992px;
+}
+
+@media (min-width: 768px) {
+	#main-wrap .content, #main-wrap .alert { width: 750px; }
+}
+@media (min-width: 992px) {
+	#main-wrap .content, #main-wrap .alert { width: 970px; }
+}
+@media (min-width: 1200px) {
+	#main-wrap .content, #main-wrap .alert { width: 1170px; }
+}
+
+.alert-dismissable .close, .alert-dismissible .close { right: -10px; }
+
+
+/* Progress Tracker
+--------------------------------------------------------------------------------*/
+
+
+.swoogo-reg-progress .steps, .swoogo-reg-progress .steps > li > a.step {
+  	background-color: transparent;
+}
+
+/*
+.navbar { margin-bottom: 0; }
+
+.swoogo-reg-progress {
+	background-color: #000;
+	overflow: hidden;
+	margin-bottom: 75px;
+}
+
+.swoogo-reg-progress .steps {
+	padding: 0;
+	margin: 0 auto;
+	max-width: 992px;
+  	display: table;
+  	min-height: 52px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover { background-color: transparent; }
+.swoogo-reg-progress .steps, .swoogo-reg-progress .steps > li > a.step { background-color: transparent; }
+.swoogo-reg-progress .steps > li.active > a.step .number, .swoogo-reg-progress .steps > li > a.step .number { display: none; }
+
+.swoogo-reg-progress .steps > li > a.step > .desc {
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 16px;
+	font-family: "FC Zizou Slab";
+	font-size: 14px;
+	color: white;
+    font-weight: 300;
+    font-smoothing: auto;
+	-webkit-font-smoothing: auto;
+	margin-top: 0;
+	letter-spacing: 1px;
+}
+
+.swoogo-reg-progress .steps > li.active > a.step .desc { color: #ffdf14; }
+
+.swoogo-reg-progress .steps > li > a.step > .desc {	color: #fff; }
+
+.swoogo-reg-progress .steps > li.done > a.step .desc { color: #a9a9a9; }
+
+
+@media (min-width: 768px) {
+  
+	.swoogo-reg-progress .steps li {
+		display: table-cell;
+		vertical-align: middle;
+        min-height: 52px;
+      	width: auto;
+	}
+
+	.swoogo-reg-progress .steps li:first-child:before,
+	.swoogo-reg-progress .steps li:first-child:after {
+		display: none;
+	}
+
+	.swoogo-reg-progress .steps li:before {
+		position: absolute;
+		top: -1px;
+		bottom: auto;
+		left: -12px;
+		right: auto;
+		color: #ffdf14;
+		content: "\e80b";
+		line-height: 1em;
+		font-family: "fontello";
+		font-size: 58px;
+	}
+
+}
+
+@media (max-width: 767px) {
+  
+	.swoogo-reg-progress .steps > li.active > a.step .number, .swoogo-reg-progress .steps > li > a.step .number {
+      display: inline-block;
+    }
+
+	.swoogo-reg-progress { margin-bottom: 25px; }
+}
+*/
+
+
+
+/* NEW Progress Tracker
+--------------------------------------------------------------------------------*/
+
+.swoogo-reg-progress {
+  	padding: 0 50px;
+  	margin: 0 auto 50px;
+	display: table;
+}
+
+.swoogo-reg-progress .steps > li {
+  	width: auto;
+}
+
+.swoogo-reg-progress .steps > li.active > a.step .number, .swoogo-reg-progress .steps > li > a.step .number,
+.swoogo-reg-progress .steps > li > a.step > .desc {
+	line-height: 16px;
+	font-family: "FC Zizou Sans";
+	font-size: 16px;
+	color: rgba(0, 0, 0, 0.35);
+    font-weight: 300;
+	margin-top: 0;
+  	display: table-cell;
+  	text-align: left !important;
+  	margin: 0;
+}
+
+.nav-justified>li>a {
+	text-align: left;
+}
+
+.swoogo-reg-progress .steps > li.active > a.step .number,
+.swoogo-reg-progress .steps > li > a.step .number,
+.swoogo-reg-progress .steps > li.done > a.step .number {
+  	background-color: transparent;
+  	color: rgba(0, 0, 0, 0.35);
+  	padding: 0 3px 0 0;
+    width: auto;
+	font-family: "FC Kaiser Cond";
+	font-size: 22px;
+    font-weight: 400;
+}
+
+
+
+.swoogo-reg-progress .steps > li.active > a.step .number,
+.swoogo-reg-progress .steps > li.done > a.step .number {
+  	color: #000;
+}
+
+.swoogo-reg-progress .steps > li > a.step .number:before {
+  	content:'0';
+}
+
+.swoogo-reg-progress .steps > li.active > a.step .desc,
+.swoogo-reg-progress .steps > li.done > a.step .desc {
+  	color: #000;
+}
+
+.steps li.active {
+  	border-top: solid 3px #000;
+}
+
+.steps li.done {
+  	border-top: solid 1px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 960px) and (min-width: 768px) {
+  
+	.swoogo-reg-progress {
+  		padding: 0 20px;
+  		margin: 0 auto 50px;
+		display: table;
+	}
+	.swoogo-reg-progress .steps > li.active > a.step .number,
+  	.swoogo-reg-progress .steps > li > a.step .number,
+	.swoogo-reg-progress .steps > li > a.step > .desc {
+		display: block;
+	}
+}
+
+@media (max-width: 767px) {
+  
+	.swoogo-reg-progress {
+  		padding: 0 20px;
+  		display: block;
+      	margin: 0 auto 25px;
+	}
+  	
+	.steps li.active, .steps li.done {
+  		border-top: none;
+	}
+
+/*	.steps li.active {
+      	background-color: #000;
+	}
+  
+	.steps li.done {
+      	background-color: rgba(130, 130, 130, 0.9);
+	}
+  
+  	.swoogo-reg-progress .steps > li.active > a.step .number,
+  	.swoogo-reg-progress .steps > li.done > a.step .number,
+  	.swoogo-reg-progress .steps > li.done > a.step > .desc,
+  	.swoogo-reg-progress .steps > li.active > a.step > .desc {
+  		color: white;
+	}
+*/
+  
+    .swoogo-reg-progress .steps > li.active > a.step .number,
+  	.swoogo-reg-progress .steps > li.active > a.step > .desc {
+  		color: #000;
+	}
+
+  	.swoogo-reg-progress .steps > li.done > a.step .number,
+  	.swoogo-reg-progress .steps > li.done > a.step > .desc {
+  		color: rgba(0, 0, 0, 0.35);
+	}
+  	.swoogo-reg-progress .steps > li.done > a.step > .desc {
+  		text-decoration: underline;
+	}
+  
+  	.swoogo-reg-progress .steps > li > a {
+    	margin-bottom: 0;
+    }
+  	
+  	.nav-pills>li+li {
+      	margin-left: 0;
+    }
+}
+
+  
+
+
+/* New Navbar
+--------------------------------------------------------------------------------*/
+
+
+canvas {
+    position: absolute;
+    z-index: -50;
+}
+
+#logoImage { float: left; }
+
+#logoImage.fc {
+    width: 180px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.header {
+    margin: 30px 0 30px;
+}
+  
+.navbar-default {
+	background-color: #000;
+	border: none;
+    padding: 15px 0 0;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+	color: #fff;
+	font: 600 24px/1em "FC Kaiser Cond";
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+	color: #fff;
+	background-color: transparent;
+	border: none;
+	margin: 4px 0 0 10px;
+    text-decoration: underline;
+}
+
+
+
+
+@media ( min-width: 728px ) {
+
+	.navbar-nav { float: right; }
+	
+	.navbar-nav>li>a {
+		padding-top: 8px;
+		padding-bottom: 8px;
+		margin: 4px 0 0 10px;
+	}
+}
+
+
+/* MOBILE HEADER
+----------------------------------------------------*/
+
+.navbar-default .navbar-toggle { 
+  	border-color: #fff;
+  	border: none;
+  	float: left;
+  	margin-left: 15px;
+  	position: relative;
+  	z-index: 2;
+  	/*--------------
+      REVEAL THE BURGER MENU BELOW
+      -------------*/
+  		display: none;
+}
+
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+	background-color: #000;
+}
+
+#mobLogo {
+   	display: none;
+}
+
+
+
+@media (max-width: 768px) {
+
+	.navbar-nav { margin: 7.5px -15px 0px; }
+	
+	.desktop-logo {
+		display: block;
+	}
+
+	.mobile-logo .text-logo {
+		display: none;
+	}
+	
+}
+
+@media (max-width: 480px) {
+
+	.navbar-header {
+	  	text-align: center;
+	}
+
+	#mobLogo {
+      	display: inline-block;
+ 	 	margin-bottom: 15px;
+        /*--------
+      	  USE ONLY WITH BURGER MENU
+          --------
+	  		position: relative;
+  			z-index: 1;
+  			left: -36px;
+		*/
+	}
+
+	#mobLogo img {
+	  	max-height: 50px;
+	  	max-width: 100%;
+	  	width: auto;
+	  	height: auto;
+	}
+  
+	.tickets .logo {
+		width: 100%;
+      	height: auto;
+	}
+  
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+		border-color: #000;
+		background-color: #999;
+	}
+	
+	.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+		margin: 3px 10px 0 10px;
+	}
+	
+	.navbar-default .navbar-nav>li>a {
+		margin: 0 11px 0 11px;
+	}
+	
+	.tickets .info-area {
+		padding: 0;
+	}
+	
+	#main-wrap .content, #main-wrap .alert {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	
+}
+
+
+
+/* TICKET OPTIONS (LANDING) PAGE
+----------------------------------------------------*/
+
+/* .pagetitle h2.title {
+  	font: 400 40px/1em "FC Kaiser Cond";
+   	letter-spacing: 1.25px;
+  	text-transform: uppercase;
+  	padding-bottom: 36px;
+} */
+.pagetitle h2.title {
+    text-transform: uppercase;
+  	font: 300 40px/1em "FC Zizou Slab";
+  	letter-spacing: 1px;
+  	padding-bottom: 36px;
+}
+
+.pagetitle .swoogo-line {
+  	border-top-style: solid !important;
+  	max-width: 663px;
+}
+
+.remodal-bg .header {
+    margin: 75px auto 0;
+}
+
+.tickets #footer.landingFoot {
+  	display: block;
+}
+
+.landing h2.title {
+    text-transform: uppercase;
+  	font: 400 40px/1em "FC Kaiser Cond";
+  	letter-spacing: 1.25px;
+}
+
+.landing .rate1, .landing .rate2 {
+  	font: 300 22px/1.15em "FC Kaiser Cond";
+    letter-spacing: 2.25px;
+  	text-transform: uppercase;
+}
+
+.landing .rate2 {
+	color: rgba(0,0,0,0.25);
+}
+
+@media (max-width: 480px) {
+	.rateBlank { display:none; }
+}
+
+.btn {
+  	min-width: 180px;
+}
+
+.btn-standard, .btn-default {
+   	color: #000;
+  	background-color: #fff;
+  	border: solid 2px #000;
+}
+
+.btn-standard i, .btn-default i {
+  	margin-left: 5px;
+}
+
+.btn-standard:hover, #btn-standard_hover, .btn-default:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.landing ul {
+  	padding-left: 17px;
+    margin-bottom: 0px;
+}
+
+.landing li p {
+  	margin-bottom: 3px;
+}
+
+.landing a.details {
+  	margin: 10px 0 40px;
+    text-decoration: underline;
+}
+
+.landing .row > div {
+  	margin-bottom: 70px;
+}
+
+.retreat .row > div {
+  	margin-bottom: 20px;
+}
+
+/* fix for 3-col passes */
+.landing .col-sm-4 {
+  	padding-left: 0px;
+ 	padding-right: 25px;
+}
+
+div.footnote {
+  	max-width: 700px;
+  	margin: 0 auto;
+}
+
+div.footnote a { text-decoration: underline; }
+
+.offer .content {
+  	border: solid 9px #fff;
+  	padding: 20px 35px !important;
+  	max-width: 500px !important;
+  	background: #fff url(https://swoogo.s3.amazonaws.com/themes/578fbe6336926/diagonal-trans2.png);
+}
+
+.offer .content h2.title {
+  	color: #e9008a;
+  	font-size: 30px;
+  	letter-spacing: 2px;
+}
+
+/* RETREAT PAGE company columns */
+#w_129402 .col-sm-2 {
+  	padding-right: 0px;
+  	margin-bottom: 0px;
+}
+
+
+
+/* MODAL
+----------------------------------------------------*/
+
+
+.remodal-overlay {
+  	background: rgba(50, 50, 50, 0.9) !important;
+}
+
+.detailsFrame {
+  	border: none;
+  	overflow: scroll;
+  	min-height: 600px;
+    width: 100%;
+  	text-align: left;
+}
+
+.remodal-close {
+  	left: auto !important;
+  	right: 0;
+}
+
+.detailsFrame h1 {
+    text-transform: uppercase;
+  	font: 400 40px/1em "FC Kaiser Cond";
+  	letter-spacing: 1.25px;
+    margin-bottom: 42px;
+}
+
+.detailsFrame h2 {
+  	margin-bottom: .25em;
+  	font: 400 24px/1em 'FC Zizou Slab'
+}
+
+.detailsFrame p {
+	margin-bottom: 35px;
+}
+
+
+.detailsFrame p.availBefore {
+  	margin-bottom: 0px;
+}
+
+.detailsFrame p.availability {
+  	font-size: 12px;
+  	font-style: italic;
+}
+
+
+
+/* STICKY FOOTER
+----------------------------------------------------*/
+
+.landingFoot { margin-top: 50px; }
+
+@media (min-width: 481px) {
+  
+	* { margin: 0; }
+
+	html, body { height: 100%; }
+
+	#stickyWrap {
+		min-height: 100%;
+		margin: 0 auto -379px; /* the bottom margin is the negative value of the footer's height */
+	}
+	
+  	.push {
+		height: 379px; /* '.push' must be the same height as 'footer' */
+	}
+}
+
+
+/* LEADERSHIP TITLE
+----------------------------------------------------*/
+
+@media screen and (min-width : 415px){
+            .mob-break { display: none; }
+        }
+@media screen and (max-width : 415px){
+            .dt-break { display: none; }
+        }
+
+
+
+/* AGENDA
+----------------------------------------------------*/
+
+@media only screen and (min-width: 769px) {
+	#w_105531 .responsive-table > tbody > tr > td:before { content: none !important; }
+}
+
+.fcAgenda .header {
+  	margin: 75px auto 0;
+}
+
+.fcAgenda tr.session td, .agenda-table tr.session td {
+  	font-size: 12pt;
+}
+@media screen and (min-width : 769px){
+	.fcAgenda .table-condensed>tbody>tr>td, .fcAgenda .table-condensed>tbody>tr>th,
+	.fcAgenda .table-condensed>tfoot>tr>td, .fcAgenda .table-condensed>tfoot>tr>th,
+	.fcAgenda .table-condensed>thead>tr>td, .fcAgenda .table-condensed>thead>tr>th,
+   	.agenda-table>tbody>tr>td, .agenda-table>tbody>tr>th,
+	.agenda-table>tfoot>tr>td, .agenda-table>tfoot>tr>th,
+	.agenda-table>thead>tr>td, .agenda-table>thead>tr>th{
+    	padding: 20px 0;
+	}
+    /* .fcAgenda tr.session td:first-child {
+    	font-weight: bold;
+	} */
+  	.fcAgenda tr.session td:first-child {
+  		width: 50%;
+      	padding-right: 40px;
+    }
+	.fcAgenda tr.session td:nth-child(2) {
+  		width: 12%;
+    }
+	.fcAgenda tr.session td:nth-child(3) {
+  		width: 17%;
+      	padding-right: 10px;
+    }
+	.fcAgenda tr.session td:nth-child(4) {
+  		width: 12%;
+    }
+	.fcAgenda tr.session td:last-child {
+  		width: 9%;
+    }
+  
+}
+
+.fcAgenda th, .agenda-table th {
+	 font-family: 'FC Zizou Slab';
+  	 font-size: 11pt;
+  	 color: #000;
+  	 text-transform: uppercase;
+}
+.fcAgenda th b, .agenda-table th b {
+  	 font-weight: 400;
+}
+
+.fcAgenda .table>tbody>tr>td, .fcAgenda .table>tbody>tr>th,
+.fcAgenda .table>tfoot>tr>td, .fcAgenda .table>tfoot>tr>th,
+.fcAgenda .table>thead>tr>td, .fcAgenda .table>thead>tr>th,
+.agenda-table>tbody>tr>td, .agenda-table>tbody>tr>th,
+.agenda-table>tfoot>tr>td, .agenda-table>tfoot>tr>th,
+.agenda-table>thead>tr>td {
+  	border-top: 1px solid #000;
+}
+
+.fcAgenda .table>thead>tr>th, .agenda-table>thead>tr>th {
+    border-bottom: 2px solid #000;
+}
+
+/* BEGIN FILTER BUTTONS */
+
+.fcAgenda .session-filters, #registrant-form .session-filters { text-align: center; }
+
+.fcAgenda .session-filters .btn-group, .fcAgenda .session-filters .btn-group .btn-default,
+#registrant-form .session-filters .btn-group, #registrant-form .session-filters .btn-group .btn-default {
+  	width: 240px !important;
+}
+
+.fcAgenda .session-filters > div, #registrant-form .session-filters > div {margin-bottom: 10px; }
+
+.fcAgenda .btn-group.open .dropdown-toggle, .fcAgenda .btn-default.active, .fcAgenda .btn-default.active.focus, .fcAgenda .btn-default.active:focus,
+.fcAgenda .btn-default.active:hover, .fcAgenda .btn-default:active, .fcAgenda .btn-default:active.focus, .fcAgenda .btn-default:active:focus,
+.fcAgenda .btn-default:active:hover, .fcAgenda .open>.dropdown-toggle.btn-default, .fcAgenda .open>.dropdown-toggle.btn-default.focus,
+.fcAgenda .open>.dropdown-toggle.btn-default:focus, .fcAgenda .open>.dropdown-toggle.btn-default:hover,
+.fcAgenda .btn-default.focus, .fcAgenda .btn-default:focus,
+#registrant-form .session-filters .btn-group.open .dropdown-toggle, #registrant-form .session-filters .btn-default.active,
+#registrant-form .session-filters .btn-default.active.focus, #registrant-form .session-filters .btn-default.active:focus,
+#registrant-form .session-filters .btn-default.active:hover, #registrant-form .session-filters .btn-default:active,
+#registrant-form .session-filters .btn-default:active.focus, #registrant-form .session-filters .btn-default:active:focus,
+#registrant-form .session-filters .btn-default:active:hover, #registrant-form .session-filters .open>.dropdown-toggle.btn-default,
+#registrant-form .session-filters .open>.dropdown-toggle.btn-default.focus,
+#registrant-form .session-filters .open>.dropdown-toggle.btn-default:focus,
+#registrant-form .session-filters .open>.dropdown-toggle.btn-default:hover, #registrant-form .session-filters .btn-default.focus,
+#registrant-form .session-filters .btn-default:focus {
+	border-color: #000;
+  	color: #fff;
+  	background-color: #000;
+}
+
+.fcAgenda ul.dropdown-menu, #registrant-form ul.dropdown-menu {
+  	border-radius: 0;
+	border: 1px solid #000;
+  	border-top: none;
+  	font-size: 12pt;
+  	padding: 10px 0;
+}
+
+.fcAgenda .multiselect-container>li>a>label, #registrant-form .multiselect-container>li>a>label { font-weight: 300; }
+
+.fcAgenda .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover,
+#registrant-form .dropdown-menu>.active>a, #registrant-form .dropdown-menu>.active>a:focus, #registrant-form .dropdown-menu>.active>a:hover {
+  	background-color: #f5f5f5;
+    color: #000;
+}
+
+@media screen and (min-width : 768px){
+
+    /* FILTER BUTTON ALIGNMENT
+  	   #w_220182 is appsessionlist
+       #w_179305 is public-facing agenda
+       #w_98365 is agenda builder */
+  
+  	.fcAgenda #w_220182 .session-filters .col-sm-6, #registrant-form .session-filters .col-sm-6 { width: 33%; }
+  
+  	.fcAgenda #w_220182 .session-filters .col-sm-6:first-child, #registrant-form .session-filters .col-sm-6:first-child {
+      text-align:right;
+    }
+    .fcAgenda #w_220182 .session-filters .col-sm-6:nth-child(2), #registrant-form .session-filters .col-sm-6:nth-child(2) {
+      text-align:center;
+    }
+    .fcAgenda #w_220182 .session-filters .col-sm-6:nth-child(3), #registrant-form .session-filters .col-sm-6:nth-child(3) {
+      text-align:left;
+    }
+  
+	.fcAgenda #w_179305 .session-filters .col-sm-6, #w_98365 .session-filters .col-sm-6 { width: 50%; }
+  
+  	.fcAgenda #w_179305 .session-filters .col-sm-6:first-child, .fcAgenda #w_179305 .session-filters .col-sm-6:nth-child(3),
+  	#w_98365 .session-filters .col-sm-6:first-child, #w_98365 .session-filters .col-sm-6:nth-child(3) {
+      text-align:right;
+    }
+    .fcAgenda #w_179305 .session-filters .col-sm-6:nth-child(2), .fcAgenda #w_179305 .session-filters .col-sm-6:nth-child(4),
+    #w_98365 .session-filters .col-sm-6:nth-child(2), #w_98365 .session-filters .col-sm-6:nth-child(4) {
+      text-align:left;
+    }
+
+}
+@media screen and (min-width : 992px){
+    
+  	/* FILTER BUTTON ALIGNMENT on public page and agenda builder, desktop only (4-up) */
+  	.fcAgenda #w_179305 .session-filters .col-sm-6, #w_98365 .session-filters .col-sm-6 {
+      	text-align: center;
+      	width: 241px !important;
+    }
+
+  	.fcAgenda #w_179305 .session-filters .btn-group, .fcAgenda #w_179305 .session-filters .btn-group .btn-default,
+  	#w_98365 .session-filters .btn-group, #w_98365 .session-filters .btn-group .btn-default{
+  		width: 211px !important;
+	}
+}
+@media screen and (min-width : 1200px){
+    
+  	/* FILTER BUTTON ALIGNMENT on public page and agenda builder, desktop only (4-up) */
+  	.fcAgenda #w_179305 .session-filters .col-sm-6, #w_98365 .session-filters .col-sm-6 {
+      	text-align: center;
+      	width: 247px !important;
+    }
+
+  	.fcAgenda #w_179305 .session-filters .btn-group, .fcAgenda #w_179305 .session-filters .btn-group .btn-default,
+  	#w_98365 .session-filters .btn-group, #w_98365 .session-filters .btn-group .btn-default{
+  		width: 217px !important;
+	}
+}
+
+
+@media screen and (max-width : 767px){
+    .fcAgenda .session-filters .col-sm-6, #registrant-form .session-filters .col-sm-6 { text-align:center; }
+  	
+  	/* HIDE TOGGLE */
+	.fcAgenda .session-filters.hidden-xs, #registrant-form .session-filters.hidden-xs { display: block !important; }
+	.fcAgenda .visible-xs, #registrant-form .visible-xs { display: none !important; }
+    .fcAgenda .agenda-filter-toggle, #registrant-form .agenda-filter-toggle { display: none; }
+}
+
+/* END FILTER BUTTONS */
+
+
+/* MOBILE SESSIONS TABLE */
+@media screen and (max-width : 768px){
+  
+	.fcAgenda .responsive-table, #registrant-form .agenda-table {
+      	margin-top: 20px;
+    }
+  	.fcAgenda .responsive-table > tbody > tr, .agenda-table > tbody > tr {
+    	border: none;
+      	border-top: 1px solid #000;
+      	margin-bottom: 20px;
+    }
+  	.fcAgenda .responsive-table > tbody > tr.group-heading, .agenda-table > tbody > tr.group-heading {
+        margin-bottom: 5px;
+    }
+    .fcAgenda .responsive-table > tbody > tr:last-child, .agenda-table > tbody > tr:last-child {
+      	border-bottom: 1px solid #000;
+    }
+  	.fcAgenda .responsive-table > tbody > tr > td:nth-of-type(2n+1),
+    .agenda-table > tbody > tr > td:nth-of-type(2n+1) {
+      	background-color: rgba(0,0,0,0.04);
+    }
+  	.fcAgenda .responsive-table > tbody > tr > td, .agenda-table > tbody > tr > td {
+      	padding: 10px 0;
+      	line-height: 1.3;
+    }
+  	.fcAgenda .responsive-table > tbody > tr > td:before, .agenda-table > tbody > tr > td:before {
+    	padding: 4px 4px 0 0;
+    }
+	.fcAgenda .responsive-table > tbody > tr > td, .agenda-table > tbody > tr > td {
+        padding-left: 30% !important;
+    }
+  	.fcAgenda .responsive-table > tbody > tr > td:before,
+    .agenda-table > tbody > tr > td:before {
+        width: 24%;
+    }
+}
+
+.fcAgenda .fa-search:before, .fcAgenda .fa-info-circle:before,
+#registrant-form .agenda-table .fa-search:before, #registrant-form .agenda-table .fa-info-circle:before{
+  	content: "\f055";
+  	/* font: lighter 40px/0.5 "FC Zizou Slab"; */
+  	color: #000;
+  	font-size: 17px;
+}
+.fcAgenda .fa, #registrant-form .agenda-table .fa { vertical-align: inherit; }
+
+.fcAgenda tr.group-heading th, .agenda-table tr.group-heading th {
+    color: #000;
+    font-family: "FC Kaiser";
+	font-size: 24px;
+    letter-spacing: 1.5px;
+  	font-weight: 400;
+  	padding: 8px 5px 8px 0 !important;
+}
+
+
+@media only screen and (max-width: 768px) {
+  
+    #w_179305 .responsive-table > tbody > tr > td:nth-of-type(1):before {
+        content:'Name' !important;
+    }
+    #registrant-form .agenda-table > tbody > tr > td:nth-of-type(1):before {
+    	content:'Select' !important;
+    }
+	#w_179305 .responsive-table > tbody > tr > td:nth-of-type(5):before,
+    #registrant-form .agenda-table > tbody > tr > td:nth-of-type(6):before {
+    	content:'Details' !important;
+    }
+    .fcAgenda .responsive-table > tbody > tr > td:before, .agenda-table > tbody > tr > td:before {
+	    font-family: 'FC Zizou Slab';
+  	    font-size: 11pt;
+  	    color: #000;
+  	    text-transform: uppercase;
+  	    font-weight: 400;
+      	padding-top: 5px;
+    }
+
+}
+
+/* NEW HEADER NAV BAR */
+
+@media only screen and (min-width: 768px) {
+
+	.fcAgenda ul.headNav {
+		text-align:center;
+		margin:0;
+	  	padding:0;
+  		list-style: none;
+	  	list-style-image: none;
+  		display: block;
+	}
+
+	.navCol {
+		display:table-cell;
+	  	width:33.33%;
+	}
+	#navLeft, #navRight { vertical-align: middle; }
+	#navLeft #logoImage { margin: 0; }
+	#navMid { text-align: center; }
+	#navRight {text-align: right; }
+
+	#navRight img {
+ 		width: 105px;
+	}
+
+	.fcAgenda ul.headNav li {
+  		display: inline-block;
+  		height: 80px;
+  		padding: 0 10px; 	
+	}
+
+	.fcAgenda ul.headNav li a {
+  		color: #fff;
+  		letter-spacing: 1px;
+	  	text-transform: uppercase;
+		font-size: uppercase;
+	  	text-decoration: none;
+  		line-height: 80px;
+	  	font-family: 'FC Kaiser Cond', sans-serif;
+	  	font-weight: 600;
+	  	font-size: 24px;
+	}
+
+	.fcAgenda ul.headNav li.current a {
+  		text-decoration: underline;
+	}
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+	.fcAgenda #navLeft, .fcAgenda #navRight { width: 25%; }
+	.fcAgenda #navMid { width: 50%; }
+  
+}
+
+@media only screen and (max-width: 767px) {
+	
+  	.fcAgenda .navbar .container { padding: 0; margin: 0; }
+  
+  	.fcAgenda #navMid, .fcAgenda #navRight { display: none; }
+	
+ 	.fcAgenda #navLeft {
+      	height: 56px;
+      	width: 305px;
+      	text-align: left;
+    }
+ 
+	.fcAgenda #logoImage img {
+		display: block;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		background: url(https://swoogo.s3.amazonaws.com/themes/578fbe6336926/FCNY-headerLogo.png) no-repeat;
+		width: 305px; /* Width of new image */
+		height: 56px; /* Height of new image */
+		padding-left: 305px; /* Equal to width of new image */
+		margin: 12px 0 0 12px;
+	}
+  	
+}
+  
+
+/* NEW COPY */
+
+.agenda-table strong { font-weight: 700 !important; }
+
+.fcAgenda #w_146959 p { font: 300 22px/30px "FC Zizou Slab"; }
+
+@media only screen and (max-width: 991px) {
+	.fcAgenda #w_146959 br { display:none; }
+}
+
+.fcAgenda #w_178844 h2 { font: 400 28px/30px "FC Kaiser Cond"; }
+
+
+@media only screen and (min-width: 1200px) {
+  
+	.fcAgenda #w_178844 .row { margin: 0; }
+
+	.fcAgenda #w_178844 .col-sm-4 {
+		padding-right: 0;
+		max-width: 290px;
+    }
+  	
+  	.fcAgenda #w_178844 .col-sm-4:nth-child(1), .fcAgenda #w_178844 .col-sm-4:nth-child(2) {
+      	margin-right: 45px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+  	.fcAgenda #w_178844 .col-sm-4 {
+      	margin-bottom: 20px;
+      	padding: 0;
+    }
+  	.fcAgenda #w_178844 .col-sm-4:last-child { margin-bottom: 50px; }
+}
+
+
+
+
+/* REGISTRANT AGENDA
+----------------------------------------------------*/
+
+#registrant-form .field-registrant-session_ids .col-sm-9 {
+  float: none;
+  width: 100%;
+}
+
+@media screen and (min-width : 769px){
+
+    #registrant-form .agenda-table tr.agenda-heading th:first-child {
+  		width: 5%;
+    }
+	#registrant-form .agenda-table tr.agenda-heading th:nth-child(2) {
+  		width: 10%;
+    }
+	#registrant-form .agenda-table tr.agenda-heading th:nth-child(3) {
+  		width: 39%;
+    }
+	#registrant-form .agenda-table tr.agenda-heading th:nth-child(4) {
+  		width: 17%;
+    }
+	#registrant-form .agenda-table tr.agenda-heading th:nth-child(5) {
+  		width: 20.5%;
+    }
+	#registrant-form .agenda-table tr.agenda-heading th:last-child {
+  		width: 8.5%;
+    }
+  
+    #registrant-form .agenda-table tr.session td:nth-child(3) {
+      	padding-right: 15px;
+    }
+	#registrant-form .agenda-table tr.session td:nth-child(4) {
+      	padding-right: 10px;
+    }
+}
+
+#registrant-form .field-registrant-session_ids label.control-label:first-child {
+  	text-align: center;
+	width: 100%;
+  	text-transform: uppercase;
+  	font-size: 24px;
+  	margin: 20px 0;
+}
+
+/* REGISTRANT AGENDA MODAL "MORE INFO" */
+
+.session.custom-field-750, .session.custom-field-750 + div, .session.custom-field-750 + div + div,
+.session.custom-field-750 + div + div + div, .session.more-info-title.custom-field-677, .session.custom-field-399 {
+    display: none;
+}
+
+.session.more-info-data, .session.more-info-data.custom-field-677 + div { font-weight: 300; }
+
+.session.more-info-title { margin-bottom: 0; }
+
+.modal-content .session-description, .modal-content .session-description + div,
+.modal-content .session-description + div + div,
+.modal-content .session-description + div + div + div {
+    display: none;
+}
+
+
+
+/* CONFIRMATION PAGE
+----------------------------------------------------*/
+
+/* CONFIRMATION AGENDA */
+
+@media screen and (min-width : 769px){
+
+	#w_202755 .agenda-table tr.agenda-heading th:first-child {
+  		width: 12%;
+    }
+	#w_202755 .agenda-table tr.agenda-heading th:nth-child(2) {
+  		width: 43%;
+    }
+	#w_202755 .agenda-table tr.agenda-heading th:nth-child(3) {
+  		width: 18%;
+    }
+	#w_202755 .agenda-table tr.agenda-heading th:nth-child(4) {
+  		width: 27%;
+    }
+
+  
+    #w_202755 .agenda-table tr.session td:nth-child(2) {
+      	padding-right: 25px;
+    }
+    #w_202755 .agenda-table tr.session td:nth-child(3) {
+      	padding-right: 15px;
+    }
+
+}
+
+
+/* APP AGENDA
+----------------------------------------------------*/
+
+@media screen and (min-width : 769px){
+
+
+	#w_220182 tr.session td:first-child {
+  		width: 12%;
+    }
+	#w_220182 tr.session td:nth-child(2) {
+  		width: 41%;
+    }
+	#w_220182 tr.session td:nth-child(3) {
+  		width: 19%;
+    }
+	#w_220182 tr.session td:nth-child(4) {
+  		width: 19%;
+    }
+	#w_220182 tr.session td:nth-child(5) {
+  		width: 9%;
+    }
+
+  
+    #w_220182 tr.session td:nth-child(2) {
+      	padding-right: 25px;
+    }
+    #w_220182 tr.session td:nth-child(3) {
+      	padding-right: 15px;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+  
+	#w_220182 .agenda-table > tbody > tr > td:nth-of-type(5):before {
+    	content:'Details' !important;
+    }
+  	#w_220182 .agenda-table > tbody > tr > td.more_info {
+      text-align: left;
+    }
+
+}
+
+
+
