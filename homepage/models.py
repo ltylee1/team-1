@@ -2,6 +2,26 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+class Agencies(models.Model):
+    agency_andar_number = models.IntegerField(default=0)
+    agency_name = models.CharField(max_length=128)
+
+class Program(models.Model):
+    agency_andar_number = models.ForeignKey(Agencies, on_delete=models.CASCADE)
+    program_andar_number = models.IntegerField(default=0)
+    program_name = models.CharField(max_length=128)
+    grant_start_date = models.DateField()
+    grant_end_date = models.DateField()
+    program_discription = models.CharField(max_length=128)
+    program_planner = models.CharField(max_length=128)
+    funds = models.CharField(max_length=128)
+    focus_area = models.CharField(max_length=128)
+    strategic_outcome = models.CharField(max_length=128)
+    funding_stream = models.CharField(max_length=128)
+    allocation = models.IntegerField(max_length=128)
+    year = models.IntegerField(default=2016)
+    website = models.CharField(max_length=128)
+
 class Target_Population(models.Model):
     program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
     target_Population = models.CharField(max_length=128)
@@ -35,27 +55,7 @@ class Program_Elements(models.Model):
     element_name = models.IntegerField(default=0)
     specific_element = models.IntegerField(default=0)
 
-class Agencies(models.Model):
-    agency_andar_number = models.IntegerField(default=0)
-    agency_name = models.CharField(max_length=128)
-
-class Program(models.Model):
-	agency_andar_number = models.ForeignKey(Agencies, on_delete=models.CASCADE)
-	program_andar_number = models.IntegerField(default=0)
-	program_name = models.CharField(max_length=128)
-	grant_start_date = models.DateField()
-	grant_end_date = models.DateField()
-	program_discription = models.CharField(max_length=128)
-	program_planner = models.CharField(max_length=128)
-	funds = models.CharField(max_length=128)
-	focus_area = models.CharField(max_length=128)
-	strategic_outcome = models.CharField(max_length=128)
-	funding_stream = models.CharField(max_length=128)
-	allocation = models.IntegerField(max_length=128)
-	year = models.IntegerField(default=2016)
-	website = models.CharField(max_length=128)
-
 class Location(models.Model):
 	program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
 	location = models.CharField(max_length=128)
-	postal_code = CharField(max_length=128)
+	postal_code = models.CharField(max_length=128)
