@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'uw-dashboard',
+    'uw_dashboard',
 ]
 
 MIDDLEWARE = [
