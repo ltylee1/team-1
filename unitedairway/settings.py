@@ -27,6 +27,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# provide our get_profile()
+AUTH_PROFILE_MODULE = 'uw-dashboard.UserProfile'
+
+# URL for @login_required decorator to use
+LOGIN_URL = '/login/'
+
+# redirect authenticated users
+LOGIN_REDIRECT_URL = '/profile/'
+
+# ROOT FOR ALL MEDIA
+MEDIA_ROOT = "uw-dashbaord/static/uw-dashboard/images/"
+MEDIA_URL = "/static/uw-dashboard/images/"
 
 # Application definition
 
@@ -37,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'uw-dashboard',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +67,7 @@ ROOT_URLCONF = 'unitedairway.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,3 +134,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = ''
