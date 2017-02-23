@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Agencies(models.Model):
     agency_andar_number = models.IntegerField(default=0)
@@ -59,3 +62,39 @@ class Location(models.Model):
 	program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
 	location = models.CharField(max_length=128)
 	postal_code = models.CharField(max_length=128)
+
+# Separate table for extra user information we need that is not used for authentication
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_admin = models.BooleanField(default=False)
+
+    def username(self):
+        return self.user.get_username()
+
+    def password(self):
+        return self.user.password
+
+    def email(self):
+        return self.user.email
+
+    def change_password(self, password):
+        self.user.set_password(password)
+        self.user.save()
+
+    def addUser(self, email, username, password):
+        user = User.objects.create_user(username, email, password)
+        user.save()
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+
+
+
+
