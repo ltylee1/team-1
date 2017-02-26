@@ -118,7 +118,7 @@ class Parser:
 
         self.content = []
         self.column_names = []
-        self.index_dictionary = {
+        self.output_index = {
             'Funds': -1,
             'Focus Area': -1,
             'Strategic Outcome': -1,
@@ -154,7 +154,8 @@ class Parser:
                 'Postal Code': -1
             }
 
-    def get_columns_postal(self, column_list, sheet_name):
+    # Gets the core indexes for the postal file
+    def get_postal_index(self, column_list, sheet_name):
         if 'program' in sheet_name:
             for column in column_list:
                 if 'Agency Andar #' == column:
@@ -185,57 +186,57 @@ class Parser:
                 elif 'Postal Code' == column:
                     self.postal_index['Postal Code'] = column_list.index(column)
 
+    # Gets the core indexes for the output file
     def get_output_index(self, column_list):
         if len(column_list) != 158:
             print "Columns have been removed or added, system may not work"
         for column in column_list:
             if "Funds" == column:
-                self.index_dictionary['Funds'] = column_list.index(column)
+                self.output_index['Funds'] = column_list.index(column)
             elif "Focus Area" == column:
-                self.index_dictionary['Focus Area'] = column_list.index(column)
+                self.output_index['Focus Area'] = column_list.index(column)
             elif "Strategic Outcome" == column:
-                self.index_dictionary['Strategic Outcome'] = column_list.index(column)
+                self.output_index['Strategic Outcome'] = column_list.index(column)
             elif "Funding Stream" == column:
-                self.index_dictionary['Funding stream'] = column_list.index(column)
+                self.output_index['Funding stream'] = column_list.index(column)
             elif "Agency Andar #" == column:
-                self.index_dictionary['Agency Andar #'] = column_list.index(column)
+                self.output_index['Agency Andar #'] = column_list.index(column)
             elif "Agency Name" == column:
-                self.index_dictionary['Agency Name'] = column_list.index(column)
+                self.output_index['Agency Name'] = column_list.index(column)
             elif "Program Name" == column:
-                self.index_dictionary['Program Name'] = column_list.index(column)
+                self.output_index['Program Name'] = column_list.index(column)
             elif "Program Andar #" == column:
-                self.index_dictionary['Program Andar #'] = column_list.index(column)
+                self.output_index['Program Andar #'] = column_list.index(column)
             elif "Allocation" in column:
-                self.index_dictionary['Allocation'] = column_list.index(column)
+                self.output_index['Allocation'] = column_list.index(column)
             elif "Grant Start Date" == column:
-                self.index_dictionary['Grant Start Date'] = column_list.index(column)
+                self.output_index['Grant Start Date'] = column_list.index(column)
             elif "Grant End Date" == column:
-                self.index_dictionary['Grant End Date'] = column_list.index(column)
+                self.output_index['Grant End Date'] = column_list.index(column)
             elif "Short Program Description" == column:
-                self.index_dictionary['Short Program Description'] = column_list.index(column)
+                self.output_index['Short Program Description'] = column_list.index(column)
             elif "Planner" == column:
-                self.index_dictionary['Planner'] = column_list.index(column)
+                self.output_index['Planner'] = column_list.index(column)
             elif "Target Population" == column:
-                self.index_dictionary['Target Population'] = column_list.index(column)
-            elif self.index_dictionary['Target Population'] != -1 and self.index_dictionary[
-                'Program Elements'] == -1 and "Other" == column:
-                self.index_dictionary['TP Other'] = column_list.index(column)
+                self.output_index['Target Population'] = column_list.index(column)
+            elif self.output_index['Target Population'] != -1 and self.output_index['Program Elements'] == -1 and "Other" == column:
+                self.output_index['TP Other'] = column_list.index(column)
             elif "Program Elements" == column:
-                self.index_dictionary['Program Elements'] = column_list.index(column)
+                self.output_index['Program Elements'] = column_list.index(column)
             elif "Information and Referral" == column:
-                self.index_dictionary['PE End'] = column_list.index(column)
+                self.output_index['PE End'] = column_list.index(column)
             elif "Geographic Focus Area" == column:
-                self.index_dictionary['Geographic Focus Area'] = column_list.index(column)
+                self.output_index['Geographic Focus Area'] = column_list.index(column)
             elif "Other Areas" == column:
-                self.index_dictionary['GFA Other'] = column_list.index(column) + 1
+                self.output_index['GFA Other'] = column_list.index(column) + 1
             elif "Donor Engagement" == column:
-                self.index_dictionary['Donor Engagement'] = column_list.index(column)
-            elif self.index_dictionary['Donor Engagement'] != -1 and self.index_dictionary['Outputs'] == -1 and "Other" == column:
-                self.index_dictionary['DE Other'] = column_list[self.index_dictionary['Donor Engagement']:].index(column) + self.index_dictionary['Donor Engagement']
+                self.output_index['Donor Engagement'] = column_list.index(column)
+            elif self.output_index['Donor Engagement'] != -1 and self.output_index['Outputs'] == -1 and "Other" == column:
+                self.output_index['DE Other'] = column_list[self.output_index['Donor Engagement']:].index(column) + self.output_index['Donor Engagement']
             elif "Outputs" == column:
-                self.index_dictionary['Outputs'] = column_list.index(column)
+                self.output_index['Outputs'] = column_list.index(column)
 
-        self.index_dictionary['Outputs End'] = len(column_list) - 1
+        self.output_index['Outputs End'] = len(column_list) - 1
 
     def drop_program_table(self):
         Program.objects.filter(year=self.year).delete()
@@ -252,6 +253,7 @@ class Parser:
         self.insert_geo_focus(row)
         self.insert_program_elements(row)
 
+    # Collapses binary columns and returns them as a list of column names
     def collapse_binary(self, row, start, end):
         collapsed_columns = []
         for curindex in range(start, end):
@@ -259,27 +261,24 @@ class Parser:
                 collapsed_columns.append(self.column_names[curindex])
         return collapsed_columns
 
+    # Used for debugging
     def get_table_row(self, row, index, end_index):
-        index = self.index_dictionary[index]
+        index = self.output_index[index]
         start = index + 1
-        end = self.index_dictionary[end_index] + 1
+        end = self.output_index[end_index] + 1
         table_row = []
         for x in range(start, end):
             table_row.append(row[x])
         return table_row
 
-    def get_location_list(self, row, start, end):
-        locations = []
-        for column in row[start:end]:
-            locations.append(column)
-        return locations
-
+    # Checks that the cell isn't empty
     def check_empty(self, value):
         if value == '':
             return 0
         else:
             return value
 
+    # Gets all the locations(name, postal code) for a program
     def get_locations(self, row):
         index = self.postal_index['# Locations']
         locations = []
@@ -290,12 +289,11 @@ class Parser:
                 locations.append([location, postcode])
         return locations
 
-    # If overwrite then insert all elements, if not overwrite then verify that element does not exist before inputting
-    # No difference
+    # Inserts target population into database
     def insert_target_population(self, row):
-        collapsed_row = self.collapse_binary(row, self.index_dictionary['Target Population'] + 1,
-                                             self.index_dictionary['TP Other'] + 1)
-        program = Program.objects.get(program_andar_number=row[self.index_dictionary['Program Andar #']])
+        collapsed_row = self.collapse_binary(row, self.output_index['Target Population'] + 1,
+                                             self.output_index['TP Other'] + 1)
+        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         if collapsed_row:
             for current_population in collapsed_row:
                 check = Target_Population.objects.filter(program_andar_number=program,
@@ -306,9 +304,10 @@ class Parser:
                     target.save()
 
     # TODO NOTE DOES NOT DEAL WITH First Nation Territories CD
+    # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
-        program = Program.objects.get(program_andar_number=row[self.index_dictionary['Program Andar #']])
-        for curindex in range(self.index_dictionary['Geographic Focus Area'] + 2, self.index_dictionary['GFA Other']):
+        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+        for curindex in range(self.output_index['Geographic Focus Area'] + 2, self.output_index['GFA Other']):
             curcity = self.column_names[curindex]
             curpercent = self.check_empty(row[curindex])
             if curpercent != 0:
@@ -321,11 +320,11 @@ class Parser:
                     # else:
                     #     print 'If we wanted to update during appends we would do it here'
 
-    # If overwrite then insert, if not then check if value already exists and insert if not
+    # Inserts donor engagements into database
     def insert_donor_engagement(self, row):
-        collapsed_row = self.collapse_binary(row, self.index_dictionary['Donor Engagement'] + 1,
-                                             self.index_dictionary['DE Other'] + 1)
-        program = Program.objects.get(program_andar_number=row[self.index_dictionary['Program Andar #']])
+        collapsed_row = self.collapse_binary(row, self.output_index['Donor Engagement'] + 1,
+                                             self.output_index['DE Other'] + 1)
+        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         if collapsed_row:
             for current_donor in collapsed_row:
                 check = Donor_Engagement.objects.filter(program_andar_number=program,
@@ -337,10 +336,10 @@ class Parser:
                     # else:
                     #     print 'If we wanted to update during appends we would do it here'
 
-    # If overwrite then insert, if not overwrite then check if existing and insert
+    # Inserts totals into the database
     def insert_totals(self, row):
-        start = self.index_dictionary['Outputs'] + 1
-        program = Program.objects.get(program_andar_number=row[self.index_dictionary['Program Andar #']])
+        start = self.output_index['Outputs'] + 1
+        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         check = Totals.objects.filter(program_andar_number=program).exists()
         if not check:
             total = Totals(program_andar_number=program,
@@ -361,21 +360,25 @@ class Parser:
             # else:
             #     print 'Exists and if we wanted to update we would do that here'
 
+    # Inserts program element into database
     def insert_program_elements(self, row):
         temp = []
         colnames = []
-        for curindex in range(self.index_dictionary['Program Elements'] + 1, self.index_dictionary['PE End'] + 1):
+        # Gets the column index for the Program Element Levels
+        for curindex in range(self.output_index['Program Elements'] + 1, self.output_index['PE End'] + 1):
             if row[curindex] != '' and row[curindex] != '1':
                 colname = self.column_names[curindex]
                 colnames.append(colname)
                 temp.append(curindex)
+        # For each level
         for curindex in range(0, len(colnames) - 1):
+            # Collapse the binary column
             cursection = (self.collapse_binary(row, temp[curindex], temp[curindex + 1]))
             if cursection:
                 level = row[temp[curindex]]
                 element_name = colnames[curindex]
                 specific_element = cursection
-                program = Program.objects.get(program_andar_number=row[self.index_dictionary['Program Andar #']])
+                program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
                 for curelement in specific_element:
                     check = Program_Elements.objects.filter(program_andar_number=program,
                                                             level=level,
@@ -392,55 +395,59 @@ class Parser:
 
     # Should only need to insert since program table will be dropped if overwrite; during append we should just update if there are no tables existing
     def insert_program(self, row):
-        check = Program.objects.filter(program_andar_number=row[self.index_dictionary['Program Andar #']]).exists()
+        check = Program.objects.filter(program_andar_number=row[self.output_index['Program Andar #']]).exists()
         if not check:
-            agency = Agencies.objects.get(agency_andar_number=row[self.index_dictionary['Agency Andar #']])
-            date = row[self.index_dictionary['Grant Start Date']]
+            agency = Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
+            date = row[self.output_index['Grant Start Date']]
             start_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
-            date = row[self.index_dictionary['Grant End Date']]
+            date = row[self.output_index['Grant End Date']]
             end_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
             program = Program(agency_andar_number=agency,
-                              program_andar_number=row[self.index_dictionary['Program Andar #']],
-                              program_name=row[self.index_dictionary['Program Name']],
+                              program_andar_number=row[self.output_index['Program Andar #']],
+                              program_name=row[self.output_index['Program Name']],
                               grant_start_date=start_date,
                               grant_end_date=end_date,
-                              program_description=row[self.index_dictionary['Short Program Description']],
-                              program_planner=row[self.index_dictionary['Planner']],
-                              funds=row[self.index_dictionary['Funds']],
-                              focus_area=row[self.index_dictionary['Focus Area']],
-                              strategic_outcome=row[self.index_dictionary['Strategic Outcome']],
-                              funding_stream=row[self.index_dictionary['Funding stream']],
-                              allocation=row[self.index_dictionary['Allocation']],
+                              program_description=row[self.output_index['Short Program Description']],
+                              program_planner=row[self.output_index['Planner']],
+                              funds=row[self.output_index['Funds']],
+                              focus_area=row[self.output_index['Focus Area']],
+                              strategic_outcome=row[self.output_index['Strategic Outcome']],
+                              funding_stream=row[self.output_index['Funding stream']],
+                              allocation=row[self.output_index['Allocation']],
                               year=self.year)
             program.save()
             # else:
             # print 'Exists and if we wanted to update we would do that here'
 
-    # Agency table is never dropped.
-    # If overwrite is selected then we should just update the agency name if it already exists on the table
-    # If appending then we simply create a new row if the agency does not already exist
-
+    # Inserts agency data into the database, this is the only table that is never dropped.
     def insert_agency(self, row):
-        check = Agencies.objects.filter(agency_andar_number=row[self.index_dictionary['Agency Andar #']]).exists()
-        if check and self.overwrite:
-            agency = Agencies.objects.get(agency_andar_number=row[self.index_dictionary['Agency Andar #']])
-            cur_agency = row[self.index_dictionary['Agency Name']]
-            if agency.agency_name != cur_agency:
-                agency.agency_name = cur_agency
-                agency.save()
+        check = Agencies.objects.filter(agency_andar_number=row[self.output_index['Agency Andar #']]).exists()
+        # Agency already exists if we are overwriting so we update the agency name if needed
+        if check:
+            if self.overwrite:
+                agency = Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
+                cur_agency = row[self.output_index['Agency Name']]
+                if agency.agency_name != cur_agency:
+                    agency.agency_name = cur_agency
+                    agency.save()
         else:
-            agency = Agencies(agency_andar_number=row[self.index_dictionary['Agency Andar #']],
-                              agency_name=row[self.index_dictionary['Agency Name']])
+            # If agency does not exists then we create it in database
+            agency = Agencies(agency_andar_number=row[self.output_index['Agency Andar #']],
+                              agency_name=row[self.output_index['Agency Name']])
             agency.save()
 
+    # Inserts program location data into database
     def insert_program_location(self, row):
         locations = self.get_locations(row)
         for location in locations:
             loc_name = location[0]
             loc_post = location[1]
+            # Check that the location is not empty
             if loc_name != 'None' and loc_name != '':
+                # Check that location does not already exist
                 check = Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']], location=loc_name,
                                                 postal_code=loc_post).exists()
+                # Insert data into database
                 if not check:
                     loc = Location(program_andar_number=row[self.postal_index['Program Andar #']],
                                    location=loc_name,
@@ -450,25 +457,31 @@ class Parser:
                     # else:
                     #     print 'Exists and if we wanted to update we would do that here'
 
+    # Checks that the file is a CSV
     def validate_file(self):
         pfile = self.cur_file
         if pfile.endswith('.csv'):
             return True
         else:
-            raise False
+            return False
 
+    # Inserts the parsed contents into the database
     def insert_file(self):
-        if "outputs" in self.cur_file.lower():
-            if self.overwrite:
-                self.drop_program_table()
-            for row in self.content:
-                self.insert_row(row)
-        elif "postal" in self.cur_file.lower():
-            if self.overwrite:
-                self.drop_location_table()
-            for row in self.content:
-                self.insert_program_location(row)
+        if self.content:
+            if "outputs" in self.cur_file.lower():
+                if self.overwrite:
+                    self.drop_program_table()
+                for row in self.content:
+                    self.insert_row(row)
+            elif "postal" in self.cur_file.lower():
+                if self.overwrite:
+                    self.drop_location_table()
+                for row in self.content:
+                    self.insert_program_location(row)
+        else:
+            raise Exception("Nothing to insert")
 
+    # Parses the file
     def parse_file(self):
         pfile = self.cur_file
         if "outputs" in pfile.lower():
@@ -483,6 +496,6 @@ class Parser:
             with open(pfile, 'rb') as f:
                 reader = csv.reader(f)
                 self.column_names = reader.next()
-                self.get_columns_postal(self.column_names, 'program')
+                self.get_postal_index(self.column_names, 'program')
                 for row in reader:
                     self.content.append(row)
