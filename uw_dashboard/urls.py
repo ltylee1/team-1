@@ -4,6 +4,7 @@ from .views import Homepage, UploadView, LoginView, AddUserView, MapView
 
 urlpatterns = [
     url(r'^$', Homepage.as_view(), name='index'),
+    url(r'^homepage.html$', Homepage.as_view(), name='index'),
     url(r'^upload.html$', UploadView.as_view(), name="upload"),
     url(r'^login.html$', LoginView.as_view(), name="login"),
     url(r'^addUser.html$', AddUserView.as_view(), name="addUser"),
