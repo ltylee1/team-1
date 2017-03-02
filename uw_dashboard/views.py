@@ -16,3 +16,6 @@ class MapView(TemplateView):
 
 class AddUserView(TemplateView):
     template_name = "addUser.html"
+
+class SearchResultsView(TemplateView):
+    template_name = "search-results.html"
