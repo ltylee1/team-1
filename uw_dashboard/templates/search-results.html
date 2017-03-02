@@ -29,7 +29,7 @@
   </tbody></table>  
     </header>
 		<div >
-    		<img class="united-way-logo-header" src="dashboard.jpg"/>
+    		<img class="united-way-logo-header" src="{% static 'uw-dashboard/images/dashboard.jpeg' %}"/>
     	</div>
 
 
@@ -204,14 +204,14 @@
 
         <div class="container">
             <p class="search-result-title-text">Search Result Totals</p>
-            <img class="united-way-logo" src="images/totals.png"/>
+            <img class="united-way-logo" src="{% static 'uw-dashboard/images/total.png' %}"/>
             <p class="search-result-title-text">Geographic Distribution of Money</p>
             <a href="table.html" onclick="return popup(this)"> 
-                <img class="united-way-logo" src="images/money-dist-graph.png"/>
+                <img class="united-way-logo" src="{% static 'uw-dashboard/images/money-dist-graph.png' %}"/>
             </a>
              <p class="text-center">Click graph for source data</p>
             <p class="search-result-title-text">Program List</p>
-            <img class="results" src="images/results.png"/>
+            <img class="results" src="{% static 'uw-dashboard/images/results.png' %}"/>
         </div>
 
         <SCRIPT TYPE="text/javascript"> 
