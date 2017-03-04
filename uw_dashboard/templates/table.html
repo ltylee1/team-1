@@ -3,98 +3,100 @@
 <html lang="en">
 <head>
     <link type="text/css" rel="stylesheet" href="../../static/stylesheets/tablestyle.css"/>
-{#    <meta charset="UTF-8">#}
+    {#
+    <meta charset="UTF-8">
+    #}
     <title>Table</title>
 </head>
 <body>
 <div id="top">
-    <a href="/home_helper_app/"><img id="logo" src="{% static "images/HomeHelper Logo.PNG" %}" alt="Logo link"/></a>
+    <a href="/home_helper_app/"><img id="logo" src="{% static " images/HomeHelper Logo.PNG" %}" alt="Logo link"/></a>
     <h1 id="title">Table of Selected Data</h1>
     <p id="omehelper">omeHelper</p>
 </div>
 <table id="maintable">
     <thead>
-        <tr>
-            <th class="th"><span>Crimes</span></th>
-            <th class="th"><span>Parks</span></th>
-            <th class="th"><span>Community Centers</span></th>
-        </tr>
+    <tr>
+        <th class="th"><span>Crimes</span></th>
+        <th class="th"><span>Parks</span></th>
+        <th class="th"><span>Community Centers</span></th>
+    </tr>
     </thead>
     <tbody>
-        <tr>
-            <td valign="top">
-                <table>
-                    <thead>
-                            <tr>
-                                <th class="th">Info</th>
-                                <th class="th">Month</th>
-                                <th class="th">Year</th>
-                                <th class="th">Address</th>
-                            </tr>
-                    </thead>
-                    <tbody>
-                        {% if crimeSettings.0.crime %}
-                        {% for crime in crimes %}
-                            <tr>
-                                <td>"{{ crime.info }}"</td>
-                                <td>"{{ crime.month }}"</td>
-                                <td>"{{ crime.year }}"</td>
-                                <td>"{{ crime.address }}"</td>
-                            </tr>
-                        {%  endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
-            </td>
-            <td valign="top">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="th">Name</th>
-                            <th class="th">Address</th>
-                            <th class="th">Latitude</th>
-                            <th class="th">Longitude</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if parkSettings.0.park %}
-                        {% for park in parks %}
-                            <tr>
-                                <td>"{{ park.name }}"</td>
-                                <td>"{{ park.address }}"</td>
-                                <td>"{{ park.latitude }}"</td>
-                                <td>"{{ park.longitude }}"</td>
-                            </tr>
-                        {%  endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
-            </td>
-            <td valign="top">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="th">Name</th>
-                            <th class="th">Address</th>
-                            <th class="th">Latitude</th>
-                            <th class="th">Longitude</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if communityCenterSettings.0.communityCenter %}
-                        {% for communitycenter in communitycenters %}
-                            <tr>
-                                <td>"{{ communitycenter.name }}"</td>
-                                <td>"{{ communitycenter.address }}"</td>
-                                <td>"{{ communitycenter.latitude }}"</td>
-                                <td>"{{ communitycenter.longitude }}"</td>
-                            </tr>
-                        {%  endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
-            </td>
-        </tr>
+    <tr>
+        <td valign="top">
+            <table>
+                <thead>
+                <tr>
+                    <th class="th">Info</th>
+                    <th class="th">Month</th>
+                    <th class="th">Year</th>
+                    <th class="th">Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if crimeSettings.0.crime %}
+                {% for crime in crimes %}
+                <tr>
+                    <td>"{{ crime.info }}"</td>
+                    <td>"{{ crime.month }}"</td>
+                    <td>"{{ crime.year }}"</td>
+                    <td>"{{ crime.address }}"</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </td>
+        <td valign="top">
+            <table>
+                <thead>
+                <tr>
+                    <th class="th">Name</th>
+                    <th class="th">Address</th>
+                    <th class="th">Latitude</th>
+                    <th class="th">Longitude</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if parkSettings.0.park %}
+                {% for park in parks %}
+                <tr>
+                    <td>"{{ park.name }}"</td>
+                    <td>"{{ park.address }}"</td>
+                    <td>"{{ park.latitude }}"</td>
+                    <td>"{{ park.longitude }}"</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </td>
+        <td valign="top">
+            <table>
+                <thead>
+                <tr>
+                    <th class="th">Name</th>
+                    <th class="th">Address</th>
+                    <th class="th">Latitude</th>
+                    <th class="th">Longitude</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if communityCenterSettings.0.communityCenter %}
+                {% for communitycenter in communitycenters %}
+                <tr>
+                    <td>"{{ communitycenter.name }}"</td>
+                    <td>"{{ communitycenter.address }}"</td>
+                    <td>"{{ communitycenter.latitude }}"</td>
+                    <td>"{{ communitycenter.longitude }}"</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </td>
+    </tr>
     </tbody>
 </table>
 <script>
@@ -124,87 +126,234 @@
     }
 
     setSchemes();
+
 </script>
 </body>
 </html>
 
 
-{#<table id="maintable" border="2" style="border-collapse:collapse">#}
-{#    <thead>#}
-{#        <tr>#}
-{#            <th>Crimes</th>#}
-{#            <th>Parks</th>#}
-{#            <th>Community Centers</th>#}
-{#        </tr>#}
-{#    </thead>#}
-{#    <tbody>#}
-{#        <tr>#}
-{#            <td valign="top">#}
-{#                <table align="center" style="border-collapse:collapse">#}
-{#                    <thead>#}
-{#                            <tr style="border-bottom:1px solid black;">#}
-{#                                <th style="padding:5px;">Info</th>#}
-{#                                <th style="padding:5px;">Month</th>#}
-{#                                <th style="padding:5px;">Year</th>#}
-{#                                <th style="padding:5px;">Address</th>#}
-{#                            </tr>#}
-{#                    </thead>#}
-{#                    <tbody>#}
-{#                        {% for crime in crimes %}#}
-{#                            <tr>#}
-{#                                <td style="padding:5px;"><center>"{{ crime.info }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ crime.month }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ crime.year }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ crime.address }}"</center></td>#}
-{#                            </tr>#}
-{#                        {%  endfor %}#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#            <td valign="top">#}
-{#                <table align="right" style="border-collapse:collapse">#}
-{#                    <thead>#}
-{#                        <tr style="border-bottom:1px solid black;">#}
-{#                            <th style="padding:5px;">Name</th>#}
-{#                            <th style="padding:5px;">Address</th>#}
-{#                            <th style="padding:5px;">Latitude</th>#}
-{#                            <th style="padding:5px;">Longitude</th>#}
-{#                        </tr>#}
-{#                    </thead>#}
-{#                    <tbody>#}
-{#                        {% for park in parks %}#}
-{#                            <tr>#}
-{#                                <td style="padding:5px;"><center>"{{ park.name }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ park.address }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ park.latitude }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ park.longitude }}"</center></td>#}
-{#                            </tr>#}
-{#                        {%  endfor %}#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#            <td valign="top">#}
-{#                <table align="left" style="border-collapse:collapse">#}
-{#                    <thead>#}
-{#                        <tr style="border-bottom:1px solid black;">#}
-{#                            <th style="padding:5px;">Name</th>#}
-{#                            <th style="padding:5px;">Address</th>#}
-{#                            <th style="padding:5px;">Latitude</th>#}
-{#                            <th style="padding:5px;">Longitude</th>#}
-{#                        </tr>#}
-{#                    </thead>#}
-{#                    <tbody>#}
-{#                        {% for communitycenter in communitycenters %}#}
-{#                            <tr>#}
-{#                                <td style="padding:5px;"><center>"{{ communitycenter.name }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ communitycenter.address }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ communitycenter.latitude }}"</center></td>#}
-{#                                <td style="padding:5px;"><center>"{{ communitycenter.longitude }}"</center></td>#}
-{#                            </tr>#}
-{#                        {%  endfor %}#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#        </tr>#}
-{#    </tbody>#}
-{#</table>#}
+{#
+<table id="maintable" border="2" style="border-collapse:collapse">#}
+    {#
+    <thead>#}
+    {#
+    <tr>#}
+        {#
+        <th>Crimes</th>
+        #}
+        {#
+        <th>Parks</th>
+        #}
+        {#
+        <th>Community Centers</th>
+        #}
+        {#
+    </tr>
+    #}
+    {#
+    </thead>
+    #}
+    {#
+    <tbody>#}
+    {#
+    <tr>#}
+        {#
+        <td valign="top">#}
+            {#
+            <table align="center" style="border-collapse:collapse">#}
+                {#
+                <thead>#}
+                {#
+                <tr style="border-bottom:1px solid black;">#}
+                    {#
+                    <th style="padding:5px;">Info</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Month</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Year</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Address</th>
+                    #}
+                    {#
+                </tr>
+                #}
+                {#
+                </thead>
+                #}
+                {#
+                <tbody>#}
+                {# {% for crime in crimes %}#}
+                {#
+                <tr>#}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ crime.info }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ crime.month }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ crime.year }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ crime.address }}"</center>
+                    </td>
+                    #}
+                    {#
+                </tr>
+                #}
+                {# {% endfor %}#}
+                {#
+                </tbody>
+                #}
+                {#
+            </table>
+            #}
+            {#
+        </td>
+        #}
+        {#
+        <td valign="top">#}
+            {#
+            <table align="right" style="border-collapse:collapse">#}
+                {#
+                <thead>#}
+                {#
+                <tr style="border-bottom:1px solid black;">#}
+                    {#
+                    <th style="padding:5px;">Name</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Address</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Latitude</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Longitude</th>
+                    #}
+                    {#
+                </tr>
+                #}
+                {#
+                </thead>
+                #}
+                {#
+                <tbody>#}
+                {# {% for park in parks %}#}
+                {#
+                <tr>#}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ park.name }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ park.address }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ park.latitude }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ park.longitude }}"</center>
+                    </td>
+                    #}
+                    {#
+                </tr>
+                #}
+                {# {% endfor %}#}
+                {#
+                </tbody>
+                #}
+                {#
+            </table>
+            #}
+            {#
+        </td>
+        #}
+        {#
+        <td valign="top">#}
+            {#
+            <table align="left" style="border-collapse:collapse">#}
+                {#
+                <thead>#}
+                {#
+                <tr style="border-bottom:1px solid black;">#}
+                    {#
+                    <th style="padding:5px;">Name</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Address</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Latitude</th>
+                    #}
+                    {#
+                    <th style="padding:5px;">Longitude</th>
+                    #}
+                    {#
+                </tr>
+                #}
+                {#
+                </thead>
+                #}
+                {#
+                <tbody>#}
+                {# {% for communitycenter in communitycenters %}#}
+                {#
+                <tr>#}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ communitycenter.name }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ communitycenter.address }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ communitycenter.latitude }}"</center>
+                    </td>
+                    #}
+                    {#
+                    <td style="padding:5px;">
+                        <center>"{{ communitycenter.longitude }}"</center>
+                    </td>
+                    #}
+                    {#
+                </tr>
+                #}
+                {# {% endfor %}#}
+                {#
+                </tbody>
+                #}
+                {#
+            </table>
+            #}
+            {#
+        </td>
+        #}
+        {#
+    </tr>
+    #}
+    {#
+    </tbody>
+    #}
+    {#
+</table>#}
