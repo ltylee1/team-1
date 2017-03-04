@@ -37,8 +37,8 @@ LOGIN_URL = '/login.html'
 LOGIN_REDIRECT_URL = '/profile.html'
 
 # ROOT FOR ALL MEDIA
-MEDIA_ROOT = "uw-dashbaord/static/uw-dashboard/images/"
-MEDIA_URL = "/static/uw-dashboard/images/"
+MEDIA_ROOT = "uw-dashbaord/static/media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 
