@@ -29,8 +29,11 @@
 
 <div class="row">
     <div class="dropdown col-md-2 col-md-offset-3">
-        <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Choose CSV File
-        </button>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="csv-normal">
+            <button type="submit">Upload</button>
+        </form>
     </div>
     <div class="dropdown col-md-2">
         <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Funding Year
@@ -43,7 +46,7 @@
         </ul>
     </div>
     <div class="dropdown col-sm-2">
-        <label class="checkbox"><input type="checkbox" value=""> Append Data</label>
+        <label class="checkbox"><input type="checkbox" value=""> Overwrite Data</label>
     </div>
 </div>
 {% endblock %}

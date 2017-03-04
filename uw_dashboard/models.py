@@ -37,6 +37,7 @@ class Geo_Focus_Area(models.Model):
     program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
     city = models.CharField(max_length=150)
     percent_of_focus = models.IntegerField(default=0)
+    level_name = models.CharField(max_length=150)
 
 
 class Donor_Engagement(models.Model):
@@ -129,13 +130,13 @@ class Reporting_Service:
 		# query the data
 		return ["stuff", "things"]
 
-	def create_dashboard():
+	def create_dashboard(self):
 		# call the dashboard generator
 		return True
 
-	def log_in(username, hashed_pass):
+	def log_in(self, username, hashed_pass):
 		return True
 
-	def log_out():
+	def log_out(self):
 		return True
 
