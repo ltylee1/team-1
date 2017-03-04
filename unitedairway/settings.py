@@ -31,10 +31,10 @@ ALLOWED_HOSTS = []
 AUTH_PROFILE_MODULE = 'uw-dashboard.UserProfile'
 
 # URL for @login_required decorator to use
-LOGIN_URL = '/login/'
+LOGIN_URL = '/login.html'
 
 # redirect authenticated users
-LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_REDIRECT_URL = '/profile.html'
 
 # ROOT FOR ALL MEDIA
 MEDIA_ROOT = "uw-dashbaord/static/uw-dashboard/images/"
