@@ -110,33 +110,29 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class Reporting_Service:
-	
-	def __init__(self, logged_in, user):
-		self.logged_in = logged_in
-		self.user = user
+    
+    def __init__(self, user):
+        self.user = user
 
-	def is_logged_in(self):
-		return self.logged_in
+    def import_data(self, file, year, overwrite):
+        parser = Parser(file, year, overwrite)
+        if parser.validate_file():
+            parser.parse_file()
+            parser.insert_file()
+            return True
+        else:
+            return False
+    def query_data(self, filters):
+        # query the data
+        return ["stuff", "things"]
 
-	def import_data(self, file, year, overwrite):
-		parser = Parser(file, year, overwrite)
-		if (parser.validate_file()):
-			parser.parse_file()
-			parser.insert_file()
-			return True
-		else:
-			return False
-	def query_data(self, filters):
-		# query the data
-		return ["stuff", "things"]
+    def create_dashboard(self):
+        # call the dashboard generator
+        return True
 
-	def create_dashboard(self):
-		# call the dashboard generator
-		return True
+    def log_in(self, username, hashed_pass):
+        return True
 
-	def log_in(self, username, hashed_pass):
-		return True
-
-	def log_out(self):
-		return True
+    def log_out(self):
+        return True
 

@@ -6,10 +6,15 @@ class Parser:
     def __init__(self, cur_file, year, overwrite):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool):
             self.cur_file = cur_file
+            print self.cur_file
             self.year = year
             self.overwrite = overwrite
         else:
-            raise Exception("Invalid inputs")
+            if not isinstance(year, int):
+                raise Exception("year invalid")
+            if not isinstance(overwrite, bool):
+                raise Exception("overwrite invalid")
+            Exception("file invalid")
 
         self.content = []
         self.column_names = []

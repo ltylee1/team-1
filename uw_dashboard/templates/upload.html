@@ -24,17 +24,16 @@
         <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
     </div>
     <div class="text-center title-text">United Way Program and Agency Database</div>
-    <div class="text-center filter-text"><a class="header-text" href="homepage.html">~ Upload ~</a></div>
+<!--     <div class="text-center filter-text"><a class="header-text" href="homepage.html">~ Upload ~</a></div> -->
 </div>
-
 <div class="row">
     <div class="dropdown col-md-2 col-md-offset-3">
         <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" name="csv-normal">
-            <button type="submit">Upload</button>
-        </form>
-    </div>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+<!--     </div>
     <div class="dropdown col-md-2">
         <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Funding Year
             <span class="caret"></span>
@@ -47,6 +46,6 @@
     </div>
     <div class="dropdown col-sm-2">
         <label class="checkbox"><input type="checkbox" value=""> Overwrite Data</label>
-    </div>
+    </div> -->
 </div>
 {% endblock %}
