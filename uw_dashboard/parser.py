@@ -1,11 +1,15 @@
 import csv
+import models
+
 
 class Parser:
-
     def __init__(self, cur_file, year, overwrite):
-        self.cur_file = cur_file
-        self.year = year
-        self.overwrite = overwrite
+        if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool):
+            self.cur_file = cur_file
+            self.year = year
+            self.overwrite = overwrite
+        else:
+            raise Exception("Invalid inputs")
 
         self.content = []
         self.column_names = []
@@ -35,15 +39,15 @@ class Parser:
             'Outputs End': -1
         }
         self.postal_index = {
-                'Agency Andar #': -1,
-                'Agency Name': -1,
-                'Program Andar #': -1,
-                'Program Name': -1,
-                'Website': -1,
-                'Description': -1,
-                '# Locations': -1,
-                'Postal Code': -1
-            }
+            'Agency Andar #': -1,
+            'Agency Name': -1,
+            'Program Andar #': -1,
+            'Program Name': -1,
+            'Website': -1,
+            'Description': -1,
+            '# Locations': -1,
+            'Postal Code': -1
+        }
 
     # Gets the core indexes for the postal file
     def get_postal_index(self, column_list, sheet_name):
@@ -79,7 +83,7 @@ class Parser:
 
     # Gets the core indexes for the output file
     def get_output_index(self, column_list):
-        if len(column_list) != 158:
+        if len(column_list) != 159:
             print "Columns have been removed or added, system may not work"
         for column in column_list:
             if "Funds" == column:
@@ -123,17 +127,18 @@ class Parser:
             elif "Donor Engagement" == column:
                 self.output_index['Donor Engagement'] = column_list.index(column)
             elif self.output_index['Donor Engagement'] != -1 and self.output_index['Outputs'] == -1 and "Other" == column:
-                self.output_index['DE Other'] = column_list[self.output_index['Donor Engagement']:].index(column) + self.output_index['Donor Engagement']
+                self.output_index['DE Other'] = column_list[self.output_index['Donor Engagement']:].index(column) + \
+                                                self.output_index['Donor Engagement']
             elif "Outputs" == column:
                 self.output_index['Outputs'] = column_list.index(column)
 
         self.output_index['Outputs End'] = len(column_list) - 1
 
     def drop_program_table(self):
-        Program.objects.filter(year=self.year).delete()
+        models.Program.objects.filter(year=self.year).delete()
 
     def drop_location_table(self):
-        Location.objects.all().delete()
+        models.Location.objects.all().delete()
 
     def insert_row(self, row):
         self.insert_agency(row)
@@ -184,45 +189,54 @@ class Parser:
     def insert_target_population(self, row):
         collapsed_row = self.collapse_binary(row, self.output_index['Target Population'] + 1,
                                              self.output_index['TP Other'] + 1)
-        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+        program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         if collapsed_row:
             for current_population in collapsed_row:
-                check = Target_Population.objects.filter(program_andar_number=program,
-                                                         target_population=current_population).exists()
+                check = models.Target_Population.objects.filter(program_andar_number=program,
+                                                                target_population=current_population).exists()
                 if not check:
-                    target = Target_Population(program_andar_number=program,
-                                               target_population=current_population)
+                    target = models.Target_Population(program_andar_number=program,
+                                                      target_population=current_population)
                     target.save()
 
-    # TODO NOTE DOES NOT DEAL WITH First Nation Territories CD
+    # TODO Deal with geo focus area levels
     # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
-        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
-        for curindex in range(self.output_index['Geographic Focus Area'] + 2, self.output_index['GFA Other']):
-            curcity = self.column_names[curindex]
-            curpercent = self.check_empty(row[curindex])
-            if curpercent != 0:
-                check = Geo_Focus_Area.objects.filter(program_andar_number=program, city=curcity).exists()
-                if not check:
-                    focus = Geo_Focus_Area(program_andar_number=program,
-                                           city=curcity,
-                                           percent_of_focus=curpercent)
-                    focus.save()
-                    # else:
-                    #     print 'If we wanted to update during appends we would do it here'
+        colnames = ['First Nation Territories', 'Fraser Valley Regional District', 'Metro Vancouver Regional District',
+                    'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
+        temp = []
+        for col in colnames:
+            temp.append(self.column_names.index(col))
+        temp.append(self.output_index['GFA Other'] + 1)
+        program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+        for index in range(0, len(colnames)):
+            for curindex in range(temp[index]+1, temp[index + 1]):
+                level = self.column_names[temp[index]]
+                curcity = self.column_names[curindex]
+                curpercent = self.check_empty(row[curindex])
+                if curpercent != 0:
+                    check = models.Geo_Focus_Area.objects.filter(program_andar_number=program, city=curcity).exists()
+                    if not check:
+                        focus = models.Geo_Focus_Area(program_andar_number=program,
+                                                      city=curcity,
+                                                      percent_of_focus=curpercent,
+                                                      level_name=level)
+                        focus.save()
+                        # else:
+                        #     print 'If we wanted to update during appends we would do it here'
 
     # Inserts donor engagements into database
     def insert_donor_engagement(self, row):
         collapsed_row = self.collapse_binary(row, self.output_index['Donor Engagement'] + 1,
                                              self.output_index['DE Other'] + 1)
-        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+        program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         if collapsed_row:
             for current_donor in collapsed_row:
-                check = Donor_Engagement.objects.filter(program_andar_number=program,
-                                                        donor_engagement=current_donor).exists()
+                check = models.Donor_Engagement.objects.filter(program_andar_number=program,
+                                                               donor_engagement=current_donor).exists()
                 if not check:
-                    donor = Donor_Engagement(program_andar_number=program,
-                                             donor_engagement=current_donor)
+                    donor = models.Donor_Engagement(program_andar_number=program,
+                                                    donor_engagement=current_donor)
                     donor.save()
                     # else:
                     #     print 'If we wanted to update during appends we would do it here'
@@ -230,23 +244,23 @@ class Parser:
     # Inserts totals into the database
     def insert_totals(self, row):
         start = self.output_index['Outputs'] + 1
-        program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
-        check = Totals.objects.filter(program_andar_number=program).exists()
+        program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+        check = models.Totals.objects.filter(program_andar_number=program).exists()
         if not check:
-            total = Totals(program_andar_number=program,
-                           total_clients=self.check_empty(row[start]),
-                           early_years=self.check_empty(row[start + 1]),
-                           middle_years=self.check_empty(row[start + 2]),
-                           children=self.check_empty(row[start + 3]),
-                           seniors=self.check_empty(row[start + 4]),
-                           parent_caregivers=self.check_empty(row[start + 5]),
-                           families=self.check_empty(row[start + 6]),
-                           contacts=self.check_empty(row[start + 7]),
-                           meals_snacks=self.check_empty(row[start + 8]),
-                           counselling_sessions=self.check_empty(row[start + 9]),
-                           mentors_tutors=self.check_empty(row[start + 10]),
-                           workshops=self.check_empty(row[start + 11]),
-                           volunteers=self.check_empty(row[start + 12]))
+            total = models.Totals(program_andar_number=program,
+                                  total_clients=self.check_empty(row[start]),
+                                  early_years=self.check_empty(row[start + 1]),
+                                  middle_years=self.check_empty(row[start + 2]),
+                                  children=self.check_empty(row[start + 3]),
+                                  seniors=self.check_empty(row[start + 4]),
+                                  parent_caregivers=self.check_empty(row[start + 5]),
+                                  families=self.check_empty(row[start + 6]),
+                                  contacts=self.check_empty(row[start + 7]),
+                                  meals_snacks=self.check_empty(row[start + 8]),
+                                  counselling_sessions=self.check_empty(row[start + 9]),
+                                  mentors_tutors=self.check_empty(row[start + 10]),
+                                  workshops=self.check_empty(row[start + 11]),
+                                  volunteers=self.check_empty(row[start + 12]))
             total.save()
             # else:
             #     print 'Exists and if we wanted to update we would do that here'
@@ -269,62 +283,62 @@ class Parser:
                 level = row[temp[curindex]]
                 element_name = colnames[curindex]
                 specific_element = cursection
-                program = Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+                program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
                 for curelement in specific_element:
-                    check = Program_Elements.objects.filter(program_andar_number=program,
-                                                            level=level,
-                                                            element_name=element_name,
-                                                            specific_element=curelement).exists()
+                    check = models.Program_Elements.objects.filter(program_andar_number=program,
+                                                                   level=level,
+                                                                   element_name=element_name,
+                                                                   specific_element=curelement).exists()
                     if not check:
-                        element = Program_Elements(program_andar_number=program,
-                                                   level=level,
-                                                   element_name=element_name,
-                                                   specific_element=curelement)
+                        element = models.Program_Elements(program_andar_number=program,
+                                                          level=level,
+                                                          element_name=element_name,
+                                                          specific_element=curelement)
                         element.save()
                         # else:
                         #     print 'Exists and if we wanted to update we would do that here'
 
     # Should only need to insert since program table will be dropped if overwrite; during append we should just update if there are no tables existing
     def insert_program(self, row):
-        check = Program.objects.filter(program_andar_number=row[self.output_index['Program Andar #']]).exists()
+        check = models.Program.objects.filter(program_andar_number=row[self.output_index['Program Andar #']]).exists()
         if not check:
-            agency = Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
+            agency = models.Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
             date = row[self.output_index['Grant Start Date']]
             start_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
             date = row[self.output_index['Grant End Date']]
             end_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
-            program = Program(agency_andar_number=agency,
-                              program_andar_number=row[self.output_index['Program Andar #']],
-                              program_name=row[self.output_index['Program Name']],
-                              grant_start_date=start_date,
-                              grant_end_date=end_date,
-                              program_description=row[self.output_index['Short Program Description']],
-                              program_planner=row[self.output_index['Planner']],
-                              funds=row[self.output_index['Funds']],
-                              focus_area=row[self.output_index['Focus Area']],
-                              strategic_outcome=row[self.output_index['Strategic Outcome']],
-                              funding_stream=row[self.output_index['Funding stream']],
-                              allocation=row[self.output_index['Allocation']],
-                              year=self.year)
+            program = models.Program(agency_andar_number=agency,
+                                     program_andar_number=row[self.output_index['Program Andar #']],
+                                     program_name=row[self.output_index['Program Name']],
+                                     grant_start_date=start_date,
+                                     grant_end_date=end_date,
+                                     program_description=row[self.output_index['Short Program Description']],
+                                     program_planner=row[self.output_index['Planner']],
+                                     funds=row[self.output_index['Funds']],
+                                     focus_area=row[self.output_index['Focus Area']],
+                                     strategic_outcome=row[self.output_index['Strategic Outcome']],
+                                     funding_stream=row[self.output_index['Funding stream']],
+                                     allocation=row[self.output_index['Allocation']],
+                                     year=self.year)
             program.save()
             # else:
             # print 'Exists and if we wanted to update we would do that here'
 
     # Inserts agency data into the database, this is the only table that is never dropped.
     def insert_agency(self, row):
-        check = Agencies.objects.filter(agency_andar_number=row[self.output_index['Agency Andar #']]).exists()
+        check = models.Agencies.objects.filter(agency_andar_number=row[self.output_index['Agency Andar #']]).exists()
         # Agency already exists if we are overwriting so we update the agency name if needed
         if check:
             if self.overwrite:
-                agency = Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
+                agency = models.Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
                 cur_agency = row[self.output_index['Agency Name']]
                 if agency.agency_name != cur_agency:
                     agency.agency_name = cur_agency
                     agency.save()
         else:
             # If agency does not exists then we create it in database
-            agency = Agencies(agency_andar_number=row[self.output_index['Agency Andar #']],
-                              agency_name=row[self.output_index['Agency Name']])
+            agency = models.Agencies(agency_andar_number=row[self.output_index['Agency Andar #']],
+                                     agency_name=row[self.output_index['Agency Name']])
             agency.save()
 
     # Inserts program location data into database
@@ -336,14 +350,15 @@ class Parser:
             # Check that the location is not empty
             if loc_name != 'None' and loc_name != '':
                 # Check that location does not already exist
-                check = Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']], location=loc_name,
-                                                postal_code=loc_post).exists()
+                check = models.Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']],
+                                                       location=loc_name,
+                                                       postal_code=loc_post).exists()
                 # Insert data into database
                 if not check:
-                    loc = Location(program_andar_number=row[self.postal_index['Program Andar #']],
-                                   location=loc_name,
-                                   postal_code=loc_post,
-                                   website=row[self.postal_index['Website']])
+                    loc = models.Location(program_andar_number=row[self.postal_index['Program Andar #']],
+                                          location=loc_name,
+                                          postal_code=loc_post,
+                                          website=row[self.postal_index['Website']])
                     loc.save()
                     # else:
                     #     print 'Exists and if we wanted to update we would do that here'
@@ -389,4 +404,4 @@ class Parser:
                 self.column_names = reader.next()
                 self.get_postal_index(self.column_names, 'program')
                 for row in reader:
-                    self.content.append(row)	
+                    self.content.append(row)
