@@ -115,6 +115,7 @@ class Reporting_Service:
         self.user = user
 
     def import_data(self, file, year, overwrite):
+        file  = str(file)
         parser = Parser(file, year, overwrite)
         if parser.validate_file():
             parser.parse_file()
@@ -122,6 +123,7 @@ class Reporting_Service:
             return True
         else:
             return False
+
     def query_data(self, filters):
         # query the data
         return ["stuff", "things"]

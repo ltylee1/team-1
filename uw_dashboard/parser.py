@@ -6,7 +6,6 @@ class Parser:
     def __init__(self, cur_file, year, overwrite):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool):
             self.cur_file = cur_file
-            print self.cur_file
             self.year = year
             self.overwrite = overwrite
         else:
@@ -14,7 +13,7 @@ class Parser:
                 raise Exception("year invalid")
             if not isinstance(overwrite, bool):
                 raise Exception("overwrite invalid")
-            Exception("file invalid")
+            raise Exception("file invalid")
 
         self.content = []
         self.column_names = []
@@ -190,6 +189,41 @@ class Parser:
                 locations.append([location, postcode])
         return locations
 
+    def get_city_grouping(self,city):
+        first_nation_territories = ['First Nation Territories', 'Tsawwassen First Nation', 'Sechelt Indian Government District (Part-Sunshine Coast)']
+        fraser_cascade = ['Mission', 'Hope', 'Kent', 'Harrison Hot Springs', 'Boston Bar / North Bend', 'Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum', 'Lake Errock / Harrison Mills / Hemlock Valley,Popkum / Bridal Falls', 'Slesse Park / Baker Trails / Bell Acres,Miracle Valley / Hatzic Prairie']
+        langley = ['Langley, City of', 'Langley, District Municipality']
+        maple_ridge = ['Maple Ridge', 'Pitt Meadows']
+        northshore = ['North Vancouver, City of', 'North Vancouver, District Municipality', 'West Vancouver', 'Bowen Island']
+        sea_to_sky = ['Lions Bay', 'Lillooet', 'Pemberton', 'Squamish', 'Whistler']
+        sunshine_coast =['Elphinstone', 'Gibsons', 'Halfmoon Bay', 'Pender Harbour / Egmont / Madeira Park', 'Roberts Creek', 'Sechelt District Municipality', 'Sechelt Indian Government District (Part-Sunshine Coast)', 'West Howe Sound (Langdale, Port Mellon, Williamson?s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)']
+        surrey = ['Surrey', 'White Rock']
+        tri_cities = ['Anmore', 'Belcarra', 'Coquitlam', 'Port Coquitlam', 'Port Moody']
+        other_areas = ['Other Areas']
+
+        if city in first_nation_territories:
+            return 'First Nation Territories'
+        elif city in fraser_cascade:
+            return 'Fraser Cascade'
+        elif city in langley:
+            return 'Langley'
+        elif city in maple_ridge:
+            return 'Maple Ridge/Pitt Meadows'
+        elif city in northshore:
+            return 'Northshort'
+        elif city in other_areas:
+            return 'Other Areas in BC'
+        elif city in sea_to_sky:
+            return 'Sea to Sky'
+        elif city in sunshine_coast:
+            return 'Sunshine Coast'
+        elif city in surrey:
+            return 'Surrey/White Rock'
+        elif city in tri_cities:
+            return 'Tri-cities'
+        else:
+            return city
+
     # Inserts target population into database
     def insert_target_population(self, row):
         collapsed_row = self.collapse_binary(row, self.output_index['Target Population'] + 1,
@@ -204,7 +238,6 @@ class Parser:
                                                       target_population=current_population)
                     target.save()
 
-    # TODO Deal with geo focus area levels
     # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
         colnames = ['First Nation Territories', 'Fraser Valley Regional District', 'Metro Vancouver Regional District',
@@ -353,7 +386,7 @@ class Parser:
             loc_name = location[0]
             loc_post = location[1]
             # Check that the location is not empty
-            if loc_name != 'None' and loc_name != '':
+            if loc_name != 'None' and loc_name != '' and loc_post != 'None' and loc_post != '':
                 # Check that location does not already exist
                 check = models.Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']],
                                                        location=loc_name,
