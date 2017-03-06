@@ -189,7 +189,7 @@ class Parser:
                 locations.append([location, postcode])
         return locations
 
-    def get_city_grouping(self,city):
+    def get_city_grouping(self, city):
         first_nation_territories = ['First Nation Territories', 'Tsawwassen First Nation', 'Sechelt Indian Government District (Part-Sunshine Coast)']
         fraser_cascade = ['Mission', 'Hope', 'Kent', 'Harrison Hot Springs', 'Boston Bar / North Bend', 'Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum', 'Lake Errock / Harrison Mills / Hemlock Valley,Popkum / Bridal Falls', 'Slesse Park / Baker Trails / Bell Acres,Miracle Valley / Hatzic Prairie']
         langley = ['Langley, City of', 'Langley, District Municipality']
@@ -251,6 +251,7 @@ class Parser:
             for curindex in range(temp[index]+1, temp[index + 1]):
                 level = self.column_names[temp[index]]
                 curcity = self.column_names[curindex]
+                citygrouping = self.get_city_grouping(curcity)
                 curpercent = self.check_empty(row[curindex])
                 if curpercent != 0:
                     check = models.Geo_Focus_Area.objects.filter(program_andar_number=program, city=curcity).exists()
@@ -258,7 +259,8 @@ class Parser:
                         focus = models.Geo_Focus_Area(program_andar_number=program,
                                                       city=curcity,
                                                       percent_of_focus=curpercent,
-                                                      level_name=level)
+                                                      level_name=level,
+                                                      city_grouping=citygrouping)
                         focus.save()
                         # else:
                         #     print 'If we wanted to update during appends we would do it here'

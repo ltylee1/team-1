@@ -38,6 +38,7 @@ class Geo_Focus_Area(models.Model):
     city = models.CharField(max_length=150)
     percent_of_focus = models.IntegerField(default=0)
     level_name = models.CharField(max_length=150)
+    city_grouping = models.CharField(max_length=150)
 
 
 class Donor_Engagement(models.Model):
