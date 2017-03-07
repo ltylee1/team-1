@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from uw_dashboard.parser import Parser
-
+from uw_dashboard.databaseReader import DatabaseReader
 
 class Agencies(models.Model):
     agency_andar_number = models.IntegerField(default=0, primary_key=True)
@@ -130,7 +130,9 @@ class Reporting_Service:
 
     def query_data(self, filters):
         # query the data
-        return ["stuff", "things"]
+	dbReader = DatabaseReader(filters)
+	results = dbReader.read_data()
+        return results
 
     def create_dashboard(self):
         # call the dashboard generator
