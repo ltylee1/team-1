@@ -38,6 +38,7 @@ class Geo_Focus_Area(models.Model):
     city = models.CharField(max_length=150)
     percent_of_focus = models.IntegerField(default=0)
     level_name = models.CharField(max_length=150)
+    city_grouping = models.CharField(max_length=150)
 
 
 class Donor_Engagement(models.Model):
@@ -102,7 +103,10 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        if instance.is_staff:
+            Profile.objects.create(user=instance, is_admin = True)
+        else:
+            Profile.objects.create(user=instance, is_admin = False)
 
 
 @receiver(post_save, sender=User)
@@ -115,6 +119,7 @@ class Reporting_Service:
         self.user = user
 
     def import_data(self, file, year, overwrite):
+        file  = str(file)
         parser = Parser(file, year, overwrite)
         if parser.validate_file():
             parser.parse_file()
@@ -122,6 +127,7 @@ class Reporting_Service:
             return True
         else:
             return False
+
     def query_data(self, filters):
         # query the data
         return ["stuff", "things"]
