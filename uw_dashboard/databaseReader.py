@@ -44,11 +44,17 @@ class DatabaseReader(models.Model):
 		programElements = programElements[:-2]
 		programElements += ") AND"
 
+		gfa = " ("
+		for i in range(len(filters['gfa'])):
+			gfa += " gfa.city = '" + str(filters['gfa'][i]) + "' OR"
+		gfa = gfa[:-2]
+		gfa += ") AND"
+
 		cityGrouping = " ("
-		for i in range(len(filters['city'])):
-			cityGrouping += " gfa.city = '" + str(filters['city'][i]) + "' OR"
-		cityGrouping = cityGrouping[:-2]
-		cityGrouping += ") AND"
+                for i in range(len(filters['city'])):
+                        cityGrouping += " gfa.city_grouping = '" + str(filters['city'][i]) + "' OR"
+                cityGrouping = cityGrouping[:-2]
+                cityGrouping += ") AND"	
 
 		donorEngagement = " ("
 		for i in range(len(filters['donor'])):
@@ -62,7 +68,7 @@ class DatabaseReader(models.Model):
 		investment = investment[:-2]
 		investment += ")"
 
-		finalQuery = query + joinTables + filterYear + focusArea + targetPop + programElements + cityGrouping + donorEngagement + investment
+		finalQuery = query + joinTables + filterYear + focusArea + targetPop + programElements + gfa + cityGrouping + donorEngagement + investment
 
 		firstResults = my_custom_sql(finalQuery)
 		
