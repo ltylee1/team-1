@@ -14,6 +14,7 @@ from uw_dashboard.forms import UploadFileForm
 from uw_dashboard.models import Reporting_Service
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 reporting = Reporting_Service(None)
 
@@ -77,9 +78,15 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("addUser")
     success_message = "%(username)s was created successfully"
 
-    # def form_invalid(self, form):
-    #     messages.error(request, "Username taken.")
-    #     return super(AddUserView, self).form_invalid(form)
+    def form_invalid(self, form):
+        for field in form:
+            for error in field.errors:
+                messages.error(self.request, error)
+
+        for error in form.non_field_errors():
+            messages.error(self.request, error)
+
+        return super(AddUserView, self).form_invalid(form)
 
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
