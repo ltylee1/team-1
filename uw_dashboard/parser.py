@@ -207,7 +207,7 @@ class Parser:
     # TODO Deal with geo focus area levels
     # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
-        colnames = ['First Nation Territories', 'Fraser Valley Regional District', 'Metro Vancouver Regional District',
+        colnames = ['First Nation Territories', 'Metro Vancouver Regional District',
                     'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
         temp = []
         for col in colnames:
