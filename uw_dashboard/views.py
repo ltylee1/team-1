@@ -88,5 +88,12 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
         return super(AddUserView, self).form_invalid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.profile.is_admin:
+            messages.error(request, "Require administrator authentication to create new users")
+            return self.handle_no_permission()
+
+        return super(AddUserView, self).dispatch(request, *args, **kwargs)
+
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"

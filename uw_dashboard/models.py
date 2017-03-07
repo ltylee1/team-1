@@ -103,7 +103,10 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        if instance.is_staff:
+            Profile.objects.create(user=instance, is_admin = True)
+        else:
+            Profile.objects.create(user=instance, is_admin = False)
 
 
 @receiver(post_save, sender=User)
