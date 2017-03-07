@@ -2,25 +2,27 @@
 {% load static %}
 
 {% block content %}
-<img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
-<div class="container" style="position: relative; height: 90%;">
-    <div class="col-md-6 col-md-offset-3">
-        <h2>Add New User</h2>
-        <form name="form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" class="form-control" required/>
-                <span class="help-block">Username is required</span>
-            </div>
-            <div class="form-group"><label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" required/>
-                <span class="help-block">Password is required</span>
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Add User</button>
-                <a href="homepage.html" class="btn btn-link">Cancel</a>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <form id="signup" name="form" method="post">{% csrf_token %}
+
+        <div class="header">
+            <h3>Add New User</h3>
+            <p><img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/></p>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="inputs">
+            <label for="{{form.username.id_for_label}}">Username</label>
+            {{form.username}}<br/><br/>
+            <label for="{{form.password1.id_for_label}}">Password</label>
+            {{form.password1}}
+            <label for="{{form.password2.id_for_label}}">Confirm Password</label>
+            {{form.password2}}
+            <button type="submit" class="btn btn-primary">Add User</button>
+            <a href="homepage.html" class="btn btn-link">Back to Homepage</a>
+        </div>
+    </form>
 </div>
 {% endblock %}
+​

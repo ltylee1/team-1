@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
@@ -9,8 +9,11 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 from uw_dashboard.forms import UploadFileForm
 from uw_dashboard.models import Reporting_Service
+from django.contrib.auth.models import User
+from django.contrib.messages.views import SuccessMessageMixin
 
 reporting = Reporting_Service(None)
 
@@ -66,8 +69,17 @@ class LogoutView(RedirectView):
 class MapView(LoginRequiredMixin, TemplateView):
     template_name = "map.html"
 
-class AddUserView(LoginRequiredMixin, TemplateView):
+class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "addUser.html"
+    form_class = UserCreationForm
+    model = User
+
+    success_url = reverse_lazy("addUser")
+    success_message = "%(username)s was created successfully"
+
+    # def form_invalid(self, form):
+    #     messages.error(request, "Username taken.")
+    #     return super(AddUserView, self).form_invalid(form)
 
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
