@@ -1,4 +1,4 @@
-from django.db import connection
+from django.db import connection, models
 
 def my_custom_sql(query):
 	with connection.cursor() as cursor:

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import Homepage, UploadView, LoginView, AddUserView, MapView, LogoutView, SearchResults, SearchForm
+from .views import Homepage, UploadView, LoginView, AddUserView, MapView, LogoutView, SearchResultsView
 
 urlpatterns = [
     url(r'^$', Homepage.as_view(), name='index'),
@@ -10,6 +10,5 @@ urlpatterns = [
     url(r'^logout.html$', LogoutView.as_view(), name="logout"),
     url(r'^addUser.html$', AddUserView.as_view(), name="addUser"),
     url(r'^map.html$', MapView.as_view(), name="map"),
-    url(r'^searchForm.html$', SearchForm.as_view(), name='searchForm'),
-    url(r'^searchResults.html$', SearchResults.as_view(), name='searchResults')
+    url(r'^searchResults.html$', SearchResultsView.as_view(), name='searchResults')
 ]
