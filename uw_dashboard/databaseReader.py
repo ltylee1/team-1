@@ -19,14 +19,14 @@ class DatabaseReader(models.Model):
 		filters = self.filters
 		query = "SELECT * FROM Program AS p, Program_Elements AS pe, Target_Population AS t, Geo_Focus_Area AS gfa, Donor_Engagement AS de WHERE"
 
-		joinTables = " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
+		query += " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
 			for i in range(len(filters['funding_year'])):
-				query += " p.grant_start_date BETWEEN '" + str(filters['funding_year'][i]) + "-01-01' AND '" + str(filters['funding_year'][i]) + "'-12-31' OR"
+				query += " p.grant_start_date BETWEEN '" + str(filters['funding_year'][i]) + "-01-01' AND '" + str(filters['funding_year'][i]) + "-12-31' OR"
 			query = query[:-2]
-			query += " AND"
+			query += ") AND"
 	
 		if 'focus_area' in filters.keys():
 			query += " ("
