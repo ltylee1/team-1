@@ -17,7 +17,7 @@ class DatabaseReader(models.Model):
 
 	def readData(self):
 		filters = self.filters
-		query = "SELECT * FROM Program AS p, Program_Elements AS pe, Target_Population AS t, Geo_Focus_Area AS gfa, Donor_Engagement AS de WHERE"
+		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard+donor_engagement AS de WHERE"
 
 		query += " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
 
@@ -83,7 +83,7 @@ class DatabaseReader(models.Model):
 		
 		programsReturned = [i[0] for i in firstResults]
 
-		tQuery = "SELECT SUM(p.funds) AS invested, COUNT(p.program_andar_number) AS programs, COUNT(DISTINCT p.agency_andar_number) AS agencies, SUM(t.early_years) AS early_years, SUM(t.middle_years) AS middle_years, SUM(t.seniors) AS seniors, SUM(t.parent_caregivers) AS parent_caregivers, SUM(t.families) AS families, SUM(t.meals_snacks) as meals_snacks, SUM(t.counselling_sessions) AS counselling_sessions, SUM(t.mentors_tutors) AS mentors_tutors, SUM(t.workshops) as workshops, SUM(t.volunteers) AS volunteers FROM Program as p, Totals as t WHERE"
+		tQuery = "SELECT SUM(p.funds) AS invested, COUNT(p.program_andar_number) AS programs, COUNT(DISTINCT p.agency_andar_number) AS agencies, SUM(t.early_years) AS early_years, SUM(t.middle_years) AS middle_years, SUM(t.seniors) AS seniors, SUM(t.parent_caregivers) AS parent_caregivers, SUM(t.families) AS families, SUM(t.meals_snacks) as meals_snacks, SUM(t.counselling_sessions) AS counselling_sessions, SUM(t.mentors_tutors) AS mentors_tutors, SUM(t.workshops) as workshops, SUM(t.volunteers) AS volunteers FROM uw_dashboard_program as p, uw_dashboard_totals as t WHERE"
 
 		tJoinQuery = " p.program_andar_number = t.program_andar_number AND"
 
