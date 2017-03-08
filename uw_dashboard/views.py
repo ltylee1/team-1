@@ -21,6 +21,10 @@ reporting = Reporting_Service(None)
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
 
+    def post(self, request, *args, **kwargs):
+    	results = reporting.query_data(request.POST)
+	return render('', 'searchResults.html', results)
+
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
     form_class = UploadFileForm
