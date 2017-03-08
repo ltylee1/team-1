@@ -24,7 +24,8 @@ class Homepage(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         fundingyear = request.POST.get("funding-year")
         messages.success(request, fundingyear)
-        return HttpResponseRedirect('homepage.html')
+    	results = reporting.query_data(request.POST)
+        return render('', 'searchResults.html', results)
 
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
