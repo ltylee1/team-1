@@ -1,4 +1,4 @@
-from django.db import connection
+from django.db import connection, models
 
 def my_custom_sql(query):
 	with connection.cursor() as cursor:
@@ -16,61 +16,70 @@ class DatabaseReader(models.Model):
 		self.filters = filters
 
 	def readData(self):
+		filters = self.filters
 		query = "SELECT * FROM Program AS p, Program_Elements AS pe, Target_Population AS t, Geo_Focus_Area AS gfa, Donor_Engagement AS de WHERE"
 
-		joinTables = " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
+		query += " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
 
-		filterYear = " ("
-		for i in range(len(self.filters['year'])):
-			filterYear += " p.grant_start_date BETWEEN '" + str(filters['year'][i]) + "-01-01' AND '" + str(filters['year'][i]) + "'-12-31' OR"
-		filterYear = filterYear[:-2]
-		filterYear += " AND"
+		if 'funding_year' in filters.keys():
+			query += " ("
+			for i in range(len(filters['funding_year'])):
+				query += " p.grant_start_date BETWEEN '" + str(filters['funding_year'][i]) + "-01-01' AND '" + str(filters['funding_year'][i]) + "-12-31' OR"
+			query = query[:-2]
+			query += ") AND"
+	
+		if 'focus_area' in filters.keys():
+			query += " ("
+			for i in range(len(filters['focus_area'])):
+				query += " p.focus_area = '" + str(filters['focus_area'][i]) + "' OR"
+			query = query[:-2]
+			query += " ) AND"
 
-		focusArea = " ("
-		for i in range(len(self.filters['focus_area'])):
-			focusArea += " p.focus_area = '" + str(filters['focus_area'][i]) + "' OR"
-		focusArea = focusArea[:-2]
-		focusArea += " ) AND"
+		if 'target_population' in filters.keys():
+			query += " ("
+			for i in range(len(filters['target_population'])):
+				query += " t.target_population = '" + str(filters['target_population'][i]) + "' OR"
+			query = query[:-2]
+			query += ") AND"
 
-		targetPop = " ("
-		for i in range(len(self.filters['target_population'])):
-			targetPop += " t.target_population = '" + str(filters['target_population'][i]) + "' OR"
-		targetPop = targetPop[:-2]
-		targetPop += ") AND"
+		if 'program_elements' in filters.keys():
+			query += " ("
+			for i in range(len(filters['program_elements'])):
+				query += " pe.specific_element = '" + str(filters['program_elements'][i]) + "' OR"
+			query = query[:-2]
+			query += ") AND"
 
-		programElements = " ("
-		for i in range(len(self.filters['program_elements'])):
-			programElements += " pe.specific_element = '" + str(filters['program_elements'][i]) + "' OR"
-		programElements = programElements[:-2]
-		programElements += ") AND"
+		if 'gfa' in filters.keys():
+			query += " ("
+			for i in range(len(filters['gfa'])):
+				query += " gfa.city = '" + str(filters['gfa'][i]) + "' OR"
+			query = query[:-2]
+			query += ") AND"
 
-		gfa = " ("
-		for i in range(len(self.filters['gfa'])):
-			gfa += " gfa.city = '" + str(filters['gfa'][i]) + "' OR"
-		gfa = gfa[:-2]
-		gfa += ") AND"
+		if 'city' in filters.keys():
+			query += " ("
+			for i in range(len(filters['city'])):
+	                        query += " gfa.city_grouping = '" + str(filters['city'][i]) + "' OR"
+	                query = query[:-2]
+	                query += ") AND"	
+	
+		if 'donor' in filters.keys():
+			query += " ("
+			for i in range(len(filters['donor'])):
+				query += " de.donor_engagement = '" + str(filters['donor'][i]) + "' OR"
+			query = query[:-2]
+			query += ") AND"
 
-		cityGrouping = " ("
-                for i in range(len(self.filters['city'])):
-                        cityGrouping += " gfa.city_grouping = '" + str(filters['city'][i]) + "' OR"
-                cityGrouping = cityGrouping[:-2]
-                cityGrouping += ") AND"	
+		if 'money_invested' in filters.keys():
+			query += " ("
+			for i in range(len(filters['money_invested'])):
+				query += " p.funds = '" + str(filters['money_invested'][i]) + "' OR"
+			query = query[:-2]
+			query += ") AND"
 
-		donorEngagement = " ("
-		for i in range(len(self.filters['donor'])):
-			donorEngagement += " de.donor_engagement = '" + str(filters['donor'][i]) + "' OR"
-		donorEngagement = donorEngagement[:-2]
-		donorEngagement += ") AND"
+		query += " TRUE"
 
-		investment = " ("
-		for i in range(len(self.filters['invested'])):
-			investment += " p.funds = '" + str(filters['invested'][i]) + "' OR"
-		investment = investment[:-2]
-		investment += ")"
-
-		finalQuery = query + joinTables + filterYear + focusArea + targetPop + programElements + gfa + cityGrouping + donorEngagement + investment
-
-		firstResults = my_custom_sql(finalQuery)
+		firstResults = my_custom_sql(query)
 		
 		programsReturned = [i[0] for i in firstResults]
 

@@ -131,7 +131,7 @@ class Reporting_Service:
     def query_data(self, filters):
         # query the data
 	dbReader = DatabaseReader(filters)
-	results = dbReader.read_data()
+	results = dbReader.readData()
         return results
 
     def create_dashboard(self):
