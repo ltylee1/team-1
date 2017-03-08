@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<form class="form-horizontal" action="../views.py" method="POST">
+<form class="form-horizontal" method="POST"> {% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
@@ -43,9 +43,9 @@
 
 <!-- Select Multiple -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="selectmultiple">Funding Year</label>
+  <label class="col-md-4 control-label" for="funding-year">Funding Year</label>
   <div class="col-md-4">
-    <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
+    <select id="funding-year" name="funding-year" class="form-control" multiple="multiple">
       <option value="2015">2015/2016</option>
       <option value="2016">2016/2017</option>
       <option value="">2017/2018</option>

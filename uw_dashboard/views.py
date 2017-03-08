@@ -21,6 +21,11 @@ reporting = Reporting_Service(None)
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
 
+    def post(self, request, *args, **kwargs):
+        fundingyear = request.POST.get("funding-year")
+        messages.success(request, fundingyear)
+        return HttpResponseRedirect('homepage.html')
+
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
     form_class = UploadFileForm
