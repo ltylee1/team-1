@@ -19,7 +19,7 @@ class DatabaseReader(models.Model):
 		filters = self.filters
 		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de WHERE"
 
-		query += " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
+		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
@@ -85,7 +85,7 @@ class DatabaseReader(models.Model):
 
 		tQuery = "SELECT SUM(p.funds) AS invested, COUNT(p.program_andar_number) AS programs, COUNT(DISTINCT p.agency_andar_number) AS agencies, SUM(t.early_years) AS early_years, SUM(t.middle_years) AS middle_years, SUM(t.seniors) AS seniors, SUM(t.parent_caregivers) AS parent_caregivers, SUM(t.families) AS families, SUM(t.meals_snacks) as meals_snacks, SUM(t.counselling_sessions) AS counselling_sessions, SUM(t.mentors_tutors) AS mentors_tutors, SUM(t.workshops) as workshops, SUM(t.volunteers) AS volunteers FROM uw_dashboard_program as p, uw_dashboard_totals as t WHERE"
 
-		tJoinQuery = " p.program_andar_number = t.program_andar_number AND"
+		tJoinQuery = " p.program_andar_number = t.program_andar_number_id AND"
 
 		tPrograms = " ("
 		for i in programsReturned:
