@@ -96,3 +96,5 @@ class DatabaseReader(models.Model):
 		tQuery += " TRUE"
 
 		tResults = my_custom_sql(tQuery)
+
+		return {'results': firstResults, 'totals': tResults}
