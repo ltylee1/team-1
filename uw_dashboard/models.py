@@ -118,9 +118,9 @@ class Reporting_Service:
     def __init__(self, user):
         self.user = user
 
-    def import_data(self, file, year, overwrite):
+    def import_data(self, file, year, overwrite, type):
         file  = str(file)
-        parser = Parser(file, year, overwrite)
+        parser = Parser(file, year, overwrite, type)
         if parser.validate_file():
             parser.parse_file()
             parser.insert_file()
