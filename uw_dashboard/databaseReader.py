@@ -17,7 +17,7 @@ class DatabaseReader(models.Model):
 
 	def readData(self):
 		filters = self.filters
-		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard+donor_engagement AS de WHERE"
+		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de WHERE"
 
 		query += " p.program_andar_number = pe.program_andar_number AND p.program_andar_number = t.program_andar_number AND p.program_andar_number = gfa.program_andar_number AND p.program_andar_number = de.program_andar_number AND"
 
