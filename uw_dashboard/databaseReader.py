@@ -87,7 +87,7 @@ class DatabaseReader(models.Model):
 
 		tQuery += " p.program_andar_number = t.program_andar_number_id AND"
 
-		tQuery = " ("
+		tQuery += " ("
 		for i in programsReturned:
 			tQuery += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
 		tQuery = tQuery[:-2]
