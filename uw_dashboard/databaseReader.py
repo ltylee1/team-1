@@ -85,14 +85,12 @@ class DatabaseReader(models.Model):
 
 		tQuery = "SELECT SUM(p.funds) AS invested, COUNT(p.program_andar_number) AS programs, COUNT(DISTINCT p.agency_andar_number) AS agencies, SUM(t.early_years) AS early_years, SUM(t.middle_years) AS middle_years, SUM(t.seniors) AS seniors, SUM(t.parent_caregivers) AS parent_caregivers, SUM(t.families) AS families, SUM(t.meals_snacks) as meals_snacks, SUM(t.counselling_sessions) AS counselling_sessions, SUM(t.mentors_tutors) AS mentors_tutors, SUM(t.workshops) as workshops, SUM(t.volunteers) AS volunteers FROM uw_dashboard_program as p, uw_dashboard_totals as t WHERE"
 
-		tJoinQuery = " p.program_andar_number = t.program_andar_number_id AND"
+		tQuery += " p.program_andar_number = t.program_andar_number_id AND"
 
-		tPrograms = " ("
+		tQuery = " ("
 		for i in programsReturned:
-			tPrograms += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
-		tPrograms = tPrograms[:-2]
-		tPrograms += ")"
+			tQuery += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
+		tQuery = tQuery[:-2]
+		tQuery += ")"
 
-		tFinalQuery = tQuery + tJoinQuery + tPrograms
-
-		tResults = my_custom_sql(tFinalQuery)
+		tResults = my_custom_sql(tQuery)
