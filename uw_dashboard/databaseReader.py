@@ -97,4 +97,4 @@ class DatabaseReader(models.Model):
 
 		tResults = my_custom_sql(tQuery)
 
-		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters['funding_year'][0]}
+		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters.get('funding_year')}	
