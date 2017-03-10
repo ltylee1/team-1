@@ -87,10 +87,12 @@ class DatabaseReader(models.Model):
 
 		tQuery += " p.program_andar_number = t.program_andar_number_id AND"
 
-		tQuery += " ("
-		for i in programsReturned:
-			tQuery += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
-		tQuery = tQuery[:-2]
-		tQuery += ")"
+		if len(programsReturned) != 0:
+			tQuery += " ("
+			for i in programsReturned:
+				tQuery += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
+			tQuery = tQuery[:-2]
+			tQuery += ") AND"
+		tQuery += " TRUE"
 
 		tResults = my_custom_sql(tQuery)
