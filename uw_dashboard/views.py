@@ -21,6 +21,12 @@ reporting = Reporting_Service(None)
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
 
+    def post(self, request, *args, **kwargs):
+        fundingyear = request.POST.get("funding-year")
+        messages.success(request, fundingyear)
+    	results = reporting.query_data(request.POST)
+        return render('', 'searchResults.html', results)
+
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
     form_class = UploadFileForm
@@ -34,7 +40,7 @@ class UploadView(LoginRequiredMixin, TemplateView):
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             file_path = fs.path(uploaded_file_url)
-            reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']), form.cleaned_data['Overwrite_data'])
+            reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']), form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
             return HttpResponseRedirect('homepage.html')
 
         else:

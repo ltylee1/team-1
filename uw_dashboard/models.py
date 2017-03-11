@@ -118,9 +118,9 @@ class Reporting_Service:
     def __init__(self, user):
         self.user = user
 
-    def import_data(self, file, year, overwrite):
+    def import_data(self, file, year, overwrite, type):
         file  = str(file)
-        parser = Parser(file, year, overwrite)
+        parser = Parser(file, year, overwrite, type)
         if parser.validate_file():
             parser.parse_file()
             parser.insert_file()
@@ -131,7 +131,7 @@ class Reporting_Service:
     def query_data(self, filters):
         # query the data
 	dbReader = DatabaseReader(filters)
-	results = dbReader.read_data()
+	results = dbReader.readData()
         return results
 
     def create_dashboard(self):

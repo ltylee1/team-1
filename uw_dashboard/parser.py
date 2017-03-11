@@ -3,16 +3,19 @@ import models
 
 
 class Parser:
-    def __init__(self, cur_file, year, overwrite):
+    def __init__(self, cur_file, year, overwrite, type):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool):
             self.cur_file = cur_file
             self.year = year
             self.overwrite = overwrite
+            self.type = type
         else:
             if not isinstance(year, int):
                 raise Exception("year invalid")
             if not isinstance(overwrite, bool):
                 raise Exception("overwrite invalid")
+            if type != 'postal' or type != 'output':
+                raise Exception("type is invalid")
             raise Exception("file invalid")
 
         self.content = []
@@ -21,7 +24,7 @@ class Parser:
             'Funds': -1,
             'Focus Area': -1,
             'Strategic Outcome': -1,
-            'Funding stream': -1,
+            'Funding Stream': -1,
             'Agency Andar #': -1,
             'Agency Name': -1,
             'Program Andar #': -1,
@@ -87,8 +90,6 @@ class Parser:
 
     # Gets the core indexes for the output file
     def get_output_index(self, column_list):
-        if len(column_list) != 159:
-            print "Columns have been removed or added, system may not work"
         for column in column_list:
             if "Funds" == column:
                 self.output_index['Funds'] = column_list.index(column)
@@ -97,7 +98,7 @@ class Parser:
             elif "Strategic Outcome" == column:
                 self.output_index['Strategic Outcome'] = column_list.index(column)
             elif "Funding Stream" == column:
-                self.output_index['Funding stream'] = column_list.index(column)
+                self.output_index['Funding Stream'] = column_list.index(column)
             elif "Agency Andar #" == column:
                 self.output_index['Agency Andar #'] = column_list.index(column)
             elif "Agency Name" == column:
@@ -118,7 +119,8 @@ class Parser:
                 self.output_index['Planner'] = column_list.index(column)
             elif "Target Population" == column:
                 self.output_index['Target Population'] = column_list.index(column)
-            elif self.output_index['Target Population'] != -1 and self.output_index['Program Elements'] == -1 and "Other" == column:
+            elif self.output_index['Target Population'] != -1 and self.output_index[
+                'Program Elements'] == -1 and "Other" == column:
                 self.output_index['TP Other'] = column_list.index(column)
             elif "Program Elements" == column:
                 self.output_index['Program Elements'] = column_list.index(column)
@@ -130,7 +132,8 @@ class Parser:
                 self.output_index['GFA Other'] = column_list.index(column) + 1
             elif "Donor Engagement" == column:
                 self.output_index['Donor Engagement'] = column_list.index(column)
-            elif self.output_index['Donor Engagement'] != -1 and self.output_index['Outputs'] == -1 and "Other" == column:
+            elif self.output_index['Donor Engagement'] != -1 and self.output_index[
+                'Outputs'] == -1 and "Other" == column:
                 self.output_index['DE Other'] = column_list[self.output_index['Donor Engagement']:].index(column) + \
                                                 self.output_index['Donor Engagement']
             elif "Outputs" == column:
@@ -190,13 +193,21 @@ class Parser:
         return locations
 
     def get_city_grouping(self, city):
-        first_nation_territories = ['First Nation Territories', 'Tsawwassen First Nation', 'Sechelt Indian Government District (Part-Sunshine Coast)']
-        fraser_cascade = ['Mission', 'Hope', 'Kent', 'Harrison Hot Springs', 'Boston Bar / North Bend', 'Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum', 'Lake Errock / Harrison Mills / Hemlock Valley,Popkum / Bridal Falls', 'Slesse Park / Baker Trails / Bell Acres,Miracle Valley / Hatzic Prairie']
+        first_nation_territories = ['First Nation Territories', 'Tsawwassen First Nation',
+                                    'Sechelt Indian Government District (Part-Sunshine Coast)']
+        fraser_cascade = ['Mission', 'Hope', 'Kent', 'Harrison Hot Springs', 'Boston Bar / North Bend',
+                          'Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum',
+                          'Lake Errock / Harrison Mills / Hemlock Valley,Popkum / Bridal Falls',
+                          'Slesse Park / Baker Trails / Bell Acres,Miracle Valley / Hatzic Prairie']
         langley = ['Langley, City of', 'Langley, District Municipality']
         maple_ridge = ['Maple Ridge', 'Pitt Meadows']
-        northshore = ['North Vancouver, City of', 'North Vancouver, District Municipality', 'West Vancouver', 'Bowen Island']
+        northshore = ['North Vancouver, City of', 'North Vancouver, District Municipality', 'West Vancouver',
+                      'Bowen Island']
         sea_to_sky = ['Lions Bay', 'Lillooet', 'Pemberton', 'Squamish', 'Whistler']
-        sunshine_coast =['Elphinstone', 'Gibsons', 'Halfmoon Bay', 'Pender Harbour / Egmont / Madeira Park', 'Roberts Creek', 'Sechelt District Municipality', 'Sechelt Indian Government District (Part-Sunshine Coast)', 'West Howe Sound (Langdale, Port Mellon, Williamson?s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)']
+        sunshine_coast = ['Elphinstone', 'Gibsons', 'Halfmoon Bay', 'Pender Harbour / Egmont / Madeira Park',
+                          'Roberts Creek', 'Sechelt District Municipality',
+                          'Sechelt Indian Government District (Part-Sunshine Coast)',
+                          'West Howe Sound (Langdale, Port Mellon, Williamson?s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)']
         surrey = ['Surrey', 'White Rock']
         tri_cities = ['Anmore', 'Belcarra', 'Coquitlam', 'Port Coquitlam', 'Port Moody']
         other_areas = ['Other Areas']
@@ -210,7 +221,7 @@ class Parser:
         elif city in maple_ridge:
             return 'Maple Ridge/Pitt Meadows'
         elif city in northshore:
-            return 'Northshort'
+            return 'Northshore'
         elif city in other_areas:
             return 'Other Areas in BC'
         elif city in sea_to_sky:
@@ -240,7 +251,7 @@ class Parser:
 
     # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
-        colnames = ['First Nation Territories', 'Metro Vancouver Regional District',
+        colnames = ['First Nation Territories', 'Fraser Valley Regional District', 'Metro Vancouver Regional District',
                     'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
         temp = []
         for col in colnames:
@@ -248,7 +259,7 @@ class Parser:
         temp.append(self.output_index['GFA Other'] + 1)
         program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
         for index in range(0, len(colnames)):
-            for curindex in range(temp[index]+1, temp[index + 1]):
+            for curindex in range(temp[index] + 1, temp[index + 1]):
                 level = self.column_names[temp[index]]
                 curcity = self.column_names[curindex]
                 citygrouping = self.get_city_grouping(curcity)
@@ -343,10 +354,11 @@ class Parser:
         check = models.Program.objects.filter(program_andar_number=row[self.output_index['Program Andar #']]).exists()
         if not check:
             agency = models.Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
-            date = row[self.output_index['Grant Start Date']]
-            start_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
-            date = row[self.output_index['Grant End Date']]
-            end_date = date[:4] + '-' + date[4:6] + '-' + date[6:]
+            start_date = row[self.output_index['Grant Start Date']]
+            end_date = row[self.output_index['Grant End Date']]
+            if '-' not in start_date and '-' not in end_date:
+                start_date = start_date[:4] + '-' + start_date[4:6] + '-' + start_date[6:]
+                end_date = end_date[:4] + '-' + end_date[4:6] + '-' + end_date[6:]
             program = models.Program(agency_andar_number=agency,
                                      program_andar_number=row[self.output_index['Program Andar #']],
                                      program_name=row[self.output_index['Program Name']],
@@ -357,7 +369,7 @@ class Parser:
                                      funds=row[self.output_index['Funds']],
                                      focus_area=row[self.output_index['Focus Area']],
                                      strategic_outcome=row[self.output_index['Strategic Outcome']],
-                                     funding_stream=row[self.output_index['Funding stream']],
+                                     funding_stream=row[self.output_index['Funding Stream']],
                                      allocation=row[self.output_index['Allocation']],
                                      year=self.year)
             program.save()
@@ -403,10 +415,40 @@ class Parser:
                     # else:
                     #     print 'Exists and if we wanted to update we would do that here'
 
+    def check_columns(self):
+        # Checks column length
+        # Checks that columns contain expected columns
+        output_columns = ['Funds', 'Focus Area', 'Strategic Outcome', 'Funding Stream', 'Agency Andar #', 'Agency Name',
+                          'Program Andar #', 'Program Name', 'Grant Start Date', 'Grant End Date',
+                          'Short Program Description', 'Planner', 'Target Population', 'Program Elements',
+                          'Geographic Focus Area', 'Donor Engagement', 'Outputs', 'First Nation Territories',
+                          'Fraser Valley Regional District', 'Metro Vancouver Regional District',
+                          'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
+        postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website', 'Description',
+                          '# Locations']
+        pfile = self.cur_file
+        with open(pfile, 'rb') as f:
+            reader = csv.reader(f)
+            columns = reader.next()
+            if self.type == 'postal':
+                if len(columns) != 37:
+                    print "Columns have been removed or added, system may not work"
+                for col_name in postal_columns:
+                    if col_name not in columns:
+                        raise Exception('Column: %s is missing' % col_name)
+            elif self.type == 'output':
+                if len(columns) != 159:
+                    print "Columns have been removed or added, system may not work"
+                for col_name in output_columns:
+                    if col_name not in columns:
+                        raise Exception('Column: %s is missing' % col_name)
+        return True
+
+
     # Checks that the file is a CSV
     def validate_file(self):
         pfile = self.cur_file
-        if pfile.endswith('.csv'):
+        if pfile.endswith('.csv') and self.check_columns():
             return True
         else:
             return False
@@ -414,12 +456,12 @@ class Parser:
     # Inserts the parsed contents into the database
     def insert_file(self):
         if self.content:
-            if "outputs" in self.cur_file.lower():
+            if 'output' in self.type:
                 if self.overwrite:
                     self.drop_program_table()
                 for row in self.content:
                     self.insert_row(row)
-            elif "postal" in self.cur_file.lower():
+            elif 'postal' in self.type:
                 if self.overwrite:
                     self.drop_location_table()
                 for row in self.content:
@@ -430,7 +472,7 @@ class Parser:
     # Parses the file
     def parse_file(self):
         pfile = self.cur_file
-        if "outputs" in pfile.lower():
+        if "output" in self.type:
             with open(pfile, 'rb') as f:
                 reader = csv.reader(f)
                 self.column_names = reader.next()
@@ -438,7 +480,7 @@ class Parser:
                 for row in reader:
                     self.content.append(row)
 
-        elif "postal" in pfile.lower():
+        elif "postal" in self.type:
             with open(pfile, 'rb') as f:
                 reader = csv.reader(f)
                 self.column_names = reader.next()
