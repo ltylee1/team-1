@@ -34,7 +34,6 @@ class UploadView(LoginRequiredMixin, TemplateView):
     def upload(self, request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print "uploading file"
             myfile = form.cleaned_data['File_To_Upload']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)

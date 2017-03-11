@@ -36,6 +36,10 @@ LOGIN_URL = '/login.html'
 # redirect authenticated users
 LOGIN_REDIRECT_URL = '/profile.html'
 
+SESSION_SECURITY_EXPIRE_AFTER= 10 * 60 # logout after 10 minutes of inactivity
+SESSION_SECURITY_WARN_AFTER= 8 * 60 # logout warning after 8 minutes of inactivity
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
+
 # ROOT FOR ALL MEDIA
 MEDIA_ROOT = "uw-dashbaord/static/media"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -50,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'uw_dashboard',
+    'session_security',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'session_security.middleware.SessionSecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'unitedairway.urls'
