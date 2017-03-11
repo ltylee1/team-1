@@ -1,4 +1,4 @@
-from django.db import connection
+from django.db import connection, models
 
 def my_custom_sql(query):
 	with connection.cursor() as cursor:
@@ -22,7 +22,7 @@ class DatabaseReader(models.Model):
 
 		filterYear = " ("
 		for i in range(len(self.filters['year'])):
-			filterYear += " p.grant_start_date BETWEEN '" + str(filters['year'][i]) + "-01-01' AND '" + str(filters['year'][i]) + "'-12-31' OR"
+			filterYear += " p.grant_start_date BETWEEN '" + str(self.filters['year'][i]) + "-01-01' AND '" + str(filters['year'][i]) + "'-12-31' OR"
 		filterYear = filterYear[:-2]
 		filterYear += " AND"
 
