@@ -207,7 +207,8 @@ class Parser:
         sunshine_coast = ['Elphinstone', 'Gibsons', 'Halfmoon Bay', 'Pender Harbour / Egmont / Madeira Park',
                           'Roberts Creek', 'Sechelt District Municipality',
                           'Sechelt Indian Government District (Part-Sunshine Coast)',
-                          'West Howe Sound (Langdale, Port Mellon, Williamson?s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)']
+                          "West Howe Sound (Langdale, Port Mellon, Williamson's Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)",
+                          "West Howe Sound (Langdale, Port Mellon, Williamson?s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)"]
         surrey = ['Surrey', 'White Rock']
         tri_cities = ['Anmore', 'Belcarra', 'Coquitlam', 'Port Coquitlam', 'Port Moody']
         other_areas = ['Other Areas']
