@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block content %}
-<!-- Header -->
-<header id="top" class="header row">
-    <div class="text-vertical-center">
-        <h1 class="col-md-6 col-md-offset-4">United Way Database</h1>
-    </div>
-</header>
+
+
+<div class="text-vertical-center">
+    <h1 class="logo-title">United Way Database</h1>
+</div>
+
 
 <div>
     <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
@@ -16,8 +16,7 @@
 <section id="login" class="about">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6 text-center">
+            <div class="text-center">
                 <h2>Login</h2>
                 <form name="form" method="POST" role="form"> {% csrf_token %}
                     <div class="form-group">
@@ -35,7 +34,6 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3"></div>
         </div>
         <!-- /.row -->
     </div>

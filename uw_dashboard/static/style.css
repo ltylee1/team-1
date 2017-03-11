@@ -23,6 +23,25 @@
 	font-weight: bold;
 }
 
+.form-actions {
+    display: inline-block;
+}
+
+.text-vertical-center {
+    margin: 0 auto;
+}
+
+.logo-title {
+    text-align: center;
+}
+
+label {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
 .title-text {
 	font-size: 35px;
     line-height: 45px;
