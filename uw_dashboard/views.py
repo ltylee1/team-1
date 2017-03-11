@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -34,7 +34,6 @@ class UploadView(LoginRequiredMixin, TemplateView):
     def upload(self, request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print "uploading file"
             myfile = form.cleaned_data['File_To_Upload']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
@@ -97,7 +96,7 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.profile.is_admin:
             messages.error(request, "Require administrator authentication to create new users")
-            return self.handle_no_permission()
+            return redirect(reverse_lazy('homepage'))
 
         return super(AddUserView, self).dispatch(request, *args, **kwargs)
 
