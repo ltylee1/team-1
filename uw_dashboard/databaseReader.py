@@ -76,8 +76,15 @@ class DatabaseReader(models.Model):
 
 		if 'money_invested' in filters.keys():
 			query += " ("
-			for i in range(len(filters['money_invested'])):
-				query += " p.funds = '" + str(filters['money_invested'][i]) + "' OR"
+			for i in filters['money_invested']:
+				if '+' in i:
+					i = i[:-1]
+					query += " p.funds > '" + str(i) + "' OR"
+				elif '-' in i:
+					nums = str(i).split('-')
+					query += " (p.funds >= '" + str(nums[0]) + "' AND p.funds <= '" + str(nums[1]) + "') OR"
+				else
+					query += " p.funds < '" + str(i) + "' OR"
 			query = query[:-2]
 			query += ") AND"
 
