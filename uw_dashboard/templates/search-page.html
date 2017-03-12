@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<form class="form-horizontal" method="POST"> {% csrf_token %}
+<fieldset>
+
+<!-- Form Name -->
+<legend>Form Name</legend>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="funding_year">Funding Year</label>
+  <div class="col-md-4">
+    <select id="funding_year" name="funding_year" class="form-control" multiple="multiple">
+      <option value="2015">2015/2016</option>
+      <option value="2016">2016/2017</option>
+      <option value="">2017/2018</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="focus_area">Focus Area</label>
+  <div class="col-md-4">
+    <select id="focus_area" name="focus_area" class="form-control" multiple="multiple">
+      <option value="All that Kids Can Be">All that Kids Can Be (2)</option>
+      <option value="Giving Young Children a Healthy Start">Giving Young Children a Healthy Start</option>
+      <option value="Helping School-aged Childrem Succeed">Helping School-aged Children Succeed</option>
+      <option value="Poverty to Possibility">Poverty to Possibility (1)</option>
+      <option value="Giving Skills to Feed Families">Giving Skills to Feed Families</option>
+      <option value="Strong Communities">Strong Communities (2)  - Inventory Column says “Building Strong Communities”, this should be relabeled to “Strong Communities” instead.</option>
+      <option value="Helping Seniors to Live independently">Helping Seniors to Live independently</option>
+      <option value="Building Strong Neighborhoods">Building Strong Neighbourhoods</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="target_population">Target Population</label>
+  <div class="col-md-4">
+    <select id="target_population" name="target_population" class="form-control" multiple="multiple">
+      <option value="Early Childhood">Early Childhood</option>
+      <option value="Middle Years">Middle Years</option>
+      <option value="Families">Families</option>
+      <option value="Seniors">Seniors</option>
+      <option value="Parents/Caregivers">Parents/Caregivers</option>
+      <option value="Youth">Youth</option>
+      <option value="Immigrants/Refugees">Immigrants/Refugees</option>
+      <option value="Women">Women</option>
+      <option value="Aboriginal/First Nations">Aboriginal/First Nations</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="program_elements">Program Elements</label>
+  <div class="col-md-4">
+    <select id="program_elements" name="program_elements" class="form-control" multiple="multiple">
+      <option value="Learning Support">Learning Support (4)</option>
+      <option value="Science/technology/engineering/math/numeracy">Science/technology/engineering/math/numeracy</option>
+      <option value="Language/literacy/reading">Language/literacy/reading</option>
+      <option value="Tutoring, homework clubs">Tutoring, homework clubs</option>
+      <option value="Other">Other</option>
+      <option value="Social and Emotional Health">Social and Emotional Health (6)</option>
+      <option value="Mental wellness">Mental wellness</option>
+      <option value="Caregiver/parental support">Caregiver/parental support</option>
+      <option value="Self determination/confidence">Self determination/confidence</option>
+      <option value="Pro-social behaviour">Pro-social behaviour</option>
+      <option value="Independence">Independence</option>
+      <option value="Other">Other</option>
+      <option value="Connections/Healthy Relationships">Connections/Healthy Relationships (9)</option>
+      <option value="Intergenerational relationships">Intergenerational relationships</option>
+      <option value="Mentoring">Mentoring</option>
+      <option value="Peer relationships">Peer relationships</option>
+      <option value="Social connectedness">Social connectedness</option>
+      <option value="Interpersonal communication">Interpersonal communication</option>
+      <option value="Parent-child bonding">Parent-child bonding</option>
+      <option value="Cross-cultural relationships">Cross-cultural relationships</option>
+      <option value="Participation in society">Participation in society</option>
+      <option value="Other">Other</option>
+      <option value="Physical Health and Recreational Activities">Physical Health and Recreational Activities (9)</option>
+      <option value="Indoor play/activities">Indoor play/activities</option>
+      <option value="Outdoor play/activities">Outdoor play/activities</option>
+      <option value="Music">Music</option>
+      <option value="Sports">Sports</option>
+      <option value="Dance">Dance</option>
+      <option value="Arts and crafts">Arts and crafts</option>
+      <option value="Theatre">Theatre</option>
+      <option value="Physical safety/injury prevention">Physical safety/injury prevention</option>
+      <option value="Other">Other</option>
+      <option value="Life Skills">Life Skills (7)</option>
+      <option value="Nutrition and cooking">Nutrition and cooking</option>
+      <option value="Growing food">Growing food</option>
+      <option value="Leadership">Leadership</option>
+      <option value="Teamwork">Teamwork</option>
+      <option value="Food planning and budgeting">Food planning and budgeting</option>
+      <option value="Financial education">Financial education</option>
+      <option value="Other">Other</option>
+      <option value="System Change">System Change (6)</option>
+      <option value="Capacity building">Capacity building</option>
+      <option value="Policy work">Policy work</option>
+      <option value="Research">Research</option>
+      <option value="Advocacy">Advocacy</option>
+      <option value="Networks/collectives">Networks/collectives</option>
+      <option value="Other">Other</option>
+      <option value="Address Program Barriers/Access">Address Program Barriers/Access (5)</option>
+      <option value="Child-minding">Child-minding</option>
+      <option value="Transportation">Transportation</option>
+      <option value="Food provision">Food provision</option>
+      <option value="Outreach">Outreach</option>
+      <option value="Other">Other</option>
+      <option value="Food Redistribution">Food Redistribution</option>
+      <option value="Information and Referral">Information and Referral</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="city">City Groupings</label>
+  <div class="col-md-4">
+    <select id="city" name="city" class="form-control" multiple="multiple">
+      <option value="Abbotsford">Abbotsford</option>
+      <option value="Burnaby">Burnaby</option>
+      <option value="Chilliwack">Chilliwack</option>
+      <option value="Delta">Delta</option>
+      <option value="First Nation Territories">First Nation Territories</option>
+      <option value="Fraser Cascade">Fraser Cascade</option>
+      <option value="Langley">Langley</option>
+      <option value="Maple Ridge/Pitt Meadows">Maple Ridge/Pitt Meadows</option>
+      <option value="Mission">Mission</option>
+      <option value="New Westminster">New Westminster</option>
+      <option value="North Shore">North Shore</option>
+      <option value="Richmond">Richmond</option>
+      <option value="Sea to Sky">Sea to Sky</option>
+      <option value="Sunshine Coast">Sunshine Coast</option>
+      <option value="Surrey/White Rock">Surrey/White Rock</option>
+      <option value="Tri-cities">Tri-cities</option>
+      <option value="Vancouver">Vancouver</option>
+      <option value="Other Areas in BC">Other Areas in BC</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="gfa">Geographic Focus Area</label>
+  <div class="col-md-4">
+    <select id="gfa" name="gfa" class="form-control" multiple="multiple">
+      <option value="First Nation Territories">First Nation Territories (1)</option>
+      <option value="First Nation Territories">First Nation Territories</option>
+      <option value="Fraser Valley Regional District">Fraser Valley Regional District (8)</option>
+      <option value="Abbotsford">Abbotsford</option>
+      <option value="Chilliwack">Chilliwack</option>
+      <option value="Mission">Mission</option>
+      <option value="Hope">Hope</option>
+      <option value="Kent">Kent</option>
+      <option value="Harrison Hot Springs">Harrison Hot Springs</option>
+      <option value="Boston Bar / North Bend">Boston Bar / North Bend</option>
+      <option value="Other: “Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum”  +” Lake Errock / Harrison Mills / Hemlock Valley” + “Popkum / Bridal Falls” + “Slesse Park / Baker Trails / Bell Acres” + “Miracle Valley / Hatzic Prairie” + “Other”">Other: “Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum”  +” Lake Errock / Harrison Mills / Hemlock Valley” + “Popkum / Bridal Falls” + “Slesse Park / Baker Trails / Bell Acres” + “Miracle Valley / Hatzic Prairie” + “Other”</option>
+      <option value="Metro Vancouver Regional District">Metro Vancouver Regional District	(23)</option>
+      <option value="Anmore">Anmore</option>
+      <option value="Belcarra">Belcarra</option>
+      <option value="Bowen Island">Bowen Island</option>
+      <option value="Burnaby">Burnaby</option>
+      <option value="Coquitlam">Coquitlam</option>
+      <option value="Delta">Delta</option>
+      <option value="Langley, City of">Langley, City of</option>
+      <option value="Langley, District Municipality">Langley, District Municipality</option>
+      <option value="Lions Bay">Lions Bay</option>
+      <option value="Maple Ridge">Maple Ridge</option>
+      <option value="New Westminster">New Westminster</option>
+      <option value="North Vancouver, City of">North Vancouver, City of</option>
+      <option value="North Vancouver, District Municipality">North Vancouver, District Municipality</option>
+      <option value="Pitt Meadows">Pitt Meadows</option>
+      <option value="Port Coquitlam">Port Coquitlam</option>
+      <option value="Port Moody">Port Moody</option>
+      <option value="Richmond">Richmond</option>
+      <option value="Surrey">Surrey</option>
+      <option value="Tsawwassen First Nation">Tsawwassen First Nation</option>
+      <option value="Vancouver">Vancouver</option>
+      <option value="West Vancouver">West Vancouver</option>
+      <option value="White Rock">White Rock</option>
+      <option value="Other: “Barnston Islands / Buntzen Bay / Gambier Island Trust Area / Granite Falls / Strachan Creen / University Endowment Lands (UBC)”">Other: “Barnston Islands / Buntzen Bay / Gambier Island Trust Area / Granite Falls / Strachan Creen / University Endowment Lands (UBC)”</option>
+      <option value="Squamish-Lillooet Regional District">Squamish-Lillooet Regional District (4)</option>
+      <option value="Lillooet">Lillooet</option>
+      <option value="Squamish">Squamish</option>
+      <option value="Pemberton">Pemberton</option>
+      <option value="Whistler">Whistler</option>
+      <option value="Sunshine Coast Regional District">Sunshine Coast Regional District (4)</option>
+      <option value="Gibsons">Gibsons</option>
+      <option value="Sechelt District Municipality">Sechelt District Municipality</option>
+      <option value="Sechelt Indian Government District (Part-Sunshine Coast)">Sechelt Indian Government District (Part-Sunshine Coast)</option>
+      <option value="Other: “Elphinstone” + “Halfmoon Bay” + “Pender Harbour / Egmont / Madeira Park” + “Roberts Creek” +  “West Howe Sound (Langdale, Port Mellon, Williamson’s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)”">Other: “Elphinstone” + “Halfmoon Bay” + “Pender Harbour / Egmont / Madeira Park” + “Roberts Creek” +  “West Howe Sound (Langdale, Port Mellon, Williamson’s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)”</option>
+      <option value="Other Areas">Other Areas (1)</option>
+      <option value="Other Areas">Other Areas</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="donor">Donor Engagement</label>
+  <div class="col-md-4">
+    <select id="donor" name="donor" class="form-control" multiple="multiple">
+      <option value="UW Speaker">UW Speaker</option>
+      <option value="Day of Caring">Day of Caring</option>
+      <option value="Volunteer Opportunities">Volunteer Opportunities</option>
+      <option value="Agency Tour">Agency Tour</option>
+      <option value="Agency Fair">Agency Fair</option>
+      <option value="Impact Story">Impact Story</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="money_invested">$ Invested</label>
+  <div class="col-md-4">
+    <select id="money_invested" name="money_invested" class="form-control" multiple="multiple">
+      <option value="less than 5,000">less than 5,000</option>
+      <option value="5,000 - 10,000">5,000 - 10,000</option>
+      <option value="10,000 - 50,000">10,000 - 50,000</option>
+      <option value="50,000 - 100,000">50,000 - 100,000</option>
+      <option value="100,000 - 250,000">100,000 - 250,000</option>
+      <option value="250,000 - 500,000">250,000 - 500,000</option>
+      <option value="500,000 +">500,000 +</option>
+    </select>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton">Single Button</label>
+  <div class="col-md-4">
+    <input type="submit" value="Submit" id="singlebutton" name="singlebutton" class="btn btn-primary">
+  </div>
+</div>
+
+</fieldset>
+</form>
+{% endblock %}
