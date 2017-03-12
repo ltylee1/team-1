@@ -2,11 +2,21 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
+    <div>
+        <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
+    </div>
+    <div class="text-center title-text">United Way Program and Agency Database</div>
+    <div class="text-center-home title-text">
+      <a class="btn btn-primary" href="/homepage.html">Home Page</a>
+    </div>
+    </div>
+</div>
 <form class="form-horizontal" method="POST"> {% csrf_token %}
 <fieldset>
 
 <!-- Form Name -->
-<legend>Form Name</legend>
+<legend class="text-center">Select filters to search</legend>
 
 <!-- Select Multiple -->
 <div class="form-group">
@@ -15,7 +25,7 @@
     <select id="funding_year" name="funding_year" class="form-control" multiple="multiple">
       <option value="2015">2015/2016</option>
       <option value="2016">2016/2017</option>
-      <option value="">2017/2018</option>
+      <option value="2017">2017/2018</option>
     </select>
   </div>
 </div>

@@ -157,13 +157,17 @@ label {
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
+.right-allign {
+    text-align: right;
+}
+
+
 .btn {
-font-family: 'FC Kaiser Cond', sans-serif;
 	width: 150px;
     display: block;
     padding: 6px 12px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.42857143;
     text-align: center;
