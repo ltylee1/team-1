@@ -252,7 +252,7 @@ class Parser:
 
     # Inserts geographical focus area into database
     def insert_geo_focus(self, row):
-        colnames = ['First Nation Territories', 'Fraser Valley Regional District', 'Metro Vancouver Regional District',
+        colnames = ['First Nation Territories', 'Metro Vancouver Regional District',
                     'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
         temp = []
         for col in colnames:
@@ -423,7 +423,7 @@ class Parser:
                           'Program Andar #', 'Program Name', 'Grant Start Date', 'Grant End Date',
                           'Short Program Description', 'Planner', 'Target Population', 'Program Elements',
                           'Geographic Focus Area', 'Donor Engagement', 'Outputs', 'First Nation Territories',
-                          'Fraser Valley Regional District', 'Metro Vancouver Regional District',
+                        'Metro Vancouver Regional District',
                           'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
         postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website', 'Description',
                           '# Locations']
