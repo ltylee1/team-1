@@ -17,7 +17,7 @@ TYPE = (
 
 # widget=forms.TextInput(attrs={'class': 'text-center filter-text'})
 class UploadFileForm(forms.Form):
-    File_To_Upload = forms.FileField()
+    File_To_Upload = forms.FileField(widget=forms.ClearableFileInput(attrs= {'class': 'upload_btn'}))
     Overwrite_data = forms.BooleanField(required=False)
     Funding_Year = forms.ChoiceField(YEARS)
     File_type = forms.ChoiceField(TYPE)
