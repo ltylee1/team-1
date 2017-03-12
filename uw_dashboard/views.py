@@ -22,12 +22,6 @@ reporting = Reporting_Service(None)
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
 
-    def post(self, request, *args, **kwargs):
-        fundingyear = request.POST.get("funding-year")
-        messages.success(request, fundingyear)
-    	results = reporting.query_data(request.POST)
-        return render('', 'searchResults.html', results)
-
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
     form_class = UploadFileForm
@@ -103,9 +97,15 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
+    def post(self, request, *args, **kwargs):
+    	results = reporting.query_data(request.POST)
+        return render(request, 'search-results.html', results)
 
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = "search-page.html" 
+    def post(self, request, *args, **kwargs):
+    	results = reporting.query_data(request.POST)
+        return render(request, 'search-results.html', results)
 
 class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     template_name = "resetPassword.html"
