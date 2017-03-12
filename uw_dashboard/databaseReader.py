@@ -95,7 +95,7 @@ class DatabaseReader(models.Model):
 		if len(programsReturned) != 0:
 			tQuery += " ("
 			for i in programsReturned:
-				tQuery += " p.program_andar_number = '" + str(programsReturned[i]) + "' OR"
+				tQuery += " p.program_andar_number = '" + str(i) + "' OR"
 			tQuery = tQuery[:-2]
 			tQuery += ") AND"
 		tQuery += " TRUE"
