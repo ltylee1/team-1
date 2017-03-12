@@ -1,81 +1,23 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Map Pins</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <script>
-        function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11,
-        center: {
-            lat: 49.1609273,
-            lng: -122.74400347
-        }
-    });
-    var geocoder = new google.maps.Geocoder();
-
-    document.getElementById('submit').addEventListener('click', function() {
-        geocodeAddress(geocoder, map);
-        //run geocodeAddress(geocoder,map for every parsed address string)
-    });
-}
-
-function geocodeAddress(geocoder, resultsMap) {
-    //var address = document.getElementById('address').value;
-    var addresses = ['V2Y 2N1','V1M 2R6']
-    for (count = 0; count < addresses.length; count++) {
-            geocoder.geocode({
-        'address': addresses[count]
-    }, function(results, status) {
-        if (status === 'OK') {
-            //resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setCenter(49.1609273,-122.74400347);
-            var marker = new google.maps.Marker({
-                map: resultsMap,
-                position: results[0].geometry.location
-            });
-        } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-        }
-    });
-    }
-}
-    </script>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="floating-panel">
-      <input id="address" type="textbox" value="">
-      <input id="submit" type="button" value="Geocode">
-    </div>
-    <div id="map"></div>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
-    </script>
-  </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+    <script src="{% static 'map.js' %}"></script>
+</head>
+<body>
+<div id="floating-panel">
+    <input id="address" type="textbox" value="">
+    <input id="submit" type="button" value="Geocode">
+</div>
+<div id="map"></div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
+</script>
+</body>
 </html>
