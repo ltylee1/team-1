@@ -137,7 +137,7 @@ class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.profile.is_admin:
-            messages.error(request, "Require administrator authentication to create new users")
+            messages.error(request, "Require administrator authentication to reset passwords")
             return redirect(reverse_lazy('homepage'))
 
         return super(SetPasswordView, self).dispatch(request, *args, **kwargs)

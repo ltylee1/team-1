@@ -7,12 +7,14 @@
         <tbody>
         <tr>
             <td class="col-md-6">
+                {% if user.is_superuser %}
                 <div>
                 <a class="header-text" href="addUser.html">Add User</a>
                 </div>
                 <div>
                     <a class="header-text" href="resetPassword.html">Reset Password</a>
                 </div>
+                {% endif %}
             </td>
             <td class="col-md-6 right-allign">
                 <div>
