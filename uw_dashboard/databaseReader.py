@@ -83,7 +83,7 @@ class DatabaseReader(models.Model):
 				elif '-' in i:
 					nums = str(i).split('-')
 					query += " (p.funds >= '" + str(nums[0]) + "' AND p.funds <= '" + str(nums[1]) + "') OR"
-				else
+				else:
 					query += " p.funds < '" + str(i) + "' OR"
 			query = query[:-2]
 			query += ") AND"
