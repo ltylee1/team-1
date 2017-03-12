@@ -102,3 +102,6 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
+
+class SearchPage(LoginRequiredMixin, TemplateView):
+    template_name = "search-page.html" 
