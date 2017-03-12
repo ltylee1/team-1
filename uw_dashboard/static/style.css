@@ -1,3 +1,8 @@
+#focus_area {
+    overflow: scroll;
+}
+
+
 .text-right {
     text-align: right!important;
     padding-right: 15px;
