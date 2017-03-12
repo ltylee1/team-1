@@ -1,31 +1,18 @@
 from django.db import connection, models
 
-def my_custom_sql(self, query):
-	with connection.cursor() as cursor:
-        	cursor.execute(query)
-                results = dictfetchall(cursor)
-        return results
-
-def dictfetchall(self, cursor):
-	columns = [col[0] for col in cursor.description]
-        return [
-        	dict(zip(columns, row))
-                for row in cursor.fetchall()
-        ]
-
 
 class DatabaseReader(models.Model):
 
 	def __init__(self, filters):
 		self.filters = filters
 
-	def my_custom_sql(self, query):
+	def _my_custom_sql(self, query):
 	        with connection.cursor() as cursor:
 	                cursor.execute(query)
-	                results = dictfetchall(cursor)
+	                results = _dictfetchall(cursor)
 	        return results
 
-	def dictfetchall(self, cursor):
+	def _dictfetchall(self, cursor):
 	    "Return all rows from a cursor as a dict"
 	    columns = [col[0] for col in cursor.description]
 	    return [
@@ -98,7 +85,7 @@ class DatabaseReader(models.Model):
 
 		query += " TRUE"
 
-		firstResults = my_custom_sql(query)
+		firstResults = _my_custom_sql(query)
 		
 		programsReturned = [i[0] for i in firstResults]
 
@@ -114,6 +101,6 @@ class DatabaseReader(models.Model):
 			tQuery += ") AND"
 		tQuery += " TRUE"
 
-		tResults = my_custom_sql(tQuery)
+		tResults = _my_custom_sql(tQuery)
 
 		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters['funding_year']}	
