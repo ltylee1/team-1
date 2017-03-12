@@ -9,12 +9,13 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView
-from uw_dashboard.forms import UploadFileForm
+from django.views.generic.edit import CreateView, UpdateView
+from uw_dashboard.forms import UploadFileForm, SetUserPasswordForm
 from uw_dashboard.models import Reporting_Service
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 reporting = Reporting_Service(None)
 
@@ -105,3 +106,38 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = "search-page.html" 
+
+class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+    template_name = "resetPassword.html"
+    form_class = SetUserPasswordForm
+
+    success_url = reverse_lazy("homepage")
+    success_message = "You have reset password for %(username)s successfully"
+
+    def form_valid(self, form):
+        try:
+            user = User.objects.get(username = form.cleaned_data.get('username'))
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'User with the username does not exist')
+            return redirect(reverse_lazy('resetPassword'))
+
+        user.set_password(form.clean_new_password2())
+        user.save()
+        return super(SetPasswordView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        for field in form:
+            for error in field.errors:
+                messages.error(self.request, error)
+
+        for error in form.non_field_errors():
+            messages.error(self.request, error)
+
+        return super(SetPasswordView, self).form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.profile.is_admin:
+            messages.error(request, "Require administrator authentication to create new users")
+            return redirect(reverse_lazy('homepage'))
+
+        return super(SetPasswordView, self).dispatch(request, *args, **kwargs)
