@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
     <script src="{% static 'map.js' %}"></script>
 </head>
@@ -14,7 +14,7 @@
 
 <div id="floating-panel">
     <div class="options">
-        <a href="{% url 'homepage' %}">Home</a>
+        <a class="btn btn-primary" href="{% url 'homepage' %}">Home</a>
     </div>
 
     <div class="option">
