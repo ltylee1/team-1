@@ -25,7 +25,7 @@ SECRET_KEY = '&dew+9cr-@+uwd$7c!@ppf9+l2d%q292$u99hnx2f_s8(i(y+m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.190.37.76', 'localhost']
 
 # provide our get_profile()
 AUTH_PROFILE_MODULE = 'uw-dashboard.UserProfile'

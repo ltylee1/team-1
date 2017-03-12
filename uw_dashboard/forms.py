@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import password_validation
+from django.contrib.auth.models import User
 import unicodedata
 
 YEARS = (
@@ -26,10 +27,7 @@ class UsernameField(forms.CharField):
         return unicodedata.normalize('NFKC', super(UsernameField, self).to_python(value))
 
 class SetUserPasswordForm(SetPasswordForm):
-    username = UsernameField(
-        max_length=254,
-        widget=forms.TextInput(attrs={'autofocus': ''}),
-    )
+    username = forms.ModelChoiceField(queryset= User.objects.all().order_by('username'), to_field_name="username")
 
     error_messages = {
         'password_mismatch': "The two password fields didn't match.",

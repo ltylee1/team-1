@@ -2,30 +2,21 @@
 {% load static %}
 
 {% block content %}
-<header>
-    <table width="100%" cellspacing="0">
-        <tbody>
-        <tr>
-            <td>
-                <a class="pad-header-left header-text" href="homepage.html">Search</a>
-            </td>
-            <td class="col-md-2 col-md-offset-10">
-                <div>
-                    <a class="pad-header-left header-text" href="map.html">Agency Map</a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</header>
-
 <div class="container">
     <div>
         <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
     </div>
     <div class="text-center title-text">United Way Program and Agency Database</div>
-<!--     <div class="text-center filter-text"><a class="header-text" href="homepage.html">~ Upload ~</a></div> -->
+    <div class="text-center-home title-text">
+      <a class="btn btn-primary" href="/homepage.html">Home Page</a>
+      <a class="btn btn-primary" href="/map.html">Map</a>
+      <a class="btn btn-primary" href="/search.html">Search</a>
+    </div>
+    </div>
 </div>
+<form class="form-horizontal" method="POST"> {% csrf_token %}
+<fieldset>
+
 <div class="row">
     <div class="dropdown col-md-2 col-md-offset-3">
         <form method="post" enctype="multipart/form-data">
@@ -33,19 +24,5 @@
         {{ form.as_p }}
         <button type="submit">Upload</button>
     </form>
-<!--     </div>
-    <div class="dropdown col-md-2">
-        <button class="multiselect dropdown-toggle btn btn-default" type="button" data-toggle="dropdown">Funding Year
-            <span class="caret"></span>
-        </button>
-        <ul class="multiselect-container dropdown-menu">
-            <li><a> 2015/2016</a></li>
-            <li><a> 2016/2017</a></li>
-            <li><a> 2017/2018</a></li>
-        </ul>
-    </div>
-    <div class="dropdown col-sm-2">
-        <label class="checkbox"><input type="checkbox" value=""> Overwrite Data</label>
-    </div> -->
 </div>
 {% endblock %}
