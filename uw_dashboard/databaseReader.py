@@ -1,25 +1,25 @@
 from django.db import connection, models
 
+        def my_custom_sql(query):
+                with connection.cursor() as cursor:
+                        cursor.execute(query)
+                        results = dictfetchall(cursor)
+                return results
+
+        def dictfetchall(cursor):
+            "Return all rows from a cursor as a dict"
+            columns = [col[0] for col in cursor.description]
+            return [
+                dict(zip(columns, row))
+                for row in cursor.fetchall()
+            ]
+
 
 class DatabaseReader(models.Model):
 
 	def __init__(self, filters):
 		self.filters = filters
 
-	def _my_custom_sql(self, query):
-	        with connection.cursor() as cursor:
-	                cursor.execute(query)
-	                results = _dictfetchall(cursor)
-	        return results
-
-	def _dictfetchall(self, cursor):
-	    "Return all rows from a cursor as a dict"
-	    columns = [col[0] for col in cursor.description]
-	    return [
-	        dict(zip(columns, row))
-	        for row in cursor.fetchall()
-	    ]
-	
 	def readData(self):
 		filters = self.filters
 		filters = dict(filters.iterlists())
@@ -85,7 +85,7 @@ class DatabaseReader(models.Model):
 
 		query += " TRUE"
 
-		firstResults = _my_custom_sql(query)
+		firstResults = my_custom_sql(query)
 		
 		programsReturned = [i[0] for i in firstResults]
 
@@ -101,6 +101,6 @@ class DatabaseReader(models.Model):
 			tQuery += ") AND"
 		tQuery += " TRUE"
 
-		tResults = _my_custom_sql(tQuery)
+		tResults = my_custom_sql(tQuery)
 
 		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters['funding_year']}	
