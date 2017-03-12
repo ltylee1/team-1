@@ -37,6 +37,15 @@
     display: inline-block;
 }
 
+.form-horizontal .form-group {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+select[multiple], select[size] {
+    overflow: scroll;
+    height: 100px;
+}
+
 .btn-custom {
     color: #333;
     background-color:   #928780;
@@ -48,6 +57,11 @@
 
 .logo-title {
     text-align: center;
+}
+
+.testing-form {
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 label {
