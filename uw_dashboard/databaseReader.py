@@ -1,5 +1,19 @@
 from django.db import connection, models
 
+def my_custom_sql(self, query):
+	with connection.cursor() as cursor:
+        	cursor.execute(query)
+                results = dictfetchall(cursor)
+        return results
+
+def dictfetchall(self, cursor):
+	columns = [col[0] for col in cursor.description]
+        return [
+        	dict(zip(columns, row))
+                for row in cursor.fetchall()
+        ]
+
+
 class DatabaseReader(models.Model):
 
 	def __init__(self, filters):
