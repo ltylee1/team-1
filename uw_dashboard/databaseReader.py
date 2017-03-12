@@ -17,6 +17,7 @@ class DatabaseReader(models.Model):
 
 	def readData(self):
 		filters = self.filters
+		filters = dict(filters.iterlists())
 		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de WHERE"
 
 		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND"
@@ -97,4 +98,4 @@ class DatabaseReader(models.Model):
 
 		tResults = my_custom_sql(tQuery)
 
-		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters.get('funding_year')}	
+		return {'results': firstResults, 'totals': tResults, 'query': query, 'tquery': tQuery, 'filters': filters, 'fund': filters['funding_year']}	
