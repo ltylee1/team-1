@@ -66,11 +66,6 @@ select[multiple], select[size] {
     text-align: center;
 }
 
-.testing-form {
-    margin-right: 0px;
-    margin-left: 0px;
-}
-
 label {
     display: block;
     max-width: 100%;
