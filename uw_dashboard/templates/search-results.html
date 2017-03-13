@@ -2,55 +2,15 @@
 {% load static %}
 {% block content %}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="..\static\piedemojs.js"></script>
-<header>
-    <table width="100%" cellspacing="0">
-        <tbody>
-        <tr>
-            <td class="col-md-5">
-                <a class="pad-header-left header-text" href="addUser.html">Add User</a>
-            </td>
-            <td class="col-md-5">
-                <a class="pad-header-left header-text" href="resetPassword.html">Reset Password</a>
-            </td>
-            <td class="col-md-2 col-md-offset-10">
-            <td>
-            <td class="col-md-2 col-md-offset-10">
-            <td>
-            <td class="col-md-2 col-md-offset-10">
-                <div>
-                    <a class="header-text">Logged in as: {{user.username}}</a>
-                </div>
-            <td>
-                <div>
-                    <a class="pad-header-right header-text" href="logout.html">Logout</a>
-                </div>
-        </tr>
-        </tbody>
-    </table>
-</header>
-<div class="container">
+<script type="text/javascript" src="{% static 'piedemojs.js' %}"></script>
+
+<div>
     <div>
         <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
     </div>
     <div class="text-center title-text">United Way Program and Agency Database</div>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
-    <table class="dashboard-table">
-        <thead>
-            {% for field in results.0%}
-                <th>{{field}}</th>
-            {% endfor %}
-        </thead>
-        <tbody>
-            {% for result in results %}
-                <tr>
-                    {% for key, value in result.items %}
-                        <td>{{value}}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% include 'graphs.html' %}
+    {% include 'dashboard-table.html' %}
 </div>
 </div>
 {% endblock %}
