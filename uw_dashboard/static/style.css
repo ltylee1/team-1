@@ -87,12 +87,13 @@ label {
 }
 
 .inside-title {
-position: absolute; 
+  position: absolute;
   display: table; 
 }
 
 .title-text-map {
-    font-size: 25px;
+
+    font-size: 20px;
 /*    line-height: 45px;*/
     font-weight: bold;
     text-align: center;
