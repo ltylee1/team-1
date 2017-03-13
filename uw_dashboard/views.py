@@ -98,14 +98,15 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
     def post(self, request, *args, **kwargs):
-    	results = reporting.query_data(request.POST)
-        return render(request, 'search-results.html', results)
+    	context = reporting.query_data(request.POST)
+
+        if context.get('results') == []:
+            messages.error(request, "No data for selected filters")
+            return redirect(reverse_lazy('search-page'))
+        return render(request, 'search-results.html', context)
 
 class SearchPage(LoginRequiredMixin, TemplateView):
-    template_name = "search-page.html" 
-    def post(self, request, *args, **kwargs):
-    	results = reporting.query_data(request.POST)
-        return render(request, 'search-results.html', results)
+    template_name = "search-page.html"
 
 class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     template_name = "resetPassword.html"
