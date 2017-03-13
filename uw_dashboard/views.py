@@ -29,19 +29,16 @@ class UploadView(LoginRequiredMixin, TemplateView):
     def upload(self, request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print("form is valid")
             myfile = form.cleaned_data['File_To_Upload']
-            print(myfile)
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             file_path = fs.path(uploaded_file_url)
             reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']), form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
-            #fs.delete(filename)
+            fs.delete(filename)
             return HttpResponseRedirect('homepage.html')
 
         else:
-            print("form is invalid")
             return HttpResponseRedirect('homepage.html')
 
     def get(self, request, *args, **kwargs):
