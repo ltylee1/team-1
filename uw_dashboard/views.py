@@ -35,6 +35,7 @@ class UploadView(LoginRequiredMixin, TemplateView):
             uploaded_file_url = fs.url(filename)
             file_path = fs.path(uploaded_file_url)
             reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']), form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
+            fs.delete(filename)
             return HttpResponseRedirect('homepage.html')
 
         else:

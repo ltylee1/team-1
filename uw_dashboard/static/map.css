@@ -19,7 +19,6 @@ html, body {
   font-family: 'Roboto','sans-serif';
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
   flex-direction: row
 }
 

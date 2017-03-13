@@ -8,35 +8,19 @@
     </div>
     <div class="text-center title-text">United Way Program and Agency Database</div>
     <div class="text-center-home title-text">
-        <a class="btn btn-primary" href="/homepage.html">Home Page</a>
+      <a class="btn btn-primary" href="/homepage.html">Home Page</a>
+      <a class="btn btn-primary" href="/map.html">Map</a>
+      <a class="btn btn-primary" href="/search.html">Search</a>
+    </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="dropdown col-md-2 col-md-offset-3">
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
 </div>
-<form class="form-horizontal" method="POST"> {% csrf_token %}
-    <fieldset>
-
-        <div class="row">
-            <div class="dropdown col-md-2 col-md-offset-3">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{form.File_To_Upload}}
-                    <label id="upload" for="{{form.File_To_Upload.id_for_label}}">Choose a file</label>
-                    <label for="{{form.Funding_Year.id_for_label}}">Funding Year</label>
-                    {{form.Funding_Year}}
-
-                    <hr>
-                    {{ form.as_p }}
-                    <button type="submit">Upload</button>
-                </form>
-            </div>
-        </div>
-    </fieldset>
-</form>
-
-<script>
-$("#id_File_To_Upload").change(function (e) {
-    var filename = $('input[type=file]')[0].files[0].name;
-    $('#upload').text(filename);
-})
-</script>
 {% endblock %}
