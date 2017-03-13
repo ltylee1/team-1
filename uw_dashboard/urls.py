@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^logout.html$', LogoutView.as_view(), name="logout"),
     url(r'^addUser.html$', AddUserView.as_view(), name="addUser"),
     url(r'^map.html$', MapView.as_view(), name="map"),
-    url(r'^searchResults.html$', SearchResultsView.as_view(), name='searchResults'),
+    url(r'^searchResults.html$', SearchResultsView.as_view(), name='search-results'),
     url(r'^search-page.html$', SearchPage.as_view(), name='search-page'),
     url(r'^resetPassword.html$', SetPasswordView.as_view(), name="resetPassword")
 ]
