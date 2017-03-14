@@ -106,16 +106,44 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
 
-        context["funding_stream"] = self.getFundingStreamData(context["results"])
+        context["data_table"] = self.getDataTable(context["results"])
         return render(request, 'search-results.html', context)
 
-    def getFundingStreamData(self, results):
-        array = [["funding_stream", "allocation"]]
+    def getDataTable(self, results):
+        keys = [
+                  "funding_stream",
+                  "donor_engagement",
+                  "year",
+                  "program_planner",
+                  "element_name",
+                  "city",
+                  "specific_element",
+                  "strategic_outcome",
+                  "city_grouping",
+                  "level_name",
+                  "target_population",
+                  "focus_area"]
+
+        dataTable = [["Allocation" ,
+                  "Funding Stream",
+                  "Donor Engagement",
+                  "Year",
+                  "Program Planner",
+                  "Element Name",
+                  "City",
+                  "Specific Element",
+                  "Strategic Outcome",
+                  "City Grouping",
+                  "Level Name",
+                  "Target Population",
+                  "Focus Area"]]
 
         for data in results:
-            array.append([data["funding_stream"], data["allocation"]])
+            array = [data["allocation"]]
+            array += [str(data[key]) for key in keys]
+            dataTable.append(array)
 
-        return json.dumps(array)
+        return json.dumps(dataTable)
 
 
 class SearchPage(LoginRequiredMixin, TemplateView):

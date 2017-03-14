@@ -1,29 +1,25 @@
 <div id="graph_container">
-    <div id="funding_stream" class="graph">Funding Stream</div>
-    <div id="donor_engagement" class="graph">donor_engagement</div>
-    <div id="year" class="graph">year</div>
-    <div id="program_planner" class="graph">program_planner</div>
-    <div id="element_name" class="graph">element_name</div>
-    <div id="city" class="graph">city</div>
-    <div id="specific_element" class="graph">specific_element</div>
-    <div id="strategic_outcome" class="graph">strategic_outcome</div>
-    <div id="city_grouping" class="graph">city_grouping</div>
-    <div id="level_name" class="graph">level_name</div>
-    <div id="target_population" class="graph">target_population</div>
-    <div id="focus_area" class="graph">focus_area</div>
+    <div id="funding_stream" data-name="Funding Stream" class="graph">Funding Stream</div>
+    <div id="donor_engagement" data-name="Donor Engagement" class="graph">donor_engagement</div>
+    <div id="year" data-name="Year" class="graph">year</div>
+    <div id="program_planner" data-name="Program Planner" class="graph">program_planner</div>
+    <div id="element_name" data-name="Element Name" class="graph">element_name</div>
+    <div id="city" data-name="City" class="graph">city</div>
+    <div id="specific_element" data-name="Specific Element" class="graph">specific_element</div>
+    <div id="strategic_outcome" data-name="Strategic Outcome" class="graph">strategic_outcome</div>
+    <div id="city_grouping" data-name="City Grouping" class="graph">city_grouping</div>
+    <div id="level_name" data-name="Level Name" class="graph">level_name</div>
+    <div id="target_population" data-name="Target Population" class="graph">target_population</div>
+    <div id="focus_area" data-name="Focus Area" class="graph">focus_area</div>
 </div>
-{{funding_stream}}
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
   google.load("visualization", "1", {packages:["corechart"]});
 
-  function aggregateData(){
-    var data = {{funding_stream | safe}};
-    var dataTable = google.visualization.arrayToDataTable(data);
-
-    return google.visualization.data.group(dataTable, [0],
-        [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}])
+  function aggregateData(dataTable, groupByIndex){
+    return google.visualization.data.group(dataTable, [groupByIndex],
+        [{'column': 0, 'aggregation': google.visualization.data.sum, 'type': 'number'}])
   };
 
   function drawPieChart(id, title, data) {
@@ -36,24 +32,21 @@
   }
 </script>
 
+
 <script type="text/javascript">
-  google.setOnLoadCallback(drawFundingStream);
+  google.setOnLoadCallback(drawGraphs);
 
-  function drawFundingStream() {
-    var id = "funding_stream";
-    var title = "Funding Stream";
+  function drawGraphs() {
+    var data = {{data_table | safe}};
+    var dataTable = google.visualization.arrayToDataTable(data);
 
-    drawPieChart(id, title, aggregateData());
-  }
-</script>
-<script type="text/javascript">
-  google.setOnLoadCallback(drawDonorEngagement);
+    $(".graph").each(function(i) {
+        var id = this.id;
+        var title = $(this).data("name");
+        var groupByIndex = i + 1;
+        var data = aggregateData(dataTable, groupByIndex);
 
-  function drawDonorEngagement() {
-    var id = "donor_engagement";
-    var title = "Donor Stream";
-    var data = {{array | safe}};
-
-    drawPieChart(id, title, data);
+        drawPieChart(id, title, data)
+    });
   }
 </script>
