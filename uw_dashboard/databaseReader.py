@@ -90,7 +90,7 @@ class DatabaseReader(models.Model):
 			query = query[:-2]
 			query += ") AND"
 
-		query += " TRUE GROUP BY p.program_andar_number, pe.program_andar_number_id, de.program_andar_number_id"
+		query += " TRUE GROUP BY p.program_andar_number, pe.program_andar_number_id, de.program_andar_number_id, l.program_andar_number"
 
 		firstResults = my_custom_sql(query)
 		
