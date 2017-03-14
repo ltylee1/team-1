@@ -21,9 +21,11 @@ class DatabaseReader(models.Model):
 	def readData(self):
 		filters = self.filters
 		filters = dict(filters.iterlists())
-		query = "SELECT * FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de WHERE"
+		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), t.target_population, gfa.city, gfa.city_grouping"
+		
+		query += " FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de, uw_dashboard_location AS l WHERE"
 
-		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND"
+		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND p.program_andar_number = l.program_andar_number AND"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
@@ -79,16 +81,16 @@ class DatabaseReader(models.Model):
 			for i in filters['money_invested']:
 				if '+' in i:
 					i = i[:-1]
-					query += " p.funds > '" + str(i) + "' OR"
+					query += " p.allocation > '" + str(i) + "' OR"
 				elif '-' in i:
 					nums = str(i).split('-')
-					query += " (p.funds >= '" + str(nums[0]) + "' AND p.funds <= '" + str(nums[1]) + "') OR"
+					query += " (p.allocation >= '" + str(nums[0]) + "' AND p.allocation <= '" + str(nums[1]) + "') OR"
 				else:
-					query += " p.funds < '" + str(i) + "' OR"
+					query += " p.allocation < '" + str(i) + "' OR"
 			query = query[:-2]
 			query += ") AND"
 
-		query += " TRUE"
+		query += " TRUE GROUP BY p.program_andar_number, pe.program_andar_number_id, de.program_andar_number_id, l.program_andar_number, p.grant_start_date"
 
 		firstResults = my_custom_sql(query)
 		
