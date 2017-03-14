@@ -20,8 +20,10 @@ import json
 
 reporting = Reporting_Service(None)
 
+
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
+
 
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
@@ -35,7 +37,8 @@ class UploadView(LoginRequiredMixin, TemplateView):
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             file_path = fs.path(uploaded_file_url)
-            reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']), form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
+            reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
+                                  form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
             fs.delete(filename)
             return HttpResponseRedirect('homepage.html')
 
@@ -69,8 +72,10 @@ class LogoutView(RedirectView):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
 
+
 class MapView(LoginRequiredMixin, TemplateView):
     template_name = "map.html"
+
 
 class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "addUser.html"
@@ -97,10 +102,12 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
         return super(AddUserView, self).dispatch(request, *args, **kwargs)
 
+
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
+
     def post(self, request, *args, **kwargs):
-    	context = reporting.query_data(request.POST)
+        context = reporting.query_data(request.POST)
 
         if context.get('results') == []:
             messages.error(request, "No data for selected filters")
@@ -111,32 +118,35 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
     def getDataTable(self, results):
         keys = [
-                  "funding_stream",
-                  "donor_engagement",
-                  "year",
-                  "program_planner",
-                  "element_name",
-                  "city",
-                  "specific_element",
-                  "strategic_outcome",
-                  "city_grouping",
-                  "level_name",
-                  "target_population",
-                  "focus_area"]
+            "funding_stream",
+            "donor_engagement",
+            "year",
+            "program_planner",
+            "element_name",
+            "city",
+            "specific_element",
+            "strategic_outcome",
+            "city_grouping",
+            "level_name",
+            "target_population",
+            "focus_area",
+            "program_name"
+        ]
 
-        dataTable = [["Allocation" ,
-                  "Funding Stream",
-                  "Donor Engagement",
-                  "Year",
-                  "Program Planner",
-                  "Element Name",
-                  "City",
-                  "Specific Element",
-                  "Strategic Outcome",
-                  "City Grouping",
-                  "Level Name",
-                  "Target Population",
-                  "Focus Area"]]
+        dataTable = [["Allocation",
+                      "Funding Stream",
+                      "Donor Engagement",
+                      "Year",
+                      "Program Planner",
+                      "Element Name",
+                      "City",
+                      "Specific Element",
+                      "Strategic Outcome",
+                      "City Grouping",
+                      "Level Name",
+                      "Target Population",
+                      "Focus Area",
+                      "Program Name"]]
 
         for data in results:
             array = [data["allocation"]]
@@ -149,6 +159,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = "search-page.html"
 
+
 class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     template_name = "resetPassword.html"
     form_class = SetUserPasswordForm
@@ -158,7 +169,7 @@ class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         try:
-            user = User.objects.get(username = form.cleaned_data.get('username'))
+            user = User.objects.get(username=form.cleaned_data.get('username'))
         except ObjectDoesNotExist:
             messages.error(self.request, 'User with the username does not exist')
             return redirect(reverse_lazy('resetPassword'))
