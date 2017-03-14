@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+import json
 
 reporting = Reporting_Service(None)
 
@@ -104,7 +105,18 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
         if context.get('results') == []:
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
+
+        context["funding_stream"] = self.getFundingStreamData(context["results"])
         return render(request, 'search-results.html', context)
+
+    def getFundingStreamData(self, results):
+        array = [["funding_stream", "allocation"]]
+
+        for data in results:
+            array.append([data["funding_stream"], data["allocation"]])
+
+        return json.dumps(array)
+
 
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = "search-page.html"

@@ -1,14 +1,59 @@
 <div id="graph_container">
-    <div id="funding_stream" class="graph"></div>
-    <!--<div id="donor_engagement" class="graph"></div>-->
-    <!--<div id="year" class="graph"></div>-->
-    <!--<div id="program_planner" class="graph"></div>-->
-    <!--<div id="element_name" class="graph"></div>-->
-    <!--<div id="city" class="graph"></div>-->
-    <!--<div id="specific_element" class="graph"></div>-->
-    <!--<div id="strategic_outcome" class="graph"></div>-->
-    <!--<div id="city_grouping" class="graph"></div>-->
-    <!--<div id="level_name" class="graph"></div>-->
-    <!--<div id="target_population" class="graph"></div>-->
-    <!--<div id="focus_area" class="graph"></div>-->
+    <div id="funding_stream" class="graph">Funding Stream</div>
+    <div id="donor_engagement" class="graph">donor_engagement</div>
+    <div id="year" class="graph">year</div>
+    <div id="program_planner" class="graph">program_planner</div>
+    <div id="element_name" class="graph">element_name</div>
+    <div id="city" class="graph">city</div>
+    <div id="specific_element" class="graph">specific_element</div>
+    <div id="strategic_outcome" class="graph">strategic_outcome</div>
+    <div id="city_grouping" class="graph">city_grouping</div>
+    <div id="level_name" class="graph">level_name</div>
+    <div id="target_population" class="graph">target_population</div>
+    <div id="focus_area" class="graph">focus_area</div>
 </div>
+{{funding_stream}}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+
+  function aggregateData(){
+    var data = {{funding_stream | safe}};
+    var dataTable = google.visualization.arrayToDataTable(data);
+
+    return google.visualization.data.group(dataTable, [0],
+        [{'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number'}])
+  };
+
+  function drawPieChart(id, title, data) {
+    var chart = new google.visualization.PieChart(document.getElementById(id));
+    var options = {
+      title: title
+    };
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.setOnLoadCallback(drawFundingStream);
+
+  function drawFundingStream() {
+    var id = "funding_stream";
+    var title = "Funding Stream";
+
+    drawPieChart(id, title, aggregateData());
+  }
+</script>
+<script type="text/javascript">
+  google.setOnLoadCallback(drawDonorEngagement);
+
+  function drawDonorEngagement() {
+    var id = "donor_engagement";
+    var title = "Donor Stream";
+    var data = {{array | safe}};
+
+    drawPieChart(id, title, data);
+  }
+</script>
