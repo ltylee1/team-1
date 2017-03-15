@@ -15,7 +15,7 @@ TYPE = (
     ('postal', 'Program Locations'),
 )
 
-# widget=forms.TextInput(attrs={'class': 'text-center filter-text'})
+# widget=forms.TextInput(attrs={'class': 'col-md-4'})
 class UploadFileForm(forms.Form):
     File_To_Upload = forms.FileField()
     Overwrite_data = forms.BooleanField(required=False)

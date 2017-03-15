@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<style>body {padding-top: 20px;}</style>
 <div class="container">
     <div>
         <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
@@ -15,7 +16,7 @@
 
 <legend class="text-center">Upload file</legend>
 
-<div>
+<div class="upload-section">
     <div class="dropdown col-md-2 col-md-offset-3">
         <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

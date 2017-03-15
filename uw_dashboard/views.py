@@ -37,11 +37,18 @@ class UploadView(LoginRequiredMixin, TemplateView):
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             file_path = fs.path(uploaded_file_url)
-            reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
+            try:
+                result = reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
                                   form.cleaned_data['Overwrite_data'], form.cleaned_data['File_type'])
-            fs.delete(filename)
-            return HttpResponseRedirect('homepage.html')
-
+            except:
+                messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                return redirect(reverse_lazy('upload'))
+            if not result:
+                messages.error(request, "Please upload a .csv file")
+                return redirect(reverse_lazy('upload'))
+            else:
+                fs.delete(filename)
+                return HttpResponseRedirect('homepage.html')
         else:
             return HttpResponseRedirect('homepage.html')
 

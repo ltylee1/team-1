@@ -9,7 +9,6 @@
     height: 20px;
 }
 
-
 .text-right {
     text-align: right!important;
     padding-right: 15px;
@@ -20,9 +19,14 @@
 }
 
 .header-text {
-    font-family: 'FC Kaiser Cond', sans-serif;
-    font-size: 25px;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 18px;
     color: #000;
+    font-weight: bold;
+}
+
+.upload-section {
+   
 }
 
 .text-center {
