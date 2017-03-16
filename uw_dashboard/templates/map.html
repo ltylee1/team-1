@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
-    <script src="{% static 'map.js' %}"></script>
+    <!--<script src="{% static 'map.js' %}"></script>-->
 </head>
 <body>
 
@@ -32,13 +32,10 @@
     </div>
 </div>
 <div id="map"></div>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
-</script>
-<script type="text/javascript">
-function initMap() {
+<script>
+  function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11,
+        zoom: 10,
         center: {
             lat: 49.1609273,
             lng: -122.74400347
@@ -51,72 +48,45 @@ function initMap() {
     for (count = 0; count < addresses.length; count++) {
         plotMap(geocoder, map, addresses[count], loc_names[count]);
         }
-}
+  }
 
-function plotMap(geocoder, resultsMap, address, name){
-    geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-            //resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setCenter(49.1609273,-122.74400347);
-            contentString = '<div>Location name: '.concat(name)+'</div>'+
-                            '<div>Program name:</div>'+
-                            '<div>Agency name:</div>';
-            if (String(name) != 'undefined'){
-                var infowindow = new google.maps.InfoWindow({
-                    content: 'Location name: '.concat(name)
-                });
-            }
-            else{
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-            }
-            var marker = new google.maps.Marker({
-                map: resultsMap,
-                position: results[0].geometry.location,
-                title: 'United Way Program'
+  function plotMap(geocoder, resultsMap, address, name){
+geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+        contentString = '<div>Location name: '.concat(name)+'</div>'+
+                        '<div>Program name:</div>';
+        if (String(name) != 'undefined'){
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Location name: '.concat(name)
             });
-            marker.addListener('click', function() {
-                infowindow.open(map, marker, name);
-            });
-        } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-            setTimeout(function() {
-                plotMap(geocoder, resultsMap, address);
-            }, 50);
-        } else {
-            alert("Geocode was not successful for the following reason:"
-                  + status);
         }
-    });
-
-}
-
-function geocodeAddress(geocoder, resultsMap) {
-    //var address = document.getElementById('address').value;
-    var addresses = {{data_table|safe}};
-
-    for (count = 0; count < addresses.length; count++) {
-            geocoder.geocode({
-        'address': addresses[count]
-    }, function(results, status) {
-        if (status === 'OK') {
-            //resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setCenter(49.1609273,-122.74400347);
-            var marker = new google.maps.Marker({
-                map: resultsMap,
-                position: results[0].geometry.location
+        else{
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
             });
-        } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-            setTimeout(function() {
-                geocoder.geocode({'address': 'V6X 1A7'});
-            }, 2000);
-        } else {
-            alert("Geocode was not successful for the following reason:"
-                  + status);
         }
-    });
+        var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location,
+            title: 'United Way Program'
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker, name);
+        });
+    } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+        setTimeout(function() {
+            plotMap(geocoder, resultsMap, address);
+        }, 50);
+    } else {
+        alert("Geocode was not successful for the following reason:"
+              + status);
     }
+});
 }
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
 </script>
 </body>
 </html>
