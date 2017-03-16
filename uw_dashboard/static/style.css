@@ -9,6 +9,7 @@
     height: 20px;
 }
 
+<<<<<<< HEAD
 .miis {
     height: 100px;
     margin-left: auto;
@@ -26,6 +27,8 @@
     margin-right: auto;
 }
 
+=======
+>>>>>>> 9edf06bd57107c09ccdeb8738d887a2a50bf7462
 .text-right {
     text-align: right!important;
     padding-right: 15px;
@@ -36,9 +39,14 @@
 }
 
 .header-text {
-    font-family: 'FC Kaiser Cond', sans-serif;
-    font-size: 25px;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 18px;
     color: #000;
+    font-weight: bold;
+}
+
+.upload-section {
+   
 }
 
 .text-center {

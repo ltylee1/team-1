@@ -4,7 +4,7 @@ import models
 
 class Parser:
     def __init__(self, cur_file, year, overwrite, type):
-        if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool):
+        if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(type, str):
             self.cur_file = cur_file
             self.year = year
             self.overwrite = overwrite
@@ -14,7 +14,7 @@ class Parser:
                 raise Exception("year invalid")
             if not isinstance(overwrite, bool):
                 raise Exception("overwrite invalid")
-            if type != 'postal' or type != 'output':
+            if not isinstance(type, str):
                 raise Exception("type is invalid")
             raise Exception("file invalid")
 
@@ -145,6 +145,9 @@ class Parser:
         models.Program.objects.filter(year=self.year).delete()
 
     def drop_location_table(self):
+        models.Location.objects.all().delete()
+
+    def drop_agency_location_table(self):
         models.Location.objects.all().delete()
 
     def insert_row(self, row):
@@ -416,6 +419,21 @@ class Parser:
                     # else:
                     #     print 'Exists and if we wanted to update we would do that here'
 
+    # TODO determine model and insert agency can have multiple programs
+    def insert_agency_location(self, row):
+        loc_post = row[self.postal_index['Postal Code']]
+        if ' ' not in loc_post:
+            loc_post = loc_post[:3] + ' ' + loc_post[3:]
+        check = models.Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']], postal_code=loc_post).exists()
+        # Agency location does not already exist
+        if not check:
+            loc = models.Location(program_andar_number=row[self.postal_index['Program Andar #']],
+                                  postal_code=loc_post)
+            loc.save()
+        # else:
+            #     print 'Exists and if we wanted to update we would do that here'
+
+
     def check_columns(self):
         # Checks column length
         # Checks that columns contain expected columns
@@ -425,8 +443,9 @@ class Parser:
                           'Geographic Focus Area', 'Donor Engagement', 'Outputs', 'First Nation Territories',
                         'Metro Vancouver Regional District',
                           'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
-        postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website', 'Description',
+        program_postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website', 'Description',
                           '# Locations']
+        agency_postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Postal Code']
         pfile = self.cur_file
         with open(pfile, 'rb') as f:
             reader = csv.reader(f)
@@ -434,9 +453,15 @@ class Parser:
             if self.type == 'postal':
                 if len(columns) != 37:
                     print "Columns have been removed or added, system may not work"
-                for col_name in postal_columns:
+                for col_name in program_postal_columns:
                     if col_name not in columns:
                         raise Exception('Column: %s is missing' % col_name)
+            # elif self.type == 'agency':
+            #     if len(columns) != 5:
+            #         print "Columns have been removed or added, system may not work"
+            #     for col_name in agency_postal_columns:
+            #         if col_name not in columns:
+            #             raise Exception('Column: %s is missing' % col_name)
             elif self.type == 'output':
                 if len(columns) != 159:
                     print "Columns have been removed or added, system may not work"
@@ -445,11 +470,15 @@ class Parser:
                         raise Exception('Column: %s is missing' % col_name)
         return True
 
+    def check_type(self):
+        if str(self.type) != 'postal' and str(self.type) != 'output':
+            raise Exception('File type is incorrect')
+        return True
 
     # Checks that the file is a CSV
     def validate_file(self):
         pfile = self.cur_file
-        if pfile.endswith('.csv') and self.check_columns():
+        if pfile.endswith('.csv') and self.check_columns() and self.check_type():
             return True
         else:
             return False
@@ -467,6 +496,11 @@ class Parser:
                     self.drop_location_table()
                 for row in self.content:
                     self.insert_program_location(row)
+            # elif 'agency' in self.type:
+            #     if self.overwrite:
+            #         self.drop_location_table()
+            #     for row in self.content:
+            #         self.insert_agency_location(row)
         else:
             raise Exception("Nothing to insert")
 
@@ -488,3 +522,11 @@ class Parser:
                 self.get_postal_index(self.column_names, 'program')
                 for row in reader:
                     self.content.append(row)
+
+        # elif 'agency' in self.type:
+        #     with open(pfile, 'rb') as f:
+        #         reader = csv.reader(f)
+        #         self.column_names = reader.next()
+        #         self.get_postal_index(self.column_names, 'agency')
+        #         for row in reader:
+        #             self.content.append(row)

@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-<header>
     <table width="100%" cellspacing="0">
         <tbody>
         <tr>
@@ -17,9 +16,7 @@
                 {% endif %}
             </td>
             <td class="col-md-6 right-allign">
-                <div>
-                    <a class="header-text">Logged in as:{{user.username}}</a>
-                </div>
+                <div class="header-text">Logged in as: {{user.username}}</div>
                 <div>
                     <a class="header-text" href="logout.html">Logout</a>
                 </div>
@@ -27,7 +24,6 @@
         </tr>
         </tbody>
     </table>
-</header>
 <div class="container">
     <div>
         <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
