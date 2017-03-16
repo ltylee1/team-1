@@ -114,39 +114,42 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             return redirect(reverse_lazy('search-page'))
 
         context["data_table"] = self.getDataTable(context["results"])
+        context["totals_table"] = self.getTotalsTable(context["totals"])
+        context["filters_table"] = self.getFiltersTable(context["filters"])
         return render(request, 'search-results.html', context)
 
     def getDataTable(self, results):
         keys = [
-            "funding_stream",
-            "donor_engagement",
-            "year",
-            "program_planner",
-            "element_name",
-            "city",
-            "specific_element",
-            "strategic_outcome",
-            "city_grouping",
-            "level_name",
-            "target_population",
-            "focus_area",
-            "program_name"
+            # "funding_stream"
+            # "donor_engagement",
+            # "year",
+            # "program_planner",
+            # "element_name",
+             "city",
+            # "specific_element",
+            # "strategic_outcome",
+            # "city_grouping",
+            # "level_name",
+            # "target_population",
+            # "focus_area",
+            # "program_name"
         ]
 
         dataTable = [["Allocation",
-                      "Funding Stream",
-                      "Donor Engagement",
-                      "Year",
-                      "Program Planner",
-                      "Element Name",
-                      "City",
-                      "Specific Element",
-                      "Strategic Outcome",
-                      "City Grouping",
-                      "Level Name",
-                      "Target Population",
-                      "Focus Area",
-                      "Program Name"]]
+                      # "Funding Stream",
+                      # "Donor Engagement",
+                      # "Year",
+                      # "Program Planner",
+                      # "Element Name",
+                      "City"
+                      # "Specific Element",
+                      # "Strategic Outcome",
+                      # "City Grouping",
+                      # "Level Name",
+                      # "Target Population",
+                      # "Focus Area",
+                      # "Program Name"]]
+                      ]]
 
         for data in results:
             array = [data["allocation"]]
@@ -154,6 +157,64 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             dataTable.append(array)
 
         return json.dumps(dataTable)
+
+
+    def getTotalsTable(self, results):
+        keyNames = ["Seniors",
+                      "Early Years",
+                      "Counselling Sessions",
+                      "Families",
+                      "Programs",
+                      "Mentors/Tutors",
+                      "Workshops",
+                      "Middle Years",
+                      "Agencies",
+                      "Meals/Snacks",
+                      "Money Invested",
+                      "Parent/Caregivers",
+                      "Volunteers"]
+
+        print results
+        data = results[0]
+        i =0
+        for key in data:
+            data[key] = [keyNames[i], str(data[key])]
+            i = i + 1
+
+
+        results[0] = data
+
+        return results
+
+    def getFiltersTable(self, results):
+        keyNames = {"funding_year" : "Funding Year",
+                    "focus_area" : "Focus Area",
+                    "target_population" : "Target Population",
+                    "program_elements" : "Program Elements",
+                    "city" : "City Grouping",
+                    "gfa" : "Geogrphic Focus Area",
+                    "donor" : "Donor Engagement",
+                    "money_invested" : "Money Invested"
+                    }
+
+        del results["Submit"]
+        del results["csrfmiddlewaretoken"]
+
+        # for key in results:
+        #     results[key] = {keyNames[key]: str(results[key])}
+
+        for key in results:
+            results[key] = {keyNames[key] :  results[key]}
+            filterList = results[key][keyNames[key]]
+            filterMapKey = keyNames[key]
+            j = 0
+            for option in filterList:
+                print j
+                filterList[j] = str(option)
+                j = j + 1
+            results[key][keyNames[key]] = filterList
+
+        return results
 
 
 class SearchPage(LoginRequiredMixin, TemplateView):

@@ -9,6 +9,22 @@
     height: 20px;
 }
 
+.miis {
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mii-div{
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.totals-div {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .text-right {
     text-align: right!important;

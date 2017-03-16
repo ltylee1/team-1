@@ -1,15 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<!DOCTYPE html>
+<head>
+  <title>Graphs</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+</head>
+<body>
 <div>
+	<div id="floating-panel">
     <div>
-        <img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/>
+        <img class="united-way-logo-map" src="{% static 'images/dashboard.jpeg' %}"/>
     </div>
-    <div class="text-center title-text">United Way Program and Agency Database</div>
+    <div class="inside-title">
+        <div class="title-text-map">United Way Program and</div>
+        <div class="title-text-map">Agency Database</div>
+    </div>
+    <div class="options but-map">
+        <a class="btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
+    </div>
+</div>
+
     {% include 'graphs.html' %}
     {% include 'dashboard-table.html' %}
 </div>
 </div>
+</body>
 {% endblock %}
