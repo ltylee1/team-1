@@ -81,7 +81,14 @@ class LogoutView(RedirectView):
 
 
 class MapView(LoginRequiredMixin, TemplateView):
-    template_name = "map.html"
+
+    def get(self, request, *args, **kwargs):
+        location_list = reporting.queryMap()
+        postal_list = location_list[0]
+        name_list = location_list[1]
+        # # print postal_list
+        # postal_list = ['V2Y 2N1','V1M 2R6','V6X 1A7']
+        return render(request, 'map.html', {'data_table': location_list})
 
 
 class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
