@@ -42,9 +42,11 @@ class UploadView(LoginRequiredMixin, TemplateView):
                                   form.cleaned_data['Overwrite_data'], str(form.cleaned_data['File_type']))
             except Exception as e:
                 messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                fs.delete(filename)
                 return redirect(reverse_lazy('upload'))
             if not result:
                 messages.error(request, "Please upload a .csv file")
+                fs.delete(filename)
                 return redirect(reverse_lazy('upload'))
             else:
                 fs.delete(filename)
