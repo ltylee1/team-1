@@ -142,9 +142,18 @@ class Reporting_Service:
 
     def query_data(self, filters):
         # query the data
-	dbReader = DatabaseReader(filters)
-	results = dbReader.readData()
+        dbReader = DatabaseReader(filters)
+        results = dbReader.readData()
         return results
+
+    def queryMap(self):
+        postal_codes = []
+        location_name = []
+        locations = Location.objects.all()
+        for location in locations:
+            postal_codes.append(str(location.postal_code))
+            location_name.append(str(location.location))
+        return [postal_codes, location_name]
 
     def create_dashboard(self):
         # call the dashboard generator

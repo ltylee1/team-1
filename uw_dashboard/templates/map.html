@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
-    <script src="{% static 'map.js' %}"></script>
+    <!--<script src="{% static 'map.js' %}"></script>-->
 </head>
 <body>
 
@@ -32,8 +32,61 @@
     </div>
 </div>
 <div id="map"></div>
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: {
+            lat: 49.1609273,
+            lng: -122.74400347
+        }
+    });
+    var geocoder = new google.maps.Geocoder();
+    var data = {{data_table|safe}};
+    var addresses = data[0];
+    var loc_names = data[1];
+    for (count = 0; count < addresses.length; count++) {
+        plotMap(geocoder, map, addresses[count], loc_names[count]);
+        }
+  }
+
+  function plotMap(geocoder, resultsMap, address, name){
+geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+        contentString = '<div>Location name: '.concat(name)+'</div>'+
+                        '<div>Program name:</div>';
+        if (String(name) != 'undefined'){
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Location name: '.concat(name)
+            });
+        }
+        else{
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+        }
+        var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location,
+            title: 'United Way Program'
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker, name);
+        });
+    } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+        setTimeout(function() {
+            plotMap(geocoder, resultsMap, address);
+        }, 50);
+    } else {
+        alert("Geocode was not successful for the following reason:"
+              + status);
+    }
+});
+}
+
+</script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&callback=initMap">
 </script>
 </body>
 </html>
