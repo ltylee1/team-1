@@ -21,12 +21,6 @@
         <div class="title-text-map">United Way Program and</div>
         <div class="title-text-map">Agency Database</div>
     </div>
-
-<!--     <div class="option">
-        <input id="address" type="textbox" value="">
-        <input id="submit" type="button" value="Geocode">
-    </div> -->
-
     <div class="options but-map">
         <a class="btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
     </div>
@@ -42,29 +36,24 @@
         }
     });
     var geocoder = new google.maps.Geocoder();
+
     var data = {{data_table|safe}};
     var addresses = data[0];
     var loc_names = data[1];
+    var pro_names = data[2];
     for (count = 0; count < addresses.length; count++) {
-        plotMap(geocoder, map, addresses[count], loc_names[count]);
+        plotMap(geocoder, map, addresses[count], loc_names[count], pro_names[count]);
         }
   }
-
-  function plotMap(geocoder, resultsMap, address, name){
+function plotMap(geocoder, resultsMap, address, name, pro_name){
 geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
-        contentString = '<div>Location name: '.concat(name)+'</div>'+
-                        '<div>Program name:</div>';
-        if (String(name) != 'undefined'){
-            var infowindow = new google.maps.InfoWindow({
-                content: 'Location name: '.concat(name)
-            });
-        }
-        else{
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-        }
+        contentString = '<div><b>Location name: </b>'.concat(name)+'</div>'+
+                        '<div><b>Program name: </b>'.concat(pro_name)+'</div>'+
+                        '<div><b>Address: </b>'.concat(results[0].formatted_address)+'</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
         var marker = new google.maps.Marker({
             map: resultsMap,
             position: results[0].geometry.location,
@@ -75,8 +64,8 @@ geocoder.geocode({'address': address}, function(results, status) {
         });
     } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         setTimeout(function() {
-            plotMap(geocoder, resultsMap, address);
-        }, 50);
+            plotMap(geocoder, resultsMap, address, name, pro_name);
+        }, 200);
     } else {
         alert("Geocode was not successful for the following reason:"
               + status);
