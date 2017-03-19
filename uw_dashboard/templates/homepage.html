@@ -13,11 +13,16 @@
                 <div>
                     <a class="header-text" href="resetPassword.html">Reset Password</a>
                 </div>
+                 <div class="header-text">
+                    <form action="{% url 'profile' %}" method="POST"> {% csrf_token %}
+                       <input type="submit" value="View Recent Searches" id="singlebutton" name="Profile" class="abtn">
+                    </form>
+                </div>
                 {% endif %}
             </td>
             <td class="col-md-6 right-allign">
-                <div class="header-text">Logged in as: {{user.username}}</div>
-                <div>
+                <div class="header-text">
+                    <a style="color:black;"> Logged in as: {{user.username}} </a><br>
                     <a class="header-text" href="logout.html">Logout</a>
                 </div>
             </td>

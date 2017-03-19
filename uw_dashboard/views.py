@@ -16,13 +16,39 @@ from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-import json
+from django.db import connection, models
+import json, models
 
 reporting = Reporting_Service(None)
 
-
 class Homepage(LoginRequiredMixin, TemplateView):
     template_name = "homepage.html"
+
+class Profile(LoginRequiredMixin, TemplateView):
+    template_name = "profile.html"
+
+
+    def post(self, request, *args, **kwargs):
+        query = "SELECT * FROM uw_dashboard_search_history"
+        results = self.my_custom_sql(query)
+        context= {}
+        context["results"] = results
+        return render(request, 'profile.html', context)
+
+    def dictfetchall(self, cursor):
+        columns = [col[0] for col in cursor.description]
+        results = []
+        for row in cursor.fetchall():
+             results.append(dict(zip(columns, row)))
+        return results    
+
+    def my_custom_sql(self,query):
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            results = self.dictfetchall(cursor)
+        return results
+
+
 
 
 class UploadView(LoginRequiredMixin, TemplateView):
@@ -120,6 +146,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
 
+        self.addFiltersToDatabase(context["filters"])
         context["data_table"] = self.getDataTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
         context["filters_table"] = self.getFiltersTable(context["filters"])
@@ -181,7 +208,6 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
                       "Parent/Caregivers",
                       "Volunteers"]
 
-        print results
         data = results[0]
         i =0
         for key in data:
@@ -216,13 +242,47 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             filterMapKey = keyNames[key]
             j = 0
             for option in filterList:
-                print j
                 filterList[j] = str(option)
                 j = j + 1
             results[key][keyNames[key]] = filterList
 
         return results
 
+    def addFiltersToDatabase(self, results):
+        funding_year=""
+        focus_area=""
+        target_population=""
+        program_elements=""
+        city=""
+        gfa=""
+        donor=""
+        money_invested=""
+        if "funding_year" in results:
+            funding_year = results["funding_year"]
+        if "focus_area" in results:
+            focus_area = results["focus_area"]
+        if "target_population" in results:
+            target_population = results["target_population"]
+        if "program_elements" in results:
+            program_elements = results["program_elements"]
+        if "city" in results:
+            city = results["city"]
+        if "gfa" in results:
+            gfa = results["gfa"]
+        if "donor" in results:
+            donor = results["donor"]
+        if "money_invested" in results:
+            money_invested = results["money_invested"]
+
+        search = models.Search_History( funding_year=funding_year,
+                                        focus_area=focus_area,
+                                        target_population=target_population,
+                                        program_elements=program_elements,
+                                        city_groupings=city,
+                                        geographic_focus_area=gfa,
+                                        donor_engagement=donor,
+                                        money_invested=money_invested)
+        search.save()
 
 class SearchPage(LoginRequiredMixin, TemplateView):
     template_name = "search-page.html"

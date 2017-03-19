@@ -77,6 +77,18 @@ class Location(models.Model):
     website = models.CharField(max_length=128)
 
 
+class Search_History(models.Model):
+    focus_area = models.CharField(max_length=512)
+    target_population = models.CharField(max_length=512)
+    program_elements = models.CharField(max_length=512)
+    city_groupings = models.CharField(max_length=512)
+    geographic_focus_area = models.CharField(max_length=512)
+    donor_engagement = models.CharField(max_length=512)
+    money_invested= models.CharField(max_length=512)
+    funding_year = models.CharField(max_length=512)
+    #user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
 # Separate table for extra user information we need that is not used for authentication
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -9,11 +9,22 @@
     height: 20px;
 }
 
-<<<<<<< HEAD
 .miis {
     height: 100px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.abtn {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.abtn:hover {
+    cursor:pointer;
+    color:navy;
+    text-decoration:underline;
 }
 
 .mii-div{
@@ -27,8 +38,6 @@
     margin-right: auto;
 }
 
-=======
->>>>>>> 9edf06bd57107c09ccdeb8738d887a2a50bf7462
 .text-right {
     text-align: right!important;
     padding-right: 15px;

@@ -1,0 +1,72 @@
+{% load static %}
+
+{% load app_filters %}
+<!DOCTYPE html>
+<head>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+</head>
+<body>
+	<div id="floating-panel">
+    <div>
+        <img class="united-way-logo-map" src="{% static 'images/dashboard.jpeg' %}"/>
+    </div>
+    <div class="inside-title">
+        <div class="title-text-map">United Way Program and</div>
+        <div class="title-text-map">Agency Database</div>
+    </div>
+    <div class="options but-map">
+        <a class="btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
+    </div>
+</div>
+
+<h1>Recent User Searches</h1>
+<table class="dashboard-table">
+    <thead>
+            <th>Focus Area</th>
+            <th>Program Elements</th>
+            <th>Money Invested</th>
+            <th>City Grouping</th>
+            <th>Geographic Focus Area</th>
+            <th>Donor Engagement</th>
+            <th>Funding Year</th>
+            <th>Target Population</th>
+    </thead>
+	<tbody>
+	  {% for filters in results reversed %}
+         <tr>
+          <td>
+          	{{ filters |get:"focus_area"}}
+          </td>
+          <td>
+          	{{ filters |get:"program_elements"}}
+          </td>
+          <td>
+          	{{ filters |get:"money_invested"}}
+          </td>
+          <td>
+          	{{ filters |get:"city_groupings"}}
+          </td>
+          <td>
+          	{{ filters |get:"geographic_focus_area"}}
+          </td>
+          <td>
+          	{{ filters |get:"donor_engagement"}}
+          </td>
+          <td>
+          	{{ filters |get:"funding_year"}}
+          </td>
+          <td>
+          	{{ filters |get:"target_population"}}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+
+
+</table>
+
+</body>
