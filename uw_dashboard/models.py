@@ -149,11 +149,15 @@ class Reporting_Service:
     def queryMap(self):
         postal_codes = []
         location_name = []
+        program_names = []
         locations = Location.objects.all()
         for location in locations:
             postal_codes.append(str(location.postal_code))
             location_name.append(str(location.location))
-        return [postal_codes, location_name]
+            andar = location.program_andar_number
+            pro = Program.objects.get(program_andar_number=andar)
+            program_names.append(str(pro.program_name))
+        return [postal_codes, location_name, program_names]
 
     def create_dashboard(self):
         # call the dashboard generator
