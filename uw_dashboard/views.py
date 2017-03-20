@@ -174,7 +174,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             array = [str(data[key]) for key in keys]
             dataTable.append(array)
 
-        return json.dumps(dataTable)
+        return dataTable
 
     def getPieTable(self, results):
         keys = [
