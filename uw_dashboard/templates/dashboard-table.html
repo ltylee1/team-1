@@ -12,11 +12,10 @@
     {% for row in data_table %}
         <tr>
             {% for value in row %}
-                <td>{{ row }}</td>
+                <td>{{ value }}</td>
             {% endfor %}
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-{{data_table}}
