@@ -25,7 +25,7 @@ class DatabaseReader(models.Model):
 		
 		query += " FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de, uw_dashboard_location AS l, uw_dashboard_agencies AS a WHERE"
 
-		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND p.program_andar_number = l.program_andar_number AND p.agency_andar_number_id = a.agency_andar_number"
+		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND p.program_andar_number = l.program_andar_number AND p.agency_andar_number_id = a.agency_andar_number AND"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
