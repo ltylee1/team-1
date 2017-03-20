@@ -51,19 +51,7 @@
 
 <h1 class="text-center">Allocation by City</h1>
 <div id="graph_container">
-   <!-- <div id="funding_stream" data-name="Funding Stream" class="graph">Funding Stream</div>
-     <div id="donor_engagement" data-name="Donor Engagement" class="graph">donor_engagement</div>
-    <div id="year" data-name="Year" class="graph">year</div>
-    <div id="program_planner" data-name="Program Planner" class="graph">program_planner</div>
-    <div id="element_name" data-name="Element Name" class="graph">element_name</div> -->
-    <div id="city" data-name="City" class="graph">city</div>
-   <!-- <div id="specific_element" data-name="Specific Element" class="graph">specific_element</div>
-    <div id="strategic_outcome" data-name="Strategic Outcome" class="graph">strategic_outcome</div>
-    <div id="city_grouping" data-name="City Grouping" class="graph">city_grouping</div>
-    <div id="level_name" data-name="Level Name" class="graph">level_name</div>
-    <div id="target_population" data-name="Target Population" class="graph">target_population</div>
-    <div id="focus_area" data-name="Focus Area" class="graph">focus_area</div>
-    <div id="program_name" data-name="Program" class="graph"></div> -->
+    <div id="city" data-name="" class="graph">city</div>
 </div>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -90,7 +78,7 @@
 
 
   function drawGraphs() {
-    var data = {{data_table | safe}};
+    var data = {{pie_table | safe}};
     var dataTable = google.visualization.arrayToDataTable(data);
 
     $(".graph").each(function(i) {

@@ -152,43 +152,20 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             return redirect(reverse_lazy('search-page'))
 
         self.addFiltersToDatabase(context["filters"])
-        context["data_table"] = self.getDataTable(context["results"])
+        context["pie_table"] = self.getPieTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
         context["filters_table"] = self.getFiltersTable(context["filters"])
         return render(request, 'search-results.html', context)
 
-    def getDataTable(self, results):
+    def getPieTable(self, results):
         keys = [
-            # "funding_stream"
-            # "donor_engagement",
-            # "year",
-            # "program_planner",
-            # "element_name",
              "city",
-            # "specific_element",
-            # "strategic_outcome",
-            # "city_grouping",
-            # "level_name",
-            # "target_population",
-            # "focus_area",
-            # "program_name"
         ]
 
-        dataTable = [["Allocation",
-                      # "Funding Stream",
-                      # "Donor Engagement",
-                      # "Year",
-                      # "Program Planner",
-                      # "Element Name",
-                      "City"
-                      # "Specific Element",
-                      # "Strategic Outcome",
-                      # "City Grouping",
-                      # "Level Name",
-                      # "Target Population",
-                      # "Focus Area",
-                      # "Program Name"]]
-                      ]]
+        dataTable = [[
+            "Allocation",
+            "City"
+        ]]
 
         for data in results:
             array = [data["allocation"]]
