@@ -335,13 +335,84 @@ class ParserTestWithDBSETUP(TestCase):
         self.assertEqual(last.funding_stream, 'Community Schools')
         self.assertEqual(last.allocation, 25000)
         self.assertEqual(last.year, 2017)
-    #
-    #     Inv = 'C:\Users\Ty\Desktop\CPSC 319\\201516_Inventory_and_Outputs.Feb_update.csv'
-    #     Post = 'C:\Users\Ty\Desktop\CPSC 319\\Postal.csv'
 
-        # rs = models.Reporting_Service('')
-        # rs.import_data(Inv, 2016, True)
-        # rs.import_data(Post, 2016, True)
-        #
-        # check = models.Program.objectsfilter(year='2017')
-        # self.assertEqual(check.count(), 16)
+        check = models.Location.objects.all()
+        self.assertEqual(check.count(), 28)
+
+        first = models.Location.objects.first()
+        self.assertEqual(first.location, 'Big Sisters BC Lower Mainland Program Office')
+        self.assertEqual(first.postal_code, 'V6E 2X5')
+        self.assertEqual(first.website, '')
+        self.assertEqual(first.program_andar_number, 5649363)
+
+        last = models.Location.objects.last()
+        self.assertEqual(last.location, 'Clinton Park')
+        self.assertEqual(last.postal_code, 'V5K 3G8')
+        self.assertEqual(last.website, '')
+        self.assertEqual(last.program_andar_number, 5649439)
+
+    def testAppend(self):
+        Updated = os.path.join(self.dir, 'media', '201516_Inventory_and_Outputs.Feb_update shorter append.csv')
+        UpdatedPost = os.path.join(self.dir, 'media', 'Postal - Updated.csv')
+        rs = models.Reporting_Service('')
+
+        rs.import_data(Updated, 2017, True, 'output')
+        rs.import_data(UpdatedPost, 2017, True, 'postal')
+
+        Inv = os.path.join(self.dir, 'media', '201516_Inventory_and_Outputs.Feb_update.csv')
+        Post = os.path.join(self.dir, 'media', 'Postal.csv')
+
+        rs.import_data(Inv, 2017, False, 'output')
+        rs.import_data(Post, 2017, False, 'postal')
+
+        check = models.Program.objects.all()
+        self.assertEqual(check.count(), 30)
+
+        first = models.Program.objects.first()
+        self.assertEqual(first.agency_andar_number.agency_andar_number, 184986)
+        self.assertEqual(first.program_andar_number, 4962759)
+        self.assertEqual(first.program_name, 'Better at Home Langley')
+        self.assertEqual(first.grant_start_date, datetime.date(2015, 4, 1))
+        self.assertEqual(first.grant_end_date, datetime.date(2016, 3, 31))
+        self.assertEqual(first.program_description, 'Better at Home funding mobilizes local resources, networks and volunteers to support seniors living in their homes and enabling them to remain at home longer.')
+        self.assertEqual(first.program_planner, 'Yves Trudel')
+        self.assertEqual(first.funds, 'GOV')
+        self.assertEqual(first.focus_area, 'Strong Communities')
+        self.assertEqual(first.strategic_outcome, 'Helping Seniors to Live Independently')
+        self.assertEqual(first.funding_stream, 'Better at Home')
+        self.assertEqual(first.allocation, 180000)
+        self.assertEqual(first.year, 2017)
+
+        last = models.Program.objects.last()
+        self.assertEqual(last.agency_andar_number.agency_andar_number, 252510)
+        self.assertEqual(last.program_andar_number, 6017495)
+        self.assertEqual(last.program_name, 'Maple Ridge Pitt Meadows Community School Partnership')
+        self.assertEqual(last.grant_start_date, datetime.date(2015, 12, 1))
+        self.assertEqual(last.grant_end_date, datetime.date(2016, 6, 30))
+        self.assertEqual(last.program_description, 'Funding of Community School Coordinator to facilitatie provision of out of school time programming to children to keep them safe and supervised as well as provide opportunities for self-development.')
+        self.assertEqual(last.program_planner, 'Angie Osachoff')
+        self.assertEqual(last.funds, 'UWLM')
+        self.assertEqual(last.focus_area, 'All That Kids Can Be')
+        self.assertEqual(last.strategic_outcome, 'Helping School-Aged Children Succeed')
+        self.assertEqual(last.funding_stream, 'Community Schools')
+        self.assertEqual(last.allocation, 25000)
+        self.assertEqual(last.year, 2017)
+
+        check = models.Location.objects.all()
+        self.assertEqual(check.count(), 67)
+
+        first = models.Location.objects.first()
+        self.assertEqual(first.location, 'Big Sisters BC Lower Mainland Program Office')
+        self.assertEqual(first.postal_code, 'V6E 2X5')
+        self.assertEqual(first.website, '')
+        self.assertEqual(first.program_andar_number, 5649363)
+
+        last = models.Location.objects.last()
+        self.assertEqual(last.location, 'Valley Community Services')
+        self.assertEqual(last.postal_code, 'V0B 1G5')
+        self.assertEqual(last.website, '')
+        self.assertEqual(last.program_andar_number, 5606579)
+
+
+
+
