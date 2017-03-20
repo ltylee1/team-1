@@ -151,6 +151,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
 
+        print context.get("results")[0]
         self.addFiltersToDatabase(context["filters"])
         context["data_table"] = self.getDataTable(context["results"])
         context["pie_table"] = self.getPieTable(context["results"])
@@ -165,7 +166,8 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             "allocation",
             "funding_stream",
             "grant_start_date",
-            "grant_end_date"
+            "grant_end_date",
+            "element_names",
         ]
 
         dataTable = []
