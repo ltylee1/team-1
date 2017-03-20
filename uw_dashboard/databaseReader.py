@@ -21,11 +21,11 @@ class DatabaseReader(models.Model):
 	def readData(self):
 		filters = self.filters
 		filters = dict(filters.iterlists())
-		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), t.target_population, gfa.city, gfa.city_grouping"
+		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), t.target_population, gfa.city, gfa.city_grouping, a.agency_name"
 		
-		query += " FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de, uw_dashboard_location AS l WHERE"
+		query += " FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de, uw_dashboard_location AS l, uw_dashboard_agencies AS a WHERE"
 
-		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND p.program_andar_number = l.program_andar_number AND"
+		query += " p.program_andar_number = pe.program_andar_number_id AND p.program_andar_number = t.program_andar_number_id AND p.program_andar_number = gfa.program_andar_number_id AND p.program_andar_number = de.program_andar_number_id AND p.program_andar_number = l.program_andar_number AND p.agency_andar_number_id = a.agency_andar_number"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
