@@ -21,7 +21,7 @@ class DatabaseReader(models.Model):
 	def readData(self):
 		filters = self.filters
 		filters = dict(filters.iterlists())
-		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), t.target_population, gfa.city, gfa.city_grouping"
+		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), t.target_population, gfa.city, gfa.city_grouping"
 		
 		query += " FROM uw_dashboard_program AS p, uw_dashboard_program_elements AS pe, uw_dashboard_target_population AS t, uw_dashboard_geo_focus_area AS gfa, uw_dashboard_donor_engagement AS de, uw_dashboard_location AS l WHERE"
 
