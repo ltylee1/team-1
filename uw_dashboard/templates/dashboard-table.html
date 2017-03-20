@@ -1,17 +1,22 @@
 <table class="dashboard-table">
     <thead>
-        {% for field in results.0 %}
-            <th>{{ field }}</th>
-        {% endfor %}
+        <th>Program Name</th>
+        <th>Agency Name</th>
+        <th>Dollars Invested</th>
+        <th>Funding Stream</th>
+        <th>Fund Start</th>
+        <th>Fund End</th>
     </thead>
 
     <tbody>
-    {% for result in results %}
+    {% for row in data_table %}
         <tr>
-            {% for key, value in result.items %}
-                <td>{{ value }}</td>
+            {% for value in row %}
+                <td>{{ row }}</td>
             {% endfor %}
         </tr>
     {% endfor %}
     </tbody>
 </table>
+
+{{data_table}}

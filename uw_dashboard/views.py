@@ -152,10 +152,29 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             return redirect(reverse_lazy('search-page'))
 
         self.addFiltersToDatabase(context["filters"])
+        context["data_table"] = self.getDataTable(context["results"])
         context["pie_table"] = self.getPieTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
         context["filters_table"] = self.getFiltersTable(context["filters"])
         return render(request, 'search-results.html', context)
+
+    def getDataTable(self, results):
+        keys = [
+            "program_name",
+            "agency_name",
+            "allocation",
+            "funding_stream",
+            "grant_start_date",
+            "grant_end_date"
+        ]
+
+        dataTable = []
+
+        for data in results:
+            array = [str(data[key]) for key in keys]
+            dataTable.append(array)
+
+        return json.dumps(dataTable)
 
     def getPieTable(self, results):
         keys = [
@@ -173,7 +192,6 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             dataTable.append(array)
 
         return json.dumps(dataTable)
-
 
     def getTotalsTable(self, results):
         keyNames = ["Seniors",
