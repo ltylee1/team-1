@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>body {padding-top: 20px;}</style>
+<div class="container">
+
+    <form id="signup" name="form" method="post">{% csrf_token %}
+
+        <div class="header">
+            <h3>Delete User</h3>
+            <p><img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/></p>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="inputs">
+            <label for="{{form.username.id_for_label}}">Username</label>
+            {{form.username}}<br/><br/>
+            <button type="submit" class="btn btn-primary">Delete</button>
+            <a href="homepage.html" class="btn btn-link">Back to Homepage</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+​
