@@ -67,7 +67,8 @@ class UploadView(LoginRequiredMixin, TemplateView):
                 result = reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
                                   form.cleaned_data['Overwrite_data'], str(form.cleaned_data['File_type']))
             except Exception as e:
-                messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                # messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                messages.error(request, "Error in parsing. Please upload a valid .csv file. Error message: %s" %(str(e)))
                 fs.delete(filename)
                 return redirect(reverse_lazy('upload'))
             if not result:
