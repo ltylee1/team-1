@@ -1,5 +1,7 @@
 <h1 class="text-center">Filters</h1>
 
+{% if filters_table %}
+
 <table class="dashboard-table">
     <thead>
     {% for key, value in filters_table.items %}
@@ -23,3 +25,9 @@
     </tr>
     </tbody>
 </table>
+
+{% else %}
+
+<center>You have not applied any filters.</center>
+
+{% endif %}
