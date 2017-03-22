@@ -23,7 +23,8 @@
         <a class="btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
     </div>
 </div>
-
+    {% include 'filters.html' %}
+    {% include 'search-result-total.html' %}
     {% include 'graphs.html' %}
     {% include 'dashboard-table.html' %}
 </div>

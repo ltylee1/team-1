@@ -1,52 +1,6 @@
 {% load static %}
-<!DOCTYPE html>
-<head>
-  <title>Graphs</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
-
-</head>
-
-<body>
-
-<h1 class="text-center">Filters</h1>
-
-  <table class="dashboard-table">
-    <thead>
-      {% for key, value in filters_table.items %}
-        {% for key2, value2 in value.items %}
-            <th>{{ key2 }}</th>
-        {% endfor %}
-      {% endfor %}
-    </thead>
-
-    <tbody>
-        <tr>
-        {% for key, value in filters_table.items %}
-          {% for key2, value2 in value.items %}
-          <td>
-            {% for option in value2 %}
-                {{ option }}<br>
-            {% endfor %}
-          </td>
-          {% endfor %}
-          {% endfor %}
-        </tr>
-    </tbody>
-</table>
 
 
-
-<h1 class="text-center">Search Result Totals</h1>
-  <div class="totals-div">
-    {% for key, value in totals.0.items %}
-      <div class="mii-div">
-        <img class="miis" src="/uw_dashboard/static/images/miis/{{ key }}.png"/>
-        <h3>{{ value.0 }}: {{ value.1 }}</h3>
-      </div>
-    {% endfor %}
-  </div>
 
 
 <h1 class="text-center">Allocation by City</h1>

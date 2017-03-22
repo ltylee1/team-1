@@ -1,0 +1,10 @@
+<h1 class="text-center">Search Result Totals</h1>
+
+<div class="totals-div">
+    {% for key, value in totals.0.items %}
+    <div class="mii-div">
+        <img class="miis" src="/uw_dashboard/static/images/miis/{{ key }}.png"/>
+        <h3>{{ value.0 }}: {{ value.1 }}</h3>
+    </div>
+    {% endfor %}
+</div>
