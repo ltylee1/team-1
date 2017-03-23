@@ -490,7 +490,9 @@ class Parser:
                 self.column_names = reader.next()
                 self.get_output_index(self.column_names)
                 for row in reader:
-                    self.content.append(row)
+                    # Beginning of row is not filled, consider empty
+                    if row[0] is not '':
+                        self.content.append(row)
 
         elif "postal" in self.type:
             with open(pfile, 'rb') as f:
@@ -498,4 +500,6 @@ class Parser:
                 self.column_names = reader.next()
                 self.get_postal_index(self.column_names)
                 for row in reader:
-                    self.content.append(row)
+                    # Beginning of row is not filled, consider empty
+                    if row[0] is not '':
+                        self.content.append(row)
