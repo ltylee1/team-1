@@ -14,7 +14,7 @@ class Agencies(models.Model):
 
 class Program(models.Model):
     agency_andar_number = models.ForeignKey(Agencies, on_delete=models.CASCADE)
-    prgrm_andar_year = models.FloatField(default=0)
+    prgrm_andar_year = models.CharField(max_length=128)
     program_andar_number = models.IntegerField(default=0, primary_key=True)
     program_name = models.CharField(max_length=128)
     grant_start_date = models.DateField()
