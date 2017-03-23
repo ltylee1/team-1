@@ -38,13 +38,18 @@
     var geocoder = new google.maps.Geocoder();
 
     var data = {{data_table|safe}};
-    var addresses = data[0];
+    //var addresses = data[0];
+    
+    var addresses = 
     var loc_names = data[1];
     var pro_names = data[2];
     for (count = 0; count < addresses.length; count++) {
         plotMap(geocoder, map, addresses[count], loc_names[count], pro_names[count]);
         }
   }
+
+
+
 function plotMap(geocoder, resultsMap, address, name, pro_name){
 geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {

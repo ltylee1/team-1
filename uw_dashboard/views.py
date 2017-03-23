@@ -157,7 +157,9 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
         context["pie_table"] = self.getPieTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
         context["filters_table"] = self.getFiltersTable(context["filters"])
-        return render(request, 'search-results.html', context)
+        res = render(request, 'search-results.html', context)
+        request.session['pdf'] = res
+        return res
 
     def getDataTable(self, results):
         keys = [

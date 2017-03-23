@@ -14,6 +14,7 @@ class Agencies(models.Model):
 
 class Program(models.Model):
     agency_andar_number = models.ForeignKey(Agencies, on_delete=models.CASCADE)
+    prgrm_andar_year = models.FloatField(default=0)
     program_andar_number = models.IntegerField(default=0, primary_key=True)
     program_name = models.CharField(max_length=128)
     grant_start_date = models.DateField()
@@ -29,12 +30,12 @@ class Program(models.Model):
 
 
 class Target_Population(models.Model):
-    program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     target_population = models.CharField(max_length=128)
 
 
 class Geo_Focus_Area(models.Model):
-    program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     city = models.CharField(max_length=150)
     percent_of_focus = models.IntegerField(default=0)
     level_name = models.CharField(max_length=150)
@@ -42,12 +43,12 @@ class Geo_Focus_Area(models.Model):
 
 
 class Donor_Engagement(models.Model):
-    program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     donor_engagement = models.CharField(max_length=128)
 
 
 class Totals(models.Model):
-    program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     total_clients = models.IntegerField(default=0)
     early_years = models.IntegerField(default=0)
     middle_years = models.IntegerField(default=0)
@@ -64,17 +65,19 @@ class Totals(models.Model):
 
 
 class Program_Elements(models.Model):
-    program_andar_number = models.ForeignKey(Program, on_delete=models.CASCADE)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     level = models.IntegerField(default=0)
     element_name = models.CharField(max_length=128)
     specific_element = models.CharField(max_length=128)
 
 
 class Location(models.Model):
-    program_andar_number = models.IntegerField(default=0)
+    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
     location = models.CharField(max_length=128)
     postal_code = models.CharField(max_length=128)
     website = models.CharField(max_length=128)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
 
 
 class Search_History(models.Model):
