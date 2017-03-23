@@ -16,6 +16,8 @@ backend/bin
 backend/lib
 backend/app_support/.idea
 
+unitedairway/settings.py
+
 /build/
 /benchpress-build/
 .DS_Store
