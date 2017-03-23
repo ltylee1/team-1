@@ -1,0 +1,33 @@
+<h1 class="text-center">Filters</h1>
+
+{% if filters_table %}
+
+<table class="dashboard-table">
+    <thead>
+    {% for key, value in filters_table.items %}
+    {% for key2, value2 in value.items %}
+    <th>{{ key2 }}</th>
+    {% endfor %}
+    {% endfor %}
+    </thead>
+
+    <tbody>
+    <tr>
+        {% for key, value in filters_table.items %}
+        {% for key2, value2 in value.items %}
+        <td>
+            {% for option in value2 %}
+            {{ option }}<br>
+            {% endfor %}
+        </td>
+        {% endfor %}
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+
+{% else %}
+
+<center>You have not applied any filters.</center>
+
+{% endif %}

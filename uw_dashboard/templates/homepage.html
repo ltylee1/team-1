@@ -8,10 +8,13 @@
             <td class="col-md-6">
                 {% if user.is_superuser %}
                 <div>
-                <a class="header-text" href="addUser.html">Add User</a>
+                <a class="header-text" href="{% url 'addUser' %}">Add User</a>
                 </div>
                 <div>
-                    <a class="header-text" href="resetPassword.html">Reset Password</a>
+                <a class="header-text" href="{% url 'deleteUser' %}">Delete User</a>
+                </div>
+                <div>
+                    <a class="header-text" href="{% url 'resetPassword' %}">Reset Password</a>
                 </div>
                  <div class="header-text">
                     <form action="{% url 'profile' %}" method="POST"> {% csrf_token %}
@@ -22,7 +25,7 @@
             </td>
             <td class="col-md-6 right-allign">
                 <div class="header-text">
-                    <a style="color:black;"> Logged in as: {{user.username}} </a><br>
+                    <span style="color:black;"> Logged in as: {{user.username}} </span><br>
                     <a class="header-text" href="logout.html">Logout</a>
                 </div>
             </td>

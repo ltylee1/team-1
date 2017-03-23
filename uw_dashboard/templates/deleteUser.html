@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -8,7 +8,7 @@
     <form id="signup" name="form" method="post">{% csrf_token %}
 
         <div class="header">
-            <h3>Add New User</h3>
+            <h3>Delete User</h3>
             <p><a href="{% url 'homepage' %}"><img class="united-way-logo" src="{% static 'images/dashboard.jpeg' %}"/></a></p>
         </div>
 
@@ -17,11 +17,7 @@
         <div class="inputs">
             <label for="{{form.username.id_for_label}}">Username</label>
             {{form.username}}<br/><br/>
-            <label for="{{form.password1.id_for_label}}">Password</label>
-            {{form.password1}}
-            <label for="{{form.password2.id_for_label}}">Confirm Password</label>
-            {{form.password2}}
-            <button type="submit" class="btn btn-primary">Add User</button>
+            <button type="submit" class="btn btn-primary">Delete</button>
             <a href="homepage.html" class="btn btn-link">Back to Homepage</a>
         </div>
     </form>

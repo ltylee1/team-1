@@ -10,7 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
-from uw_dashboard.forms import UploadFileForm, SetUserPasswordForm
+from uw_dashboard.forms import UploadFileForm, SetUserPasswordForm, DeleteUserForm
 from uw_dashboard.models import Reporting_Service
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
@@ -67,7 +67,8 @@ class UploadView(LoginRequiredMixin, TemplateView):
                 result = reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
                                   form.cleaned_data['Overwrite_data'], str(form.cleaned_data['File_type']))
             except Exception as e:
-                messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                # messages.error(request, "Error in parsing. Please upload a valid .csv file")
+                messages.error(request, "Error in parsing. Please upload a valid .csv file. Error message: %s" %(str(e)))
                 fs.delete(filename)
                 return redirect(reverse_lazy('upload'))
             if not result:
@@ -327,3 +328,38 @@ class SetPasswordView(LoginRequiredMixin, SuccessMessageMixin, FormView):
             return redirect(reverse_lazy('homepage'))
 
         return super(SetPasswordView, self).dispatch(request, *args, **kwargs)
+
+class DeleteUserView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+    template_name = "deleteUser.html"
+    form_class = DeleteUserForm
+
+    success_url = reverse_lazy("homepage")
+    success_message = "You have deleted %(username)s successfully"
+
+    def form_valid(self, form):
+        try:
+            user = User.objects.get(username=form.cleaned_data.get('username'))
+        except ObjectDoesNotExist:
+            messages.error(self.request, 'User with the username does not exist')
+            return redirect(reverse_lazy('deleteUser'))
+
+        user.delete()
+        return super(DeleteUserView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        for field in form:
+            for error in field.errors:
+                messages.error(self.request, error)
+
+        for error in form.non_field_errors():
+            messages.error(self.request, error)
+
+        return super(DeleteUserView, self).form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.profile.is_admin:
+            messages.error(request, "Require administrator authentication to reset passwords")
+            return redirect(reverse_lazy('homepage'))
+
+        return super(DeleteUserView, self).dispatch(request, *args, **kwargs)
+

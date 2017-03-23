@@ -59,3 +59,6 @@ class SetUserPasswordForm(SetPasswordForm):
                 )
         password_validation.validate_password(password2)
         return password2
+
+class DeleteUserForm(forms.Form):
+    username = forms.ModelChoiceField(queryset= User.objects.all().order_by('username'), to_field_name="username")
