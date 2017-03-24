@@ -2,7 +2,6 @@ import csv
 import models
 import requests
 
-
 class Parser:
     def __init__(self, cur_file, year, overwrite, file_type):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(file_type,
@@ -179,20 +178,21 @@ class Parser:
     def get_locations(self, row):
         index = self.postal_index['# Locations']
         locations = []
-        url = 'https://maps.googleapis.com/maps/api/geocode/json'
         if row[index] != "None" and row[index] != '':
             for num in range(0, int(row[index])):
                 location = row[(index + num * 2) + 1]
                 postcode = row[(index + num * 2) + 2]
-                # Maybe append 'canada' to postcode?
-                params = {'sensor': 'false', 'address': postcode}
+                params = {'address': str(postcode)}
+                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(postcode)
                 r = requests.get(url, params=params)
                 results = r.json()['results']
-                glocation = results[0]['geometry']['location']
-                geocode = [glocation['lat'], glocation['lng']]
-                lat = geocode[0]
-                lon = geocode[1]
-                locations.append([location, postcode, lat, lon])
+                try:
+                    results[0]['geometry']['location']
+                    glocation = results[0]['geometry']['location']
+                    locations.append([location, postcode, glocation['lat'], glocation['lng']])
+                    #print(str(glocation['lat']) + "," + str(glocation['lng']))
+                except IndexError, e:
+                    print("Can't geocode" + str(postcode))
         return locations
 
     def get_city_grouping(self, city):
