@@ -14,8 +14,8 @@ class Agencies(models.Model):
 
 class Program(models.Model):
     agency_andar_number = models.ForeignKey(Agencies, on_delete=models.CASCADE)
-    prgrm_andar_year = models.CharField(max_length=128)
-    program_andar_number = models.IntegerField(default=0, primary_key=True)
+    prgrm_andar_year = models.CharField(max_length=128, primary_key=True)
+    program_andar_number = models.IntegerField(default=0)
     program_name = models.CharField(max_length=128)
     grant_start_date = models.DateField()
     grant_end_date = models.DateField()
@@ -72,7 +72,7 @@ class Program_Elements(models.Model):
 
 
 class Location(models.Model):
-    prgrm_andar_year = models.ForeignKey(Program, on_delete=models.CASCADE)
+    program_andar_number = models.IntegerField(default=0)
     location = models.CharField(max_length=128)
     postal_code = models.CharField(max_length=128)
     website = models.CharField(max_length=128)

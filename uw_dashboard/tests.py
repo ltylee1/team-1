@@ -64,7 +64,7 @@ class ParserTestWithoutDBSETUP(TestCase):
     def testInvalidFile(self):
         Invalid = 2013
         with self.assertRaises(Exception) as context:
-            Parser(Invalid, 2017, True, 'zsadsf')
+            Parser(Invalid, 2017, True, 'output')
         self.assertTrue('file invalid' in str(context.exception))
 
     def testInvalidOverwrite(self):
@@ -76,6 +76,12 @@ class ParserTestWithoutDBSETUP(TestCase):
         with self.assertRaises(Exception) as context:
             Parser(self.file, '2017', True, 'postal')
         self.assertTrue('year invalid' in str(context.exception))
+
+    def testGenerateKey(self):
+        parser = Parser(self.file, 2017, True, 'output')
+        self.assertEqual('12342017', parser.generate_primary_key(1234, 2017))
+
+
 
 
 class ParserTestWithDBSETUP(TestCase):
@@ -119,6 +125,7 @@ class ParserTestWithDBSETUP(TestCase):
         first = models.Program.objects.first()
         self.assertEqual(first.agency_andar_number.agency_andar_number, 184986)
         self.assertEqual(first.program_andar_number, 4962759)
+        self.assertEqual(first.prgrm_andar_year, '49627592017')
         self.assertEqual(first.program_name, 'Better at Home Langley')
         self.assertEqual(first.grant_start_date, datetime.date(2015, 4, 1))
         self.assertEqual(first.grant_end_date, datetime.date(2016, 3, 31))
@@ -134,6 +141,7 @@ class ParserTestWithDBSETUP(TestCase):
         random = check[3]
         self.assertEqual(random.agency_andar_number.agency_andar_number, 1891)
         self.assertEqual(random.program_andar_number, 5121926)
+        self.assertEqual(random.prgrm_andar_year, '51219262017')
         self.assertEqual(random.program_name, 'Better at Home Burnaby')
         self.assertEqual(random.grant_start_date, datetime.date(2015, 4, 1))
         self.assertEqual(random.grant_end_date, datetime.date(2016, 3, 31))
@@ -149,6 +157,7 @@ class ParserTestWithDBSETUP(TestCase):
         last = models.Program.objects.last()
         self.assertEqual(last.agency_andar_number.agency_andar_number, 252510)
         self.assertEqual(last.program_andar_number, 6017495)
+        self.assertEqual(last.prgrm_andar_year, '60174952017')
         self.assertEqual(last.program_name, 'Maple Ridge Pitt Meadows Community School Partnership')
         self.assertEqual(last.grant_start_date, datetime.date(2015, 12, 1))
         self.assertEqual(last.grant_end_date, datetime.date(2016, 6, 30))
@@ -163,20 +172,24 @@ class ParserTestWithDBSETUP(TestCase):
 
         check = models.Program_Elements.objects.all()
         self.assertEqual(check.count(), 209)
+
         first = models.Program_Elements.objects.first()
-        self.assertEqual(first.program_andar_number.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.prgrm_andar_year, '51219262017')
         self.assertEqual(first.level, 100)
         self.assertEqual(first.element_name, 'Social and Emotional Health ')
         self.assertEqual(first.specific_element, 'Independence')
 
         random = check[100]
-        self.assertEqual(random.program_andar_number.program_andar_number, 5649488)
+        self.assertEqual(random.prgrm_andar_year.program_andar_number, 5649488)
+        self.assertEqual(random.prgrm_andar_year.prgrm_andar_year, '56494882017')
         self.assertEqual(random.level, 100)
         self.assertEqual(random.element_name, 'System Change')
         self.assertEqual(random.specific_element, 'Policy work')
 
         last = models.Program_Elements.objects.last()
-        self.assertEqual(last.program_andar_number.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.prgrm_andar_year, '59897512017')
         self.assertEqual(last.level, 200)
         self.assertEqual(last.element_name, 'Address Program Barriers/Access')
         self.assertEqual(last.specific_element, 'Transportation')
@@ -198,36 +211,44 @@ class ParserTestWithDBSETUP(TestCase):
 
         check = models.Target_Population.objects.all()
         self.assertEqual(check.count(), 49)
+
         first = models.Target_Population.objects.first()
-        self.assertEqual(first.program_andar_number.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.prgrm_andar_year, '51219262017')
         self.assertEqual(first.target_population, 'Seniors')
 
         random = check[23]
-        self.assertEqual(random.program_andar_number.program_andar_number, 5816343)
+        self.assertEqual(random.prgrm_andar_year.program_andar_number, 5816343)
+        self.assertEqual(random.prgrm_andar_year.prgrm_andar_year, '58163432017')
         self.assertEqual(random.target_population, 'Families')
 
         last = models.Target_Population.objects.last()
-        self.assertEqual(last.program_andar_number.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.prgrm_andar_year, '59897512017')
         self.assertEqual(last.target_population, 'Families')
 
         check = models.Geo_Focus_Area.objects.all()
         self.assertEqual(check.count(), 49)
+
         first = models.Geo_Focus_Area.objects.first()
-        self.assertEqual(first.program_andar_number.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.prgrm_andar_year, '51219262017')
         self.assertEqual(first.city, 'Burnaby')
         self.assertEqual(first.percent_of_focus, 100)
         self.assertEqual(first.level_name, 'Metro Vancouver Regional District')
         self.assertEqual(first.city_grouping, 'Burnaby')
 
         random = check[23]
-        self.assertEqual(random.program_andar_number.program_andar_number, 5649512)
+        self.assertEqual(random.prgrm_andar_year.program_andar_number, 5649512)
+        self.assertEqual(random.prgrm_andar_year.prgrm_andar_year, '56495122017')
         self.assertEqual(random.city, 'North Vancouver, District Municipality')
         self.assertEqual(random.percent_of_focus, 20)
         self.assertEqual(random.level_name, 'Metro Vancouver Regional District')
         self.assertEqual(random.city_grouping, 'Northshore')
 
         last = models.Geo_Focus_Area.objects.last()
-        self.assertEqual(last.program_andar_number.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.prgrm_andar_year, '59897512017')
         self.assertEqual(last.city, 'Vancouver')
         self.assertEqual(last.percent_of_focus, 100)
         self.assertEqual(last.level_name, 'Metro Vancouver Regional District')
@@ -235,20 +256,28 @@ class ParserTestWithDBSETUP(TestCase):
 
         check = models.Donor_Engagement.objects.all()
         self.assertEqual(check.count(), 54)
+
         first = models.Donor_Engagement.objects.first()
-        self.assertEqual(first.program_andar_number.program_andar_number, 5846167)
+        self.assertEqual(first.prgrm_andar_year.program_andar_number, 5846167)
+        self.assertEqual(first.prgrm_andar_year.prgrm_andar_year, '58461672017')
         self.assertEqual(first.donor_engagement, 'Volunteer Opps')
+
         random = check[17]
-        self.assertEqual(random.program_andar_number.program_andar_number, 5988456)
+        self.assertEqual(random.prgrm_andar_year.program_andar_number, 5988456)
+        self.assertEqual(random.prgrm_andar_year.prgrm_andar_year, '59884562017')
         self.assertEqual(random.donor_engagement, 'Volunteer Opps')
+
         last = models.Donor_Engagement.objects.last()
-        self.assertEqual(last.program_andar_number.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.prgrm_andar_year, '59897512017')
         self.assertEqual(last.donor_engagement, 'Impact Story')
 
         check = models.Totals.objects.all()
         self.assertEqual(check.count(), 30)
+
         first = models.Totals.objects.first()
-        self.assertEqual(first.program_andar_number.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.program_andar_number, 5121926)
+        self.assertEqual(first.prgrm_andar_year.prgrm_andar_year, '51219262017')
         self.assertEqual(first.total_clients, 198)
         self.assertEqual(first.early_years, 0)
         self.assertEqual(first.middle_years, 0)
@@ -264,7 +293,8 @@ class ParserTestWithDBSETUP(TestCase):
         self.assertEqual(first.volunteers, 0)
 
         random = check[14]
-        self.assertEqual(random.program_andar_number.program_andar_number, 5649512)
+        self.assertEqual(random.prgrm_andar_year.program_andar_number, 5649512)
+        self.assertEqual(random.prgrm_andar_year.prgrm_andar_year, '56495122017')
         self.assertEqual(random.total_clients, 0)
         self.assertEqual(random.early_years, 0)
         self.assertEqual(random.middle_years, 0)
@@ -280,7 +310,8 @@ class ParserTestWithDBSETUP(TestCase):
         self.assertEqual(random.volunteers, 0)
 
         last = models.Totals.objects.last()
-        self.assertEqual(last.program_andar_number.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.program_andar_number, 5989751)
+        self.assertEqual(last.prgrm_andar_year.prgrm_andar_year, '59897512017')
         self.assertEqual(last.total_clients, 288)
         self.assertEqual(last.early_years, 132)
         self.assertEqual(last.middle_years, 21)
@@ -309,6 +340,7 @@ class ParserTestWithDBSETUP(TestCase):
         random = check[9]
         self.assertEqual(random.agency_andar_number.agency_andar_number, 174227)
         self.assertEqual(random.program_andar_number, 5649678)
+        self.assertEqual(random.prgrm_andar_year, '56496782017')
         self.assertEqual(random.program_name, 'Westside Seniors Kitchen Project')
         self.assertEqual(random.grant_start_date, datetime.date(2015, 4, 1))
         self.assertEqual(random.grant_end_date, datetime.date(2016, 3, 31))
@@ -324,6 +356,7 @@ class ParserTestWithDBSETUP(TestCase):
         last = models.Program.objects.last()
         self.assertEqual(last.agency_andar_number.agency_andar_number, 252510)
         self.assertEqual(last.program_andar_number, 6017495)
+        self.assertEqual(last.prgrm_andar_year, '60174952017')
         self.assertEqual(last.program_name, 'Maple Ridge Pitt Meadows Community School Partnership')
         self.assertEqual(last.grant_start_date, datetime.date(2015, 12, 1))
         self.assertEqual(last.grant_end_date, datetime.date(2016, 6, 30))
@@ -371,6 +404,7 @@ class ParserTestWithDBSETUP(TestCase):
         first = models.Program.objects.first()
         self.assertEqual(first.agency_andar_number.agency_andar_number, 184986)
         self.assertEqual(first.program_andar_number, 4962759)
+        self.assertEqual(first.prgrm_andar_year, '49627592017')
         self.assertEqual(first.program_name, 'Better at Home Langley')
         self.assertEqual(first.grant_start_date, datetime.date(2015, 4, 1))
         self.assertEqual(first.grant_end_date, datetime.date(2016, 3, 31))
@@ -386,6 +420,7 @@ class ParserTestWithDBSETUP(TestCase):
         last = models.Program.objects.last()
         self.assertEqual(last.agency_andar_number.agency_andar_number, 252510)
         self.assertEqual(last.program_andar_number, 6017495)
+        self.assertEqual(last.prgrm_andar_year, '60174952017')
         self.assertEqual(last.program_name, 'Maple Ridge Pitt Meadows Community School Partnership')
         self.assertEqual(last.grant_start_date, datetime.date(2015, 12, 1))
         self.assertEqual(last.grant_end_date, datetime.date(2016, 6, 30))

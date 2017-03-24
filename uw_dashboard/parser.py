@@ -3,18 +3,19 @@ import models
 
 
 class Parser:
-    def __init__(self, cur_file, year, overwrite, type):
-        if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(type, str):
+    def __init__(self, cur_file, year, overwrite, file_type):
+        if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(file_type,
+                                                                                                              str):
             self.cur_file = cur_file
             self.year = year
             self.overwrite = overwrite
-            self.type = type
+            self.type = file_type
         else:
             if not isinstance(year, int):
                 raise Exception("year invalid")
             if not isinstance(overwrite, bool):
                 raise Exception("overwrite invalid")
-            if not isinstance(type, str):
+            if not isinstance(file_type, str):
                 raise Exception("type is invalid")
             raise Exception("file invalid")
 
@@ -105,8 +106,7 @@ class Parser:
                 self.output_index['Planner'] = column_list.index(column)
             elif "Target Population" == column:
                 self.output_index['Target Population'] = column_list.index(column)
-            elif self.output_index['Target Population'] != -1 and self.output_index[
-                'Program Elements'] == -1 and "Other" == column:
+            elif self.output_index['Target Population'] != -1 and self.output_index['Program Elements'] == -1 and "Other" == column:
                 self.output_index['TP Other'] = column_list.index(column)
             elif "Program Elements" == column:
                 self.output_index['Program Elements'] = column_list.index(column)
@@ -118,8 +118,7 @@ class Parser:
                 self.output_index['GFA Other'] = column_list.index(column) + 1
             elif "Donor Engagement" == column:
                 self.output_index['Donor Engagement'] = column_list.index(column)
-            elif self.output_index['Donor Engagement'] != -1 and self.output_index[
-                'Outputs'] == -1 and "Other" == column:
+            elif self.output_index['Donor Engagement'] != -1 and self.output_index['Outputs'] == -1 and "Other" == column:
                 self.output_index['DE Other'] = column_list[self.output_index['Donor Engagement']:].index(column) + \
                                                 self.output_index['Donor Engagement']
             elif "Outputs" == column:
@@ -169,6 +168,11 @@ class Parser:
             return 0
         else:
             return value
+
+    def generate_primary_key(self, program_andar_number, year):
+        andar = str(program_andar_number)
+        year = str(year)
+        return andar + year
 
     # Gets all the locations(name, postal code) for a program
     def get_locations(self, row):
@@ -231,13 +235,15 @@ class Parser:
         for row in self.content:
             collapsed_row = self.collapse_binary(row, self.output_index['Target Population'] + 1,
                                                  self.output_index['TP Other'] + 1)
-            program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
+            program = models.Program.objects.get(prgrm_andar_year=andar_year)
             if collapsed_row:
                 for current_population in collapsed_row:
-                    check = models.Target_Population.objects.filter(program_andar_number=program,
+                    check = models.Target_Population.objects.filter(prgrm_andar_year=program,
                                                                     target_population=current_population).exists()
                     if not check:
-                        target = models.Target_Population(program_andar_number=program,
+                        target = models.Target_Population(prgrm_andar_year=program,
                                                           target_population=current_population)
                         if target not in target_list:
                             target_list.append(target)
@@ -249,11 +255,13 @@ class Parser:
                     'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
         focus_list = []
         for row in self.content:
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
             temp = []
             for col in colnames:
                 temp.append(self.column_names.index(col))
             temp.append(self.output_index['GFA Other'] + 1)
-            program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+            program = models.Program.objects.get(prgrm_andar_year=andar_year)
             for index in range(0, len(colnames)):
                 for curindex in range(temp[index] + 1, temp[index + 1]):
                     level = self.column_names[temp[index]]
@@ -261,9 +269,9 @@ class Parser:
                     citygrouping = self.get_city_grouping(curcity)
                     curpercent = self.check_empty(row[curindex])
                     if curpercent != 0:
-                        check = models.Geo_Focus_Area.objects.filter(program_andar_number=program, city=curcity).exists()
+                        check = models.Geo_Focus_Area.objects.filter(prgrm_andar_year=program, city=curcity).exists()
                         if not check:
-                            focus = models.Geo_Focus_Area(program_andar_number=program,
+                            focus = models.Geo_Focus_Area(prgrm_andar_year=program,
                                                           city=curcity,
                                                           percent_of_focus=curpercent,
                                                           level_name=level,
@@ -276,15 +284,17 @@ class Parser:
     def insert_donor_engagement(self):
         de_list = []
         for row in self.content:
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
             collapsed_row = self.collapse_binary(row, self.output_index['Donor Engagement'] + 1,
                                                  self.output_index['DE Other'] + 1)
-            program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+            program = models.Program.objects.get(prgrm_andar_year=andar_year)
             if collapsed_row:
                 for current_donor in collapsed_row:
-                    check = models.Donor_Engagement.objects.filter(program_andar_number=program,
+                    check = models.Donor_Engagement.objects.filter(prgrm_andar_year=program,
                                                                    donor_engagement=current_donor).exists()
                     if not check:
-                        donor = models.Donor_Engagement(program_andar_number=program,
+                        donor = models.Donor_Engagement(prgrm_andar_year=program,
                                                         donor_engagement=current_donor)
                         if donor not in de_list:
                             de_list.append(donor)
@@ -295,10 +305,12 @@ class Parser:
         totals_list = []
         for row in self.content:
             start = self.output_index['Outputs'] + 1
-            program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
-            check = models.Totals.objects.filter(program_andar_number=program).exists()
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
+            program = models.Program.objects.get(prgrm_andar_year=andar_year)
+            check = models.Totals.objects.filter(prgrm_andar_year=program).exists()
             if not check:
-                total = models.Totals(program_andar_number=program,
+                total = models.Totals(prgrm_andar_year=program,
                                       total_clients=self.check_empty(row[start]),
                                       early_years=self.check_empty(row[start + 1]),
                                       middle_years=self.check_empty(row[start + 2]),
@@ -320,6 +332,8 @@ class Parser:
     def insert_program_elements(self):
         pe_list = []
         for row in self.content:
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
             temp = []
             colnames = []
             # Gets the column index for the Program Element Levels
@@ -336,14 +350,14 @@ class Parser:
                     level = row[temp[curindex]]
                     element_name = colnames[curindex]
                     specific_element = cursection
-                    program = models.Program.objects.get(program_andar_number=row[self.output_index['Program Andar #']])
+                    program = models.Program.objects.get(prgrm_andar_year=andar_year)
                     for curelement in specific_element:
-                        check = models.Program_Elements.objects.filter(program_andar_number=program,
+                        check = models.Program_Elements.objects.filter(prgrm_andar_year=program,
                                                                        level=level,
                                                                        element_name=element_name,
                                                                        specific_element=curelement).exists()
                         if not check:
-                            element = models.Program_Elements(program_andar_number=program,
+                            element = models.Program_Elements(prgrm_andar_year=program,
                                                               level=level,
                                                               element_name=element_name,
                                                               specific_element=curelement)
@@ -354,8 +368,11 @@ class Parser:
     # Should only need to insert since program table will be dropped if overwrite; during append we should just update if there are no tables existing
     def insert_program(self):
         program_list = []
+        # prgrm_andar_year
         for row in self.content:
-            check = models.Program.objects.filter(program_andar_number=row[self.output_index['Program Andar #']]).exists()
+            andar = row[self.output_index['Program Andar #']]
+            andar_year = self.generate_primary_key(andar, self.year)
+            check = models.Program.objects.filter(prgrm_andar_year=andar_year).exists()
             if not check:
                 agency = models.Agencies.objects.get(agency_andar_number=row[self.output_index['Agency Andar #']])
                 start_date = row[self.output_index['Grant Start Date']]
@@ -363,7 +380,8 @@ class Parser:
                 if '-' not in start_date and '-' not in end_date:
                     start_date = start_date[:4] + '-' + start_date[4:6] + '-' + start_date[6:]
                     end_date = end_date[:4] + '-' + end_date[4:6] + '-' + end_date[6:]
-                program = models.Program(agency_andar_number=agency,
+                program = models.Program(prgrm_andar_year=andar_year,
+                                         agency_andar_number=agency,
                                          program_andar_number=row[self.output_index['Program Andar #']],
                                          program_name=row[self.output_index['Program Name']],
                                          grant_start_date=start_date,
@@ -384,7 +402,8 @@ class Parser:
     def insert_agency(self):
         agency_list = []
         for row in self.content:
-            check = models.Agencies.objects.filter(agency_andar_number=row[self.output_index['Agency Andar #']]).exists()
+            check = models.Agencies.objects.filter(
+                agency_andar_number=row[self.output_index['Agency Andar #']]).exists()
             # Agency already exists if we are overwriting so we update the agency name if needed
             if check:
                 if self.overwrite:
@@ -412,9 +431,10 @@ class Parser:
                 # Check that the location is not empty
                 if loc_name != 'None' and loc_name != '' and loc_post != 'None' and loc_post != '':
                     # Check that location does not already exist
-                    check = models.Location.objects.filter(program_andar_number=row[self.postal_index['Program Andar #']],
-                                                           location=loc_name,
-                                                           postal_code=loc_post).exists()
+                    check = models.Location.objects.filter(
+                        program_andar_number=row[self.postal_index['Program Andar #']],
+                        location=loc_name,
+                        postal_code=loc_post).exists()
                     # Insert data into database
                     if not check:
                         loc = models.Location(program_andar_number=row[self.postal_index['Program Andar #']],
@@ -431,10 +451,11 @@ class Parser:
                           'Program Andar #', 'Program Name', 'Grant Start Date', 'Grant End Date',
                           'Short Program Description', 'Planner', 'Target Population', 'Program Elements',
                           'Geographic Focus Area', 'Donor Engagement', 'Outputs', 'First Nation Territories',
-                        'Metro Vancouver Regional District', 'Fraser Valley Regional District',
+                          'Metro Vancouver Regional District', 'Fraser Valley Regional District',
                           'Squamish-Lillooet Regional District', 'Sunshine Coast Regional District', 'Other Areas']
-        program_postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website', 'Description',
-                          '# Locations']
+        program_postal_columns = ['Agency Andar #', 'Agency Name', 'Program Andar #', 'Program Name', 'Website',
+                                  'Description',
+                                  '# Locations']
         pfile = self.cur_file
         with open(pfile, 'rb') as f:
             reader = csv.reader(f)
