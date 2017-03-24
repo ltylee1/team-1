@@ -38,9 +38,7 @@
     var geocoder = new google.maps.Geocoder();
 
     var data = {{data_table|safe}};
-    //var addresses = data[0];
-    
-    var addresses = 
+    var addresses = data[0];
     var loc_names = data[1];
     var pro_names = data[2];
     for (count = 0; count < addresses.length; count++) {
