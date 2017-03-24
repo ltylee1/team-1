@@ -153,6 +153,8 @@ class Reporting_Service:
         postal_codes = []
         location_name = []
         program_names = []
+        location_lat = []
+        location_lon = []
         locations = Location.objects.all()
         for location in locations:
             postal_codes.append(str(location.postal_code))
@@ -160,7 +162,9 @@ class Reporting_Service:
             andar = location.program_andar_number
             pro = Program.objects.get(program_andar_number=andar)
             program_names.append(str(pro.program_name))
-        return [postal_codes, location_name, program_names]
+            location_lat.append(str(location.latitude))
+            location_lon.append(str(location.longitude))
+        return [postal_codes, location_name, program_names, location_lat, location_lon]
 
     def create_dashboard(self):
         # call the dashboard generator
