@@ -77,6 +77,7 @@ class Location(models.Model):
     location = models.CharField(max_length=128)
     postal_code = models.CharField(max_length=128)
     website = models.CharField(max_length=128)
+    address = models.CharField(max_length=250)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
 
@@ -151,19 +152,19 @@ class Reporting_Service:
         return results
 
     def queryMap(self):
-        postal_codes = []
         location_name = []
         program_names = []
         location_lat = []
         location_lon = []
+        addresses = []
         locations = Location.objects.all()
         for location in locations:
-            postal_codes.append(str(location.postal_code))
             location_name.append(str(location.location))
             program_names.append(str(location.program_name))
             location_lat.append(str(location.latitude))
             location_lon.append(str(location.longitude))
-        return [postal_codes, location_name, program_names, location_lat, location_lon]
+            addresses.append(str(location.address))
+        return [addresses, location_name, program_names, location_lat, location_lon]
 
     def create_dashboard(self):
         # call the dashboard generator

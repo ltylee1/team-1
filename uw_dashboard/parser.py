@@ -185,13 +185,18 @@ class Parser:
                 postcode = row[(index + num * 2) + 2]
                 params = {'address': str(postcode)}
                 url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
-                    postcode)
+                    postcode+',ca')
                 r = requests.get(url, params=params)
                 results = r.json()['results']
                 try:
                     # results[0]['geometry']['location']
                     glocation = results[0]['geometry']['location']
-                    locations.append([location, postcode, glocation['lat'], glocation['lng']])
+                    address = results[0]['formatted_address']
+                    # Temp fix for google api not being able to query properly
+                    if '0' in postcode[4]:
+                        result = address.split('BC ', 1)
+                        address = result[0]+'BC '+postcode+', Canada'
+                    locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
                     # print(str(glocation['lat']) + "," + str(glocation['lng']))
                 except IndexError, e:
                     print("Can't geocode" + str(postcode))
@@ -442,6 +447,7 @@ class Parser:
                 loc_post = location[1]
                 loc_lat = location[2]
                 loc_lon = location[3]
+                address = location[4]
                 # Check that the location is not empty
                 if loc_name != 'None' and loc_name != '' and loc_post != 'None' and loc_post != '' and loc_lat != 'None' and loc_lat != '' and loc_lon != 'None' and loc_lon != '':
                     # Check that location does not already exist
@@ -460,6 +466,7 @@ class Parser:
                                               postal_code=loc_post,
                                               latitude=loc_lat,
                                               longitude=loc_lon,
+                                              address = address,
                                               website=row[self.postal_index['Website']])
                         if loc not in pro_loc_list:
                             pro_loc_list.append(loc)
