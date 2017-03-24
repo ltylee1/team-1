@@ -2,6 +2,7 @@ import csv
 import models
 import requests
 
+
 class Parser:
     def __init__(self, cur_file, year, overwrite, file_type):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(file_type,
@@ -183,14 +184,15 @@ class Parser:
                 location = row[(index + num * 2) + 1]
                 postcode = row[(index + num * 2) + 2]
                 params = {'address': str(postcode)}
-                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(postcode)
+                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
+                    postcode)
                 r = requests.get(url, params=params)
                 results = r.json()['results']
                 try:
-                    results[0]['geometry']['location']
+                    # results[0]['geometry']['location']
                     glocation = results[0]['geometry']['location']
                     locations.append([location, postcode, glocation['lat'], glocation['lng']])
-                    #print(str(glocation['lat']) + "," + str(glocation['lng']))
+                    # print(str(glocation['lat']) + "," + str(glocation['lng']))
                 except IndexError, e:
                     print("Can't geocode" + str(postcode))
         return locations
@@ -445,6 +447,7 @@ class Parser:
                     # Check that location does not already exist
                     check = models.Location.objects.filter(
                         program_andar_number=row[self.postal_index['Program Andar #']],
+                        program_name=row[self.postal_index['Program Name']],
                         location=loc_name,
                         postal_code=loc_post,
                         latitude=loc_lat,
@@ -452,6 +455,7 @@ class Parser:
                     # Insert data into database
                     if not check:
                         loc = models.Location(program_andar_number=row[self.postal_index['Program Andar #']],
+                                              program_name=row[self.postal_index['Program Name']],
                                               location=loc_name,
                                               postal_code=loc_post,
                                               latitude=loc_lat,
