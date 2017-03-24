@@ -188,7 +188,8 @@ class Parser:
                     postcode+',ca')
                 r = requests.get(url, params=params)
                 results = r.json()['results']
-                try:
+                # try:
+                if postcode != '':
                     # results[0]['geometry']['location']
                     glocation = results[0]['geometry']['location']
                     address = results[0]['formatted_address']
@@ -198,8 +199,8 @@ class Parser:
                         address = result[0]+'BC '+postcode+', Canada'
                     locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
                     # print(str(glocation['lat']) + "," + str(glocation['lng']))
-                except IndexError, e:
-                    print("Can't geocode" + str(postcode))
+                # except IndexError, e:
+                #     print("Can't geocode" + str(postcode))
         return locations
 
     def get_city_grouping(self, city):
