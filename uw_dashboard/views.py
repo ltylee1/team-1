@@ -45,9 +45,6 @@ class Profile(LoginRequiredMixin, TemplateView):
             results = self.dictfetchall(cursor)
         return results
 
-
-
-
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
     form_class = UploadFileForm
@@ -144,6 +141,26 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AddUserView, self).dispatch(request, *args, **kwargs)
 
 
+class PDFGenerate(LoginRequiredMixin, TemplateView):
+    template='search-results.html'
+    ctx= {'title': 'Hello World!'}
+
+    def get(self, request):
+        response = PDFTemplateResponse(request=request,
+                                       template=self.template,
+                                       filename="output.pdf",
+                                       context= self.ctx,
+                                       show_content_in_browser=False,
+                                       cmd_options={'margin-top': 50,},
+                                       )
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultsView, self).get_context_data(**kwargs)
+        ctx = context
+
+
+
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
 
@@ -155,7 +172,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             return redirect(reverse_lazy('search-page'))
 
         print context.get("results")[0]
-        self.addFiltersToDatabase(context["filters"], request.user)
+        self.addFiltersToDatabase(context["filters"])
         context["data_table"] = self.getDataTable(context["results"])
         context["pie_table"] = self.getPieTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
@@ -201,13 +218,19 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
         return json.dumps(dataTable)
 
     def getTotalsTable(self, results):
-        keyNames = [
-                    "Meals/Snacks",
-                    "Counselling Sessions",
-                    "Mentors/Tutors",
-                    "Workshops",
-                    "Volunteers"
-                    ]
+        keyNames = ["Seniors",
+                      "Early Years",
+                      "Counselling Sessions",
+                      "Families",
+                      "Programs",
+                      "Mentors/Tutors",
+                      "Workshops",
+                      "Middle Years",
+                      "Agencies",
+                      "Meals/Snacks",
+                      "Money Invested",
+                      "Parent/Caregivers",
+                      "Volunteers"]
 
         data = results[0]
         i =0
@@ -249,7 +272,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
         return results
 
-    def addFiltersToDatabase(self, results, user):
+    def addFiltersToDatabase(self, results):
         funding_year = ''
         focus_area = ''
         target_population = ''
@@ -284,16 +307,14 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             for result in results["money_invested"]:
                 money_invested += result + ', '
 
-        search = Search_History( funding_year=funding_year[:-2],
+        search = models.Search_History( funding_year=funding_year[:-2],
                                         focus_area=focus_area[:-2],
                                         target_population=target_population[:-2],
                                         program_elements=program_elements[:-2],
                                         city_groupings=city[:-2],
                                         geographic_focus_area=gfa[:-2],
                                         donor_engagement=donor[:-2],
-                                        money_invested=money_invested[:-2],
-                                        user=user
-                                        )
+                                        money_invested=money_invested[:-2])
         search.save()
 
 class SearchPage(LoginRequiredMixin, TemplateView):

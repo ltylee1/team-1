@@ -102,7 +102,7 @@ MESSAGE_TAGS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'unitedWayTest',
+        'NAME': 'shakthi',
         'USER': 'unitedWay',
         'PASSWORD': 'Etfhg8893',
         'HOST': 'uw-test.cromnho1ocid.us-west-2.rds.amazonaws.com',
