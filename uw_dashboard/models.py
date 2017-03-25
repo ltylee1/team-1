@@ -166,6 +166,22 @@ class Reporting_Service:
             addresses.append(str(location.address))
         return [addresses, location_name, program_names, location_lat, location_lon]
 
+    def queryMapPostal(self, postal_codes):
+        location_name = []
+        program_names = []
+        location_lat = []
+        location_lon = []
+        addresses = []
+        for loc_post in postal_codes:
+            location = Location.objects.filter(postal_code=loc_post).get()
+            location_name.append(str(location.location))
+            program_names.append(str(location.program_name))
+            location_lat.append(str(location.latitude))
+            location_lon.append(str(location.longitude))
+            addresses.append(str(location.address))
+        return [addresses, location_name, program_names, location_lat, location_lon]
+
+
     def create_dashboard(self):
         # call the dashboard generator
         return True
