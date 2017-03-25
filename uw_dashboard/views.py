@@ -100,6 +100,11 @@ class LoginView(FormView):
         reporting = Reporting_Service(user)
         return super(LoginView, self).form_valid(form)
 
+    def form_invalid(self, form):
+        response = super(LoginView, self).form_invalid(form)
+        messages.error(self.request, 'Username or Password invalid. Please try again')
+        return response
+
 
 class LogoutView(RedirectView):
     url = reverse_lazy('login')

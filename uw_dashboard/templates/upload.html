@@ -13,7 +13,8 @@
     </div>
     </div>
 </div>
-<script>function Hide(){
+<script>
+function Hide(){
     if(document.getElementById('id_File_type').options[document.getElementById('id_File_type').selectedIndex].value == "postal")
     {
          document.getElementById('id_Funding_Year').style.display = 'none';
@@ -25,11 +26,23 @@
     }
 
 }
+$('#ulfourum').validate();
+function Load() {
+    if ($('#ulfourum').valid()) {
+        $('#spinner').show();
+    }
+}
 </script>
+
+<div id="spinner" class="spin" style="display:none;">
+    <h1 id="img-txt">File is uploading... Please wait.</h1>
+    <img id="img-spinner" src="{% static 'images/spinner.gif' %}" alt="Loading"/>
+</div>
+
 <legend class="text-center">Upload file</legend>
 <div class="upload-section">
     <div class="dropdown col-md-2 col-md-offset-3">
-        <form method="post" enctype="multipart/form-data">
+        <form id="ulfourum" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <p><label for="{{ form.File_To_Upload.id_for_label }}">File to upload:</label>
             {{ form.File_To_Upload }}
@@ -49,7 +62,7 @@
         <p><label for="{{ form.Funding_Year.id_for_label }}" id="funding_year_id">Funding year:</label>
             {{ form.Funding_Year }}
         </p>
-        <button type="submit">Upload</button>
+        <button type="submit" onclick="Load()">Upload</button>
     </form>
 </div>
 {% endblock %}
