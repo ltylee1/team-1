@@ -155,7 +155,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             return redirect(reverse_lazy('search-page'))
 
         print context.get("results")[0]
-        self.addFiltersToDatabase(context["filters"])
+        self.addFiltersToDatabase(context["filters"], request.user)
         context["data_table"] = self.getDataTable(context["results"])
         context["pie_table"] = self.getPieTable(context["results"])
         context["totals_table"] = self.getTotalsTable(context["totals"])
@@ -249,7 +249,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
         return results
 
-    def addFiltersToDatabase(self, results):
+    def addFiltersToDatabase(self, results, user):
         funding_year = ''
         focus_area = ''
         target_population = ''
@@ -284,14 +284,16 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             for result in results["money_invested"]:
                 money_invested += result + ', '
 
-        search = models.Search_History( funding_year=funding_year[:-2],
+        search = Search_History( funding_year=funding_year[:-2],
                                         focus_area=focus_area[:-2],
                                         target_population=target_population[:-2],
                                         program_elements=program_elements[:-2],
                                         city_groupings=city[:-2],
                                         geographic_focus_area=gfa[:-2],
                                         donor_engagement=donor[:-2],
-                                        money_invested=money_invested[:-2])
+                                        money_invested=money_invested[:-2],
+                                        user=user
+                                        )
         search.save()
 
 class SearchPage(LoginRequiredMixin, TemplateView):
