@@ -158,13 +158,14 @@ class Reporting_Service:
         location_lon = []
         addresses = []
         if postal_codes:
-            for loc_post in postal_codes:
-                location = Location.objects.filter(postal_code=loc_post).get()
-                location_name.append(str(location.location))
-                program_names.append(str(location.program_name))
-                location_lat.append(str(location.latitude))
-                location_lon.append(str(location.longitude))
-                addresses.append(str(location.address))
+            locations = Location.objects.all()
+            for location in locations:
+                if location.postal_code in postal_codes:
+                    location_name.append(str(location.location))
+                    program_names.append(str(location.program_name))
+                    location_lat.append(str(location.latitude))
+                    location_lon.append(str(location.longitude))
+                    addresses.append(str(location.address))
         else:
             locations = Location.objects.all()
             for location in locations:
