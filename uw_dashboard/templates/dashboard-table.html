@@ -8,13 +8,19 @@
         <th>Fund End</th>
         <th>Program Element</th>
         <th>Description</th>
+        <th>Program Locations</th>
+        <th>Links</th>
     </thead>
 
     <tbody>
     {% for row in data_table %}
         <tr>
             {% for value in row %}
-                <td>{{ value }}</td>
+                {% if forloop.last %}
+                    <td><a class="btn btn-primary" href="/map.html">{{ value }}</a></td>
+                {% else %}
+                    <td>{{ value }}</td>
+                {% endif %}
             {% endfor %}
         </tr>
     {% endfor %}
