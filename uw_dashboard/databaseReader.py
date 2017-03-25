@@ -29,7 +29,7 @@ class DatabaseReader(models.Model):
 		query += " LEFT JOIN uw_dashboard_geo_focus_area AS gfa ON p.prgrm_andar_year = gfa.prgrm_andar_year_id"
 		query += " LEFT JOIN uw_dashboard_donor_engagement AS de ON p.prgrm_andar_year = de.prgrm_andar_year_id"
 		query += " LEFT JOIN uw_dashboard_location AS l ON p.prgrm_andar_year = l.program_andar_number"
-		query += " LEFT JOIN uw_dashboard_agencies AS a ON p.prgrm_andar_year = a.prgrm_andar_year_id WHERE"
+		query += " LEFT JOIN uw_dashboard_agencies AS a ON p.agency_andar_number_id = a.agency_andar_number WHERE"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
