@@ -28,7 +28,7 @@ class DatabaseReader(models.Model):
 		query += " LEFT JOIN uw_dashboard_target_population AS t ON p.prgrm_andar_year = t.prgrm_andar_year_id"
 		query += " LEFT JOIN uw_dashboard_geo_focus_area AS gfa ON p.prgrm_andar_year = gfa.prgrm_andar_year_id"
 		query += " LEFT JOIN uw_dashboard_donor_engagement AS de ON p.prgrm_andar_year = de.prgrm_andar_year_id"
-		query += " LEFT JOIN uw_dashboard_location AS l ON p.prgrm_andar_year = l.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_location AS l ON p.prgrm_andar_year = l.program_andar_number"
 		query += " LEFT JOIN uw_dashboard_agencies AS a ON p.prgrm_andar_year = a.prgrm_andar_year_id WHERE"
 
 		if 'funding_year' in filters.keys():
@@ -94,7 +94,7 @@ class DatabaseReader(models.Model):
 			query = query[:-2]
 			query += ") AND"
 
-		query += " TRUE GROUP BY p.prgrm_andar_year, pe.prgrm_andar_year_id, de.prgrm_andar_year_id, l.prgrm_andar_year_id, p.grant_start_date"
+		query += " TRUE GROUP BY p.prgrm_andar_year, pe.prgrm_andar_year_id, de.prgrm_andar_year_id, l.program_andar_number, p.grant_start_date"
 
 		firstResults = my_custom_sql(query)
 		
