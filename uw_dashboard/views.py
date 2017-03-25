@@ -18,6 +18,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection, models
 import json, models
+from wkhtmltopdf.views import PDFTemplateResponse
 
 reporting = Reporting_Service(None)
 
@@ -143,29 +144,28 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class PDFGenerate(LoginRequiredMixin, TemplateView):
     template='search-results.html'
-    ctx= {'title': 'Hello World!'}
 
     def get(self, request):
+        ctx = reporting.query_data(request.POST)
+        ctx["data_table"] = request.session.get('data_table')
+        ctx["pie_table"] = request.session.get('pie_table')
+        ctx["totals_table"] = request.session.get('totals_table')
+        ctx["filters_table"] = request.session.get('filters_table')
         response = PDFTemplateResponse(request=request,
                                        template=self.template,
                                        filename="output.pdf",
-                                       context= self.ctx,
+                                       context= ctx,
                                        show_content_in_browser=False,
                                        cmd_options={'margin-top': 50,},
                                        )
         return response
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchResultsView, self).get_context_data(**kwargs)
-        ctx = context
-
-
 
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
 
     def post(self, request, *args, **kwargs):
         context = reporting.query_data(request.POST)
+        print(context)
 
         if context.get('results') == []:
             messages.error(request, "No data for selected filters")
@@ -173,10 +173,21 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
         print context.get("results")[0]
         self.addFiltersToDatabase(context["filters"])
-        context["data_table"] = self.getDataTable(context["results"])
-        context["pie_table"] = self.getPieTable(context["results"])
-        context["totals_table"] = self.getTotalsTable(context["totals"])
-        context["filters_table"] = self.getFiltersTable(context["filters"])
+        dt = self.getDataTable(context["results"])
+        pt = self.getPieTable(context["results"])
+        tt = self.getTotalsTable(context["totals"])
+        ft = self.getFiltersTable(context["filters"])
+
+        context["data_table"] = dt
+        context["pie_table"] = pt
+        context["totals_table"] = tt
+        context["filters_table"] = ft
+
+        request.session["data_table"] = dt
+        request.session["pie_table"] = pt
+        request.session["totals_table"] = tt
+        request.session["filters_table"] = ft
+
         res = render(request, 'search-results.html', context)
         return res
 
