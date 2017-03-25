@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from uw_dashboard.forms import UploadFileForm, SetUserPasswordForm, DeleteUserForm
-from uw_dashboard.models import Reporting_Service
+from uw_dashboard.models import Reporting_Service, Search_History
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -29,11 +29,8 @@ class Profile(LoginRequiredMixin, TemplateView):
 
 
     def post(self, request, *args, **kwargs):
-        query = "SELECT * FROM uw_dashboard_search_history"
-        results = self.my_custom_sql(query)
-        context= {}
-        context["results"] = results
-        return render(request, 'profile.html', context)
+        models = Search_History.objects.all()
+        return render(request, 'profile.html', {'models': models})
 
     def dictfetchall(self, cursor):
         columns = [col[0] for col in cursor.description]
@@ -259,39 +256,48 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
         return results
 
     def addFiltersToDatabase(self, results):
-        funding_year=""
-        focus_area=""
-        target_population=""
-        program_elements=""
-        city=""
-        gfa=""
-        donor=""
-        money_invested=""
-        if "funding_year" in results:
-            funding_year = results["funding_year"]
-        if "focus_area" in results:
-            focus_area = results["focus_area"]
-        if "target_population" in results:
-            target_population = results["target_population"]
-        if "program_elements" in results:
-            program_elements = results["program_elements"]
-        if "city" in results:
-            city = results["city"]
-        if "gfa" in results:
-            gfa = results["gfa"]
-        if "donor" in results:
-            donor = results["donor"]
-        if "money_invested" in results:
-            money_invested = results["money_invested"]
+        funding_year = ''
+        focus_area = ''
+        target_population = ''
+        program_elements = ''
+        city = ''
+        gfa = ''
+        donor = ''
+        money_invested = ''
 
-        search = models.Search_History( funding_year=funding_year,
-                                        focus_area=focus_area,
-                                        target_population=target_population,
-                                        program_elements=program_elements,
-                                        city_groupings=city,
-                                        geographic_focus_area=gfa,
-                                        donor_engagement=donor,
-                                        money_invested=money_invested)
+        if "funding_year" in results and results["funding_year"]:
+            for result in results["funding_year"]:
+                funding_year += result+', '
+        if "focus_area" in results and results["focus_area"]:
+            for result in results["focus_area"]:
+                focus_area += result+', '
+        if "target_population" in results and results["target_population"]:
+            for result in results["target_population"]:
+                target_population += result + ', '
+        if "program_elements" in results and results["program_elements"]:
+            for result in results["program_elements"]:
+                program_elements +=result + ', '
+        if "city" in results and results["city"]:
+            for result in results["city"]:
+                city += result + ', '
+        if "gfa" in results and results["gfa"]:
+            for result in results["gfa"]:
+                gfa += result + ', '
+        if "donor" in results and results["donor"]:
+            for result in results["donor"]:
+                donor += result + ', '
+        if "money_invested" in results and results["money_invested"]:
+            for result in results["money_invested"]:
+                money_invested += result + ', '
+
+        search = models.Search_History( funding_year=funding_year[:-2],
+                                        focus_area=focus_area[:-2],
+                                        target_population=target_population[:-2],
+                                        program_elements=program_elements[:-2],
+                                        city_groupings=city[:-2],
+                                        geographic_focus_area=gfa[:-2],
+                                        donor_engagement=donor[:-2],
+                                        money_invested=money_invested[:-2])
         search.save()
 
 class SearchPage(LoginRequiredMixin, TemplateView):
