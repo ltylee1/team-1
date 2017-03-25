@@ -189,7 +189,9 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             "grant_start_date",
             "grant_end_date",
             "element_names",
-            "program_description"
+            "program_description",
+            "postal_count",
+            "postal_codes"
         ]
 
         dataTable = []
