@@ -115,11 +115,13 @@ class MapView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         location_list = reporting.queryMap([])
-
         return render(request, 'map.html', {'data_table': location_list})
     
     def post(self, request, *args, **kwargs):
-        location_list = reporting.queryMap([])
+        postalcodes = request.POST['postalcodes']
+        postalcodes = str(postalcodes)
+        postlist =  postalcodes.split(',')
+        location_list = reporting.queryMap(postlist)
         return render(request, 'map.html', {'data_table': location_list})
 
 
