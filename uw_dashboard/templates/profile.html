@@ -25,6 +25,7 @@
 <h1>Recent User Searches</h1>
 <table class="dashboard-table">
     <thead>
+            <th>User</th>
             <th>Focus Area</th>
             <th>Program Elements</th>
             <th>Money Invested</th>
@@ -37,6 +38,9 @@
 	<tbody>
 	  {% for filters in models reversed %}
          <tr>
+             <td>
+                {{ filters.user }}
+             </td>
           <td>
           	{{ filters.focus_area}}
           </td>

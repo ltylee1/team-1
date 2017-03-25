@@ -91,7 +91,7 @@ class Search_History(models.Model):
     donor_engagement = models.CharField(max_length=512)
     money_invested= models.CharField(max_length=512)
     funding_year = models.CharField(max_length=512)
-    #user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 # Separate table for extra user information we need that is not used for authentication
