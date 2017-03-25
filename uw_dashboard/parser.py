@@ -467,7 +467,7 @@ class Parser:
                                               postal_code=loc_post,
                                               latitude=loc_lat,
                                               longitude=loc_lon,
-                                              address = address,
+                                              address=address,
                                               website=row[self.postal_index['Website']])
                         if loc not in pro_loc_list:
                             pro_loc_list.append(loc)
