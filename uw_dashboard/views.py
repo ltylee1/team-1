@@ -172,7 +172,6 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = reporting.query_data(request.POST)
-        print(context)
 
         if context.get('results') == []:
             messages.error(request, "No data for selected filters")
