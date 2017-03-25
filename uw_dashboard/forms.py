@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 import unicodedata
 
 YEARS = (
-    (2016, '2015/2016'),
-    (2017, '2016/2017'),
-    (2018, '2017/2018'),
+    (2015, '2015/2016'),
+    (2016, '2016/2017'),
+    (2017, '2017/2018'),
 )
 
 TYPE = (
