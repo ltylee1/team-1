@@ -19,7 +19,7 @@
                 {% if forloop.last %}
                     <form action="/map.html" method="post">
                     {% csrf_token %}
-                    <td><input type="submit" value="postalcodes" id="postalcodes" name="postalcodes" class="btn btn-primary"></td>
+                    <td><input type="submit" value="{{ value }}" id="postalcodes" name="postalcodes" class="btn btn-primary"></td>
                     </form>
                 {% else %}
                     <td>{{ value }}</td>
