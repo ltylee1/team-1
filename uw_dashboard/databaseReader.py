@@ -24,12 +24,12 @@ class DatabaseReader(models.Model):
 		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.element_name SEPARATOR ',') as element_names, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ','), SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), t.target_population, gfa.city, gfa.city_grouping, a.agency_name"
 		
 		query += " FROM uw_dashboard_program AS p"
-		query += " LEFT JOIN uw_dashboard_program_elements AS pe ON p.prgrm_andar_year = pe.prgrm_andar_year"
-		query += " LEFT JOIN uw_dashboard_target_population AS t ON p.prgrm_andar_year = t.prgrm_andar_year"
-		query += " LEFT JOIN uw_dashboard_geo_focus_area AS gfa ON p.prgrm_andar_year = gfa.prgrm_andar_year"
-		query += " LEFT JOIN uw_dashboard_donor_engagement AS de ON p.prgrm_andar_year = de.prgrm_andar_year"
-		query += " LEFT JOIN uw_dashboard_location AS l ON p.prgrm_andar_year = l.prgrm_andar_year"
-		query += " LEFT JOIN uw_dashboard_agencies AS a ON p.prgrm_andar_year = a.prgrm_andar_year WHERE"
+		query += " LEFT JOIN uw_dashboard_program_elements AS pe ON p.prgrm_andar_year = pe.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_target_population AS t ON p.prgrm_andar_year = t.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_geo_focus_area AS gfa ON p.prgrm_andar_year = gfa.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_donor_engagement AS de ON p.prgrm_andar_year = de.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_location AS l ON p.prgrm_andar_year = l.prgrm_andar_year_id"
+		query += " LEFT JOIN uw_dashboard_agencies AS a ON p.prgrm_andar_year = a.prgrm_andar_year_id WHERE"
 
 		if 'funding_year' in filters.keys():
 			query += " ("
@@ -94,7 +94,7 @@ class DatabaseReader(models.Model):
 			query = query[:-2]
 			query += ") AND"
 
-		query += " TRUE GROUP BY p.prgrm_andar_year, pe.prgrm_andar_year, de.prgrm_andar_year, l.prgrm_andar_year, p.grant_start_date"
+		query += " TRUE GROUP BY p.prgrm_andar_year, pe.prgrm_andar_year_id, de.prgrm_andar_year_id, l.prgrm_andar_year_id, p.grant_start_date"
 
 		firstResults = my_custom_sql(query)
 		
@@ -103,7 +103,7 @@ class DatabaseReader(models.Model):
 
 		tQuery = "SELECT SUM(p.allocation) AS invested, COUNT(p.prgrm_andar_year) AS programs, COUNT(DISTINCT p.agency_andar_number_id) AS agencies, SUM(t.early_years) AS early_years, SUM(t.middle_years) AS middle_years, SUM(t.seniors) AS seniors, SUM(t.parent_caregivers) AS parent_caregivers, SUM(t.families) AS families, SUM(t.meals_snacks) as meals_snacks, SUM(t.counselling_sessions) AS counselling_sessions, SUM(t.mentors_tutors) AS mentors_tutors, SUM(t.workshops) as workshops, SUM(t.volunteers) AS volunteers FROM uw_dashboard_program as p, uw_dashboard_totals as t WHERE"
 
-		tQuery += " p.prgrm_andar_year = t.prgrm_andar_year AND"
+		tQuery += " p.prgrm_andar_year = t.prgrm_andar_year_id AND"
 
 		if len(programsReturned) != 0:
 			tQuery += " ("
