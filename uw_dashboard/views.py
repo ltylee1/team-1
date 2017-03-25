@@ -18,6 +18,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection, models
 import json, models
+from wkhtmltopdf.views import PDFTemplateResponse
 
 reporting = Reporting_Service(None)
 
@@ -44,9 +45,6 @@ class Profile(LoginRequiredMixin, TemplateView):
             cursor.execute(query)
             results = self.dictfetchall(cursor)
         return results
-
-
-
 
 class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "upload.html"
@@ -151,11 +149,30 @@ class AddUserView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AddUserView, self).dispatch(request, *args, **kwargs)
 
 
+class PDFGenerate(LoginRequiredMixin, TemplateView):
+    template='search-results.html'
+
+    def get(self, request):
+        ctx = reporting.query_data(request.POST)
+        ctx["data_table"] = request.session.get('data_table')
+        ctx["pie_table"] = request.session.get('pie_table')
+        ctx["totals_table"] = request.session.get('totals_table')
+        ctx["filters_table"] = request.session.get('filters_table')
+        response = PDFTemplateResponse(request=request,
+                                       template=self.template,
+                                       filename="output.pdf",
+                                       context= ctx,
+                                       show_content_in_browser=False,
+                                       cmd_options={'margin-top': 50,},
+                                       )
+        return response
+
 class SearchResultsView(LoginRequiredMixin, TemplateView):
     template_name = "search-results.html"
 
     def post(self, request, *args, **kwargs):
         context = reporting.query_data(request.POST)
+        print(context)
 
         if context.get('results') == []:
             messages.error(request, "No data for selected filters")
@@ -163,10 +180,21 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
         print context.get("results")[0]
         self.addFiltersToDatabase(context["filters"], request.user)
-        context["data_table"] = self.getDataTable(context["results"])
-        context["pie_table"] = self.getPieTable(context["results"])
-        context["totals_table"] = self.getTotalsTable(context["totals"])
-        context["filters_table"] = self.getFiltersTable(context["filters"])
+        dt = self.getDataTable(context["results"])
+        pt = self.getPieTable(context["results"])
+        tt = self.getTotalsTable(context["totals"])
+        ft = self.getFiltersTable(context["filters"])
+
+        context["data_table"] = dt
+        context["pie_table"] = pt
+        context["totals_table"] = tt
+        context["filters_table"] = ft
+
+        request.session["data_table"] = dt
+        request.session["pie_table"] = pt
+        request.session["totals_table"] = tt
+        request.session["filters_table"] = ft
+
         res = render(request, 'search-results.html', context)
         return res
 
@@ -300,7 +328,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             for result in results["money_invested"]:
                 money_invested += result + ', '
 
-        search = Search_History( funding_year=funding_year[:-2],
+        search = models.Search_History( funding_year=funding_year[:-2],
                                         focus_area=focus_area[:-2],
                                         target_population=target_population[:-2],
                                         program_elements=program_elements[:-2],
@@ -308,7 +336,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
                                         geographic_focus_area=gfa[:-2],
                                         donor_engagement=donor[:-2],
                                         money_invested=money_invested[:-2],
-                                        user=user
+                                        user = user
                                         )
         search.save()
 
