@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from uw_dashboard.forms import UploadFileForm, SetUserPasswordForm, DeleteUserForm
-from uw_dashboard.models import Reporting_Service
+from uw_dashboard.models import Reporting_Service, Search_History
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -29,11 +29,8 @@ class Profile(LoginRequiredMixin, TemplateView):
 
 
     def post(self, request, *args, **kwargs):
-        query = "SELECT * FROM uw_dashboard_search_history"
-        results = self.my_custom_sql(query)
-        context= {}
-        context["results"] = results
-        return render(request, 'profile.html', context)
+        models = Search_History.objects.all()
+        return render(request, 'profile.html', {'models': models})
 
     def dictfetchall(self, cursor):
         columns = [col[0] for col in cursor.description]

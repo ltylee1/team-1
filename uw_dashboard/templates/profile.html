@@ -35,31 +35,31 @@
             <th>Target Population</th>
     </thead>
 	<tbody>
-	  {% for filters in results reversed %}
+	  {% for filters in models reversed %}
          <tr>
           <td>
-          	{{ filters |get:"focus_area"}}
+          	{{ filters.focus_area}}
           </td>
           <td>
-          	{{ filters |get:"program_elements"}}
+          	{{ filters.program_elements}}
           </td>
           <td>
-          	{{ filters |get:"money_invested"}}
+          	{{ filters.money_invested}}
           </td>
           <td>
-          	{{ filters |get:"city_groupings"}}
+          	{{ filters.city_groupings}}
           </td>
           <td>
-          	{{ filters |get:"geographic_focus_area"}}
+          	{{ filters.geographic_focus_area}}
           </td>
           <td>
-          	{{ filters |get:"donor_engagement"}}
+          	{{ filters.donor_engagement}}
           </td>
           <td>
-          	{{ filters |get:"funding_year"}}
+          	{{ filters.funding_year}}
           </td>
           <td>
-          	{{ filters |get:"target_population"}}
+          	{{ filters.target_population}}
           </td>
         </tr>
       {% endfor %}
