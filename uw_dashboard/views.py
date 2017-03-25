@@ -112,7 +112,12 @@ class LogoutView(RedirectView):
 class MapView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
-        location_list = reporting.queryMap()
+        location_list = reporting.queryMap([])
+
+        return render(request, 'map.html', {'data_table': location_list})
+    
+    def post(self, request, *args, **kwargs):
+        location_list = reporting.queryMap([])
         return render(request, 'map.html', {'data_table': location_list})
 
 
@@ -204,6 +209,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             "postal_count",
             "postal_codes"
         ]
+
 
         dataTable = []
 
