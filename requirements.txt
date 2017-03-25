@@ -5,4 +5,5 @@ pyparsing==2.1.10
 six==1.10.0
 django-session-security==2.5.1
 requests==2.13.0
-
+django-wkhtmltopdf==3.1.0
+wkhtmltopdf==0.2
