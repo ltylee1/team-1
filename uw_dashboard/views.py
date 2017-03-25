@@ -201,19 +201,13 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
         return json.dumps(dataTable)
 
     def getTotalsTable(self, results):
-        keyNames = ["Seniors",
-                      "Early Years",
-                      "Counselling Sessions",
-                      "Families",
-                      "Programs",
-                      "Mentors/Tutors",
-                      "Workshops",
-                      "Middle Years",
-                      "Agencies",
-                      "Meals/Snacks",
-                      "Money Invested",
-                      "Parent/Caregivers",
-                      "Volunteers"]
+        keyNames = [
+                    "Meals/Snacks",
+                    "Counselling Sessions",
+                    "Mentors/Tutors",
+                    "Workshops",
+                    "Volunteers"
+                    ]
 
         data = results[0]
         i =0
