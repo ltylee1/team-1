@@ -179,20 +179,28 @@ class Parser:
     def get_locations(self, row):
         index = self.postal_index['# Locations']
         locations = []
-        url = 'https://maps.googleapis.com/maps/api/geocode/json'
         if row[index] != "None" and row[index] != '':
             for num in range(0, int(row[index])):
                 location = row[(index + num * 2) + 1]
                 postcode = row[(index + num * 2) + 2]
-                # Maybe append 'canada' to postcode?
-                params = {'sensor': 'false', 'address': postcode}
+                params = {'address': str(postcode)}
+                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
+                    postcode+',ca')
                 r = requests.get(url, params=params)
                 results = r.json()['results']
-                glocation = results[0]['geometry']['location']
-                geocode = [glocation['lat'], glocation['lng']]
-                lat = geocode[0]
-                lon = geocode[1]
-                locations.append([location, postcode, lat, lon])
+                # try:
+                if postcode != '':
+                    # results[0]['geometry']['location']
+                    glocation = results[0]['geometry']['location']
+                    address = results[0]['formatted_address']
+                    # Temp fix for google api not being able to query properly
+                    if '0' in postcode[4]:
+                        result = address.split('BC ', 1)
+                        address = result[0]+'BC '+postcode+', Canada'
+                    locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
+                    # print(str(glocation['lat']) + "," + str(glocation['lng']))
+                # except IndexError, e:
+                #     print("Can't geocode" + str(postcode))
         return locations
 
     def get_city_grouping(self, city):
@@ -440,11 +448,13 @@ class Parser:
                 loc_post = location[1]
                 loc_lat = location[2]
                 loc_lon = location[3]
+                address = location[4]
                 # Check that the location is not empty
                 if loc_name != 'None' and loc_name != '' and loc_post != 'None' and loc_post != '' and loc_lat != 'None' and loc_lat != '' and loc_lon != 'None' and loc_lon != '':
                     # Check that location does not already exist
                     check = models.Location.objects.filter(
                         program_andar_number=row[self.postal_index['Program Andar #']],
+                        program_name=row[self.postal_index['Program Name']],
                         location=loc_name,
                         postal_code=loc_post,
                         latitude=loc_lat,
@@ -452,10 +462,12 @@ class Parser:
                     # Insert data into database
                     if not check:
                         loc = models.Location(program_andar_number=row[self.postal_index['Program Andar #']],
+                                              program_name=row[self.postal_index['Program Name']],
                                               location=loc_name,
                                               postal_code=loc_post,
                                               latitude=loc_lat,
                                               longitude=loc_lon,
+                                              address = address,
                                               website=row[self.postal_index['Website']])
                         if loc not in pro_loc_list:
                             pro_loc_list.append(loc)

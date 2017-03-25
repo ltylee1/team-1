@@ -19,8 +19,8 @@ TYPE = (
 class UploadFileForm(forms.Form):
     File_To_Upload = forms.FileField()
     Overwrite_data = forms.BooleanField(required=False)
-    Funding_Year = forms.ChoiceField(YEARS)
     File_type = forms.ChoiceField(TYPE)
+    Funding_Year = forms.ChoiceField(YEARS)
 
 class UsernameField(forms.CharField):
     def to_python(self, value):
