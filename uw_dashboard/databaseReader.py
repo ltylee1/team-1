@@ -34,7 +34,8 @@ class DatabaseReader(models.Model):
 		if 'funding_year' in filters.keys():
 			query += " ("
 			for i in filters['funding_year']:
-				query += " p.grant_start_date BETWEEN '" + str(i) + "-01-01' AND '" + str(i) + "-12-31' OR"
+				#query += " p.grant_start_date BETWEEN '" + str(i) + "-01-01' AND '" + str(i) + "-12-31' OR"
+				query += " p.year = '" + str(filters['funding_year'][i]) + "' OR"
 			query = query[:-2]
 			query += ") AND"
 	
