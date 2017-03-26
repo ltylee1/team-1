@@ -59,29 +59,27 @@ class ParserTestWithoutDBSETUP(TestCase):
     def testInvalidType(self):
         with self.assertRaises(Exception) as context:
             Parser(self.file, 2017, True, 2017)
-        self.assertTrue('type is invalid' in str(context.exception))
+        self.assertTrue('Error in parsing: Type input is invalid' in str(context.exception))
 
     def testInvalidFile(self):
         Invalid = 2013
         with self.assertRaises(Exception) as context:
             Parser(Invalid, 2017, True, 'output')
-        self.assertTrue('file invalid' in str(context.exception))
+        self.assertTrue('Error in parsing: File input is invalid' in str(context.exception))
 
     def testInvalidOverwrite(self):
         with self.assertRaises(Exception) as context:
             Parser(self.file, 2017, 'true', 'postal')
-        self.assertTrue('overwrite invalid' in str(context.exception))
+        self.assertTrue('Error in parsing: Overwrite input is invalid' in str(context.exception))
 
     def testInvalidYear(self):
         with self.assertRaises(Exception) as context:
             Parser(self.file, '2017', True, 'postal')
-        self.assertTrue('year invalid' in str(context.exception))
+        self.assertTrue('Error in parsing: Year input is invalid' in str(context.exception))
 
     def testGenerateKey(self):
         parser = Parser(self.file, 2017, True, 'output')
         self.assertEqual('12342017', parser.generate_primary_key(1234, 2017))
-
-
 
 
 class ParserTestWithDBSETUP(TestCase):
@@ -447,7 +445,3 @@ class ParserTestWithDBSETUP(TestCase):
         self.assertEqual(last.postal_code, 'V0B 1G5')
         self.assertEqual(last.website, '')
         self.assertEqual(last.program_andar_number, 5606579)
-
-
-
-

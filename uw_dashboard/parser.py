@@ -1,10 +1,11 @@
 import csv
 import models
 import requests
-from django.db import transaction
 
 
 class Parser:
+    existingInstances = []
+
     def __init__(self, cur_file, year, overwrite, file_type):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(file_type,
                                                                                                               str):
@@ -12,14 +13,27 @@ class Parser:
             self.year = year
             self.overwrite = overwrite
             self.type = file_type
+            # Add to existing instances and determine if there is currently a user updating the db
+            if self.type == 'output':
+                if self.overwrite and self.year in self.existingInstances:
+                    self.existingInstances.append(self.year)
+                    raise Exception("Error in overwriting: Existing user is updating database, unable to overwrite")
+                else:
+                    self.existingInstances.append(self.year)
+            elif self.type == 'postal':
+                if self.overwrite and self.type in self.existingInstances:
+                    self.existingInstances.append(self.type)
+                    raise Exception("Error in overwriting: Existing user is updating database, unable to overwrite")
+                else:
+                    self.existingInstances.append(self.type)
         else:
             if not isinstance(year, int):
-                raise Exception("Error in parsing: year invalid")
+                raise Exception("Error in parsing: Year input is invalid")
             if not isinstance(overwrite, bool):
-                raise Exception("Error in parsing: overwrite invalid")
+                raise Exception("Error in parsing: Overwrite input is invalid")
             if not isinstance(file_type, str):
-                raise Exception("Error in parsing: type is invalid")
-            raise Exception("Error in parsing: file invalid")
+                raise Exception("Error in parsing: Type input is invalid")
+            raise Exception("Error in parsing: File input is invalid")
 
         self.content = []
         self.column_names = []
@@ -58,6 +72,16 @@ class Parser:
             '# Locations': -1,
             'Postal Code': -1
         }
+
+    def __del__(self):
+        # Remove from existingInstances
+        try:
+            if self.type == 'output' and self.year in self.existingInstances:
+                self.existingInstances.remove(self.year)
+            elif self.type == 'postal' and self.type in self.existingInstances:
+                self.existingInstances.remove(self.type)
+        except Exception:
+            pass
 
     # Gets the core indexes for the postal file
     def get_postal_index(self, column_list):
@@ -130,19 +154,11 @@ class Parser:
 
     # Drops the part of the program table corresponding to the year
     def drop_program_table(self):
-        with transaction.atomic():
-            numRows = models.Program.objects.filter(year=self.year).count()
-            numDel = models.Program.objects.filter(year=self.year).delete()
-            if numRows>0 and numDel[0] == 0:
-                raise Exception('Error in overwriting: Database currently in use by another user, unable to overwrite')
+        models.Program.objects.filter(year=self.year).delete()
 
     # Drops the entire location table
     def drop_location_table(self):
-        with transaction.atomic():
-            numRows = models.Location.objects.all().count()
-            numDel = models.Location.objects.all().delete()
-            if numRows>0 and numDel[0] == 0:
-                raise Exception('Error in overwriting: Database currently in use by another user, unable to overwrite')
+        models.Location.objects.all().delete()
 
     # Inserts data into the database
     def insert_data(self):
@@ -199,7 +215,6 @@ class Parser:
                 results = r.json()['results']
                 # try:
                 if postcode != '':
-                    # results[0]['geometry']['location']
                     glocation = results[0]['geometry']['location']
                     address = results[0]['formatted_address']
                     # Temp fix for google api not being able to query properly
