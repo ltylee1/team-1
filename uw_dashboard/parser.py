@@ -534,13 +534,17 @@ class Parser:
                 if len(columns) != 37:
                     print "Columns have been removed or added, system may not work"
                 for col_name in program_postal_columns:
-                    if col_name not in columns:
+                    if col_name == '' or col_name is None:
+                        raise Exception('Error in parsing: Empty column name found in file')
+                    elif col_name not in columns:
                         raise Exception('Error in parsing: Column %s is missing' % col_name)
             elif self.type == 'output':
                 if len(columns) != 159:
                     print "Columns have been removed or added, system may not work"
                 for col_name in output_columns:
-                    if col_name not in columns:
+                    if '' in columns or col_name is None:
+                        raise Exception('Error in parsing: Empty column name found in file')
+                    elif col_name not in columns:
                         raise Exception('Error in parsing: Column %s is missing' % col_name)
         return True
 

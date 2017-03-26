@@ -73,14 +73,6 @@ class UploadView(LoginRequiredMixin, TemplateView):
             fs.delete(filename)
             messages.success(request, result)
             return redirect(reverse_lazy('homepage'))
-            # if not result:
-            #     messages.error(request, "Please upload a .csv file")
-            #     fs.delete(filename)
-            #     return redirect(reverse_lazy('upload'))
-            # else:
-            #     fs.delete(filename)
-            #     messages.success(request, "Upload Completed")
-            #     return redirect(reverse_lazy('homepage'))
         else:
             return HttpResponseRedirect('homepage.html')
 

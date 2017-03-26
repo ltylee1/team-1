@@ -136,7 +136,7 @@ class Reporting_Service:
         self.user = user
 
     def import_data(self, file, year, overwrite, type):
-        file  = str(file)
+        file = str(file)
         parser = Parser(file, year, overwrite, type)
         parser.validate_file()
         parser.parse_file()
