@@ -1,6 +1,7 @@
 import csv
 import models
 import requests
+from django.db import transaction
 
 
 class Parser:
@@ -13,12 +14,12 @@ class Parser:
             self.type = file_type
         else:
             if not isinstance(year, int):
-                raise Exception("year invalid")
+                raise Exception("Error in parsing: year invalid")
             if not isinstance(overwrite, bool):
-                raise Exception("overwrite invalid")
+                raise Exception("Error in parsing: overwrite invalid")
             if not isinstance(file_type, str):
-                raise Exception("type is invalid")
-            raise Exception("file invalid")
+                raise Exception("Error in parsing: type is invalid")
+            raise Exception("Error in parsing: file invalid")
 
         self.content = []
         self.column_names = []
@@ -129,11 +130,19 @@ class Parser:
 
     # Drops the part of the program table corresponding to the year
     def drop_program_table(self):
-        models.Program.objects.filter(year=self.year).delete()
+        with transaction.atomic():
+            numRows = models.Program.objects.filter(year=self.year).count()
+            numDel = models.Program.objects.filter(year=self.year).delete()
+            if numRows>0 and numDel[0] == 0:
+                raise Exception('Error in overwriting: Database currently in use by another user, unable to overwrite')
 
     # Drops the entire location table
     def drop_location_table(self):
-        models.Location.objects.all().delete()
+        with transaction.atomic():
+            numRows = models.Location.objects.all().count()
+            numDel = models.Location.objects.all().delete()
+            if numRows>0 and numDel[0] == 0:
+                raise Exception('Error in overwriting: Database currently in use by another user, unable to overwrite')
 
     # Inserts data into the database
     def insert_data(self):
@@ -386,7 +395,6 @@ class Parser:
     # Should only need to insert since program table will be dropped if overwrite; during append we should just update if there are no tables existing
     def insert_program(self):
         program_list = []
-        # prgrm_andar_year
         for row in self.content:
             andar = row[self.output_index['Program Andar #']]
             andar_year = self.generate_primary_key(andar, self.year)
@@ -493,19 +501,19 @@ class Parser:
                     print "Columns have been removed or added, system may not work"
                 for col_name in program_postal_columns:
                     if col_name not in columns:
-                        raise Exception('Column: %s is missing' % col_name)
+                        raise Exception('Error in parsing: Column %s is missing' % col_name)
             elif self.type == 'output':
                 if len(columns) != 159:
                     print "Columns have been removed or added, system may not work"
                 for col_name in output_columns:
                     if col_name not in columns:
-                        raise Exception('Column: %s is missing' % col_name)
+                        raise Exception('Error in parsing: Column %s is missing' % col_name)
         return True
 
     # checks that the type of the file is either postal or output
     def check_type(self):
         if str(self.type) != 'postal' and str(self.type) != 'output':
-            raise Exception('File type is incorrect')
+            raise Exception('Error in parsing: File type is incorrect')
         return True
 
     # Checks that the file is a CSV
@@ -528,7 +536,7 @@ class Parser:
                     self.drop_location_table()
                 self.insert_program_location()
         else:
-            raise Exception("Nothing to insert")
+            raise Exception("Error in parsing: Nothing to insert")
 
     # Parses the file
     def parse_file(self):
