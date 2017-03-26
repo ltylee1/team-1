@@ -177,7 +177,6 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
 
-        print context.get("results")[0]
         self.addFiltersToDatabase(context["filters"], request.user)
         dt = self.getDataTable(context["results"])
         pt = self.getPieTable(context["results"])
