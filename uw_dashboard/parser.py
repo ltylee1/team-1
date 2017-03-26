@@ -1,7 +1,8 @@
 import csv
 import models
 import requests
-
+import time
+import random
 
 class Parser:
     existingInstances = []
@@ -219,6 +220,11 @@ class Parser:
     def get_locations(self, row):
         index = self.postal_index['# Locations']
         locations = []
+        # Set keys
+        keys = ['AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE', 'AIzaSyBBWJr307hih9gb5nFlklp-9Ogik4EEs7w']
+        pkey = random.choice(keys)
+        keys.remove(pkey)
+        bkey = keys[0]
         if row[index] != "None" and row[index] != '':
             for num in range(0, int(row[index])):
                 location = row[(index + num * 2) + 1]
@@ -230,9 +236,17 @@ class Parser:
                     if not check:
                         # try:
                         params = {'address': str(postcode)}
-                        url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
-                            postcode + ',ca')
+                        url = 'https://maps.googleapis.com/maps/api/geocode/json?key=%s&address=%s,ca' %(pkey, str(postcode))
                         r = requests.get(url, params=params)
+                        if 'OVER_QUERY_LIMIT' in r.json()['status']:
+                            # Try again with backup key and deal with timing
+                            time.sleep(1)
+                            url = 'https://maps.googleapis.com/maps/api/geocode/json?key=%s&address=%s,ca' % (
+                            bkey, str(postcode))
+                            r = requests.get(url, params=params)
+                            # Raise Exception
+                            if 'OVER_QUERY_LIMIT' in r.json()['status']:
+                                raise Exception("Error in updating: OVER_QUERY_LIMIT returned by google api")
                         results = r.json()['results']
                         glocation = results[0]['geometry']['location']
                         address = results[0]['formatted_address']
@@ -242,8 +256,6 @@ class Parser:
                             address = result[0]+'BC '+postcode+', Canada'
                         locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
                     # print(str(glocation['lat']) + "," + str(glocation['lng']))
-                # except IndexError, e:
-                #     print("Can't geocode" + str(postcode))
         return locations
 
     def get_city_grouping(self, city):
