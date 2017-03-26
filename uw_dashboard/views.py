@@ -69,14 +69,18 @@ class UploadView(LoginRequiredMixin, TemplateView):
                 else:
                     messages.error(request, "Something went wrong, %s returned" % str(e))
                 return redirect(reverse_lazy('upload'))
-            if not result:
-                messages.error(request, "Please upload a .csv file")
-                fs.delete(filename)
-                return redirect(reverse_lazy('upload'))
-            else:
-                fs.delete(filename)
-                messages.success(request, "Upload Completed")
-                return redirect(reverse_lazy('homepage'))
+
+            fs.delete(filename)
+            messages.success(request, result)
+            return redirect(reverse_lazy('homepage'))
+            # if not result:
+            #     messages.error(request, "Please upload a .csv file")
+            #     fs.delete(filename)
+            #     return redirect(reverse_lazy('upload'))
+            # else:
+            #     fs.delete(filename)
+            #     messages.success(request, "Upload Completed")
+            #     return redirect(reverse_lazy('homepage'))
         else:
             return HttpResponseRedirect('homepage.html')
 

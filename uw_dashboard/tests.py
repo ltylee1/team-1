@@ -53,8 +53,10 @@ class ParserTestWithoutDBSETUP(TestCase):
 
     def testInvalidFileType(self):
         Invalid = os.path.join(self.dir, 'media', '201516_Inventory_and_Outputs.Feb_update.xlsx')
-        parser = Parser(Invalid, 2017, True, 'output')
-        self.assertFalse(parser.validate_file())
+        with self.assertRaises(Exception) as context:
+            parser = Parser(Invalid, 2017, True, 'output')
+            parser.validate_file()
+        self.assertTrue('Error in parsing: Failed to validate file' in str(context.exception))
 
     def testInvalidType(self):
         with self.assertRaises(Exception) as context:

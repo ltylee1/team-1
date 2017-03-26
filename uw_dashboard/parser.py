@@ -195,6 +195,21 @@ class Parser:
         else:
             return value
 
+    def get_counts(self):
+        cur_counts = {}
+        if self.type == 'output':
+            cur_counts = {'agencies': models.Agencies.objects.all().count(),
+                          'program': models.Program.objects.all().count(),
+                          'donor': models.Donor_Engagement.objects.all().count(),
+                          'totals': models.Totals.objects.all().count(),
+                          'target': models.Target_Population.objects.all().count(),
+                          'gfa': models.Geo_Focus_Area.objects.all().count(),
+                          'pe': models.Program_Elements.objects.all().count()}
+        elif self.type == 'postal':
+            cur_counts = {'locations': models.Location.objects.all().count()}
+
+        return cur_counts
+
     def generate_primary_key(self, program_andar_number, year):
         andar = str(program_andar_number)
         year = str(year)
@@ -541,7 +556,7 @@ class Parser:
         if pfile.endswith('.csv') and self.check_columns() and self.check_type():
             return True
         else:
-            return False
+            raise Exception("Error in parsing: Failed to validate file")
 
     # Inserts the parsed contents into the database
     def insert_file(self):
@@ -549,11 +564,26 @@ class Parser:
             if 'output' in self.type:
                 if self.overwrite:
                     self.drop_program_table()
+                prev_counts = self.get_counts()
                 self.insert_data()
+                new_counts = self.get_counts()
             elif 'postal' in self.type:
                 if self.overwrite:
                     self.drop_location_table()
+                prev_counts = self.get_counts()
                 self.insert_program_location()
+                new_counts = self.get_counts()
+
+            # Return success messages
+            if self.overwrite and prev_counts != new_counts:
+                return "Upload complete, data has been overwritten"
+            elif prev_counts != new_counts:
+                return "Upload complete, new data has been added to database "
+            elif prev_counts == new_counts:
+                return "Upload complete, no new data has been added to database"
+            else:
+                return "Update complete, database has been overwritten but no data added"
+
         else:
             raise Exception("Error in parsing: Nothing to insert")
 

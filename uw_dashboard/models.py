@@ -138,12 +138,9 @@ class Reporting_Service:
     def import_data(self, file, year, overwrite, type):
         file  = str(file)
         parser = Parser(file, year, overwrite, type)
-        if parser.validate_file():
-            parser.parse_file()
-            parser.insert_file()
-            return True
-        else:
-            return False
+        parser.validate_file()
+        parser.parse_file()
+        return parser.insert_file()
 
     def query_data(self, filters):
         # query the data
