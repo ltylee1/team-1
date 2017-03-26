@@ -208,20 +208,24 @@ class Parser:
             for num in range(0, int(row[index])):
                 location = row[(index + num * 2) + 1]
                 postcode = row[(index + num * 2) + 2]
-                params = {'address': str(postcode)}
-                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
-                    postcode+',ca')
-                r = requests.get(url, params=params)
-                results = r.json()['results']
-                # try:
                 if postcode != '':
-                    glocation = results[0]['geometry']['location']
-                    address = results[0]['formatted_address']
-                    # Temp fix for google api not being able to query properly
-                    if '0' in postcode[4]:
-                        result = address.split('BC ', 1)
-                        address = result[0]+'BC '+postcode+', Canada'
-                    locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
+                    check = models.Location.objects.filter(
+                            location=location,
+                            postal_code=postcode).exists()
+                    if not check:
+                        # try:
+                        params = {'address': str(postcode)}
+                        url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
+                            postcode + ',ca')
+                        r = requests.get(url, params=params)
+                        results = r.json()['results']
+                        glocation = results[0]['geometry']['location']
+                        address = results[0]['formatted_address']
+                        # Temp fix for google api not being able to query properly
+                        if '0' in postcode[4]:
+                            result = address.split('BC ', 1)
+                            address = result[0]+'BC '+postcode+', Canada'
+                        locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
                     # print(str(glocation['lat']) + "," + str(glocation['lng']))
                 # except IndexError, e:
                 #     print("Can't geocode" + str(postcode))

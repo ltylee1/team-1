@@ -64,8 +64,10 @@ class UploadView(LoginRequiredMixin, TemplateView):
                 fs.delete(filename)
                 if 'parsing' in str(e):
                     messages.error(request, "%s, please upload a valid .csv file." % (str(e)))
-                if 'overwriting' in str(e):
+                elif 'overwriting' in str(e):
                     messages.error(request, "%s, please wait for current updates to system to finish." % (str(e)))
+                else:
+                    messages.error(request, "Something went wrong, %s returned" % str(e))
                 return redirect(reverse_lazy('upload'))
             if not result:
                 messages.error(request, "Please upload a .csv file")
