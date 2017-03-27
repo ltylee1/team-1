@@ -136,14 +136,11 @@ class Reporting_Service:
         self.user = user
 
     def import_data(self, file, year, overwrite, type):
-        file  = str(file)
+        file = str(file)
         parser = Parser(file, year, overwrite, type)
-        if parser.validate_file():
-            parser.parse_file()
-            parser.insert_file()
-            return True
-        else:
-            return False
+        parser.validate_file()
+        parser.parse_file()
+        return parser.insert_file()
 
     def query_data(self, filters):
         # query the data
@@ -151,19 +148,29 @@ class Reporting_Service:
         results = dbReader.readData()
         return results
 
-    def queryMap(self):
+    def queryMap(self, postal_codes):
         location_name = []
         program_names = []
         location_lat = []
         location_lon = []
         addresses = []
-        locations = Location.objects.all()
-        for location in locations:
-            location_name.append(str(location.location))
-            program_names.append(str(location.program_name))
-            location_lat.append(str(location.latitude))
-            location_lon.append(str(location.longitude))
-            addresses.append(str(location.address))
+        if postal_codes:
+            locations = Location.objects.all()
+            for location in locations:
+                if location.postal_code in postal_codes:
+                    location_name.append(str(location.location))
+                    program_names.append(str(location.program_name))
+                    location_lat.append(str(location.latitude))
+                    location_lon.append(str(location.longitude))
+                    addresses.append(str(location.address))
+        else:
+            locations = Location.objects.all()
+            for location in locations:
+                location_name.append(str(location.location))
+                program_names.append(str(location.program_name))
+                location_lat.append(str(location.latitude))
+                location_lon.append(str(location.longitude))
+                addresses.append(str(location.address))
         return [addresses, location_name, program_names, location_lat, location_lon]
 
     def create_dashboard(self):

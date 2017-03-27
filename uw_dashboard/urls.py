@@ -1,6 +1,6 @@
 from django.conf.urls import url, include
 
-from .views import Homepage, UploadView, LoginView, AddUserView, MapView, LogoutView, SearchResultsView, SearchPage, SetPasswordView, Profile, DeleteUserView
+from .views import Homepage, UploadView, LoginView, AddUserView, MapView, LogoutView, SearchResultsView, SearchPage, SetPasswordView, Profile, DeleteUserView, PDFGenerate
 
 urlpatterns = [
     url(r'^$', Homepage.as_view(), name='index'),
@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^resetPassword.html$', SetPasswordView.as_view(), name="resetPassword"),
     url(r'^profile.html$', Profile.as_view(), name="profile"),
     url(r'^deleteUser.html$', DeleteUserView.as_view(), name="deleteUser"),
+    url(r'^pdf/$', PDFGenerate.as_view(), name="genpdf")
 ]

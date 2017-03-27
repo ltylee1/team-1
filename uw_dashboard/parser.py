@@ -1,9 +1,12 @@
 import csv
 import models
 import requests
-
+import time
+import random
 
 class Parser:
+    existingInstances = []
+
     def __init__(self, cur_file, year, overwrite, file_type):
         if isinstance(cur_file, str) and isinstance(year, int) and isinstance(overwrite, bool) and isinstance(file_type,
                                                                                                               str):
@@ -11,14 +14,27 @@ class Parser:
             self.year = year
             self.overwrite = overwrite
             self.type = file_type
+            # Add to existing instances and determine if there is currently a user updating the db
+            if self.type == 'output':
+                if self.overwrite and self.year in self.existingInstances:
+                    self.existingInstances.append(self.year)
+                    raise Exception("Error in overwriting: Existing user is updating database, unable to overwrite")
+                else:
+                    self.existingInstances.append(self.year)
+            elif self.type == 'postal':
+                if self.overwrite and self.type in self.existingInstances:
+                    self.existingInstances.append(self.type)
+                    raise Exception("Error in overwriting: Existing user is updating database, unable to overwrite")
+                else:
+                    self.existingInstances.append(self.type)
         else:
             if not isinstance(year, int):
-                raise Exception("year invalid")
+                raise Exception("Error in parsing: Year input is invalid")
             if not isinstance(overwrite, bool):
-                raise Exception("overwrite invalid")
+                raise Exception("Error in parsing: Overwrite input is invalid")
             if not isinstance(file_type, str):
-                raise Exception("type is invalid")
-            raise Exception("file invalid")
+                raise Exception("Error in parsing: Type input is invalid")
+            raise Exception("Error in parsing: File input is invalid")
 
         self.content = []
         self.column_names = []
@@ -57,6 +73,16 @@ class Parser:
             '# Locations': -1,
             'Postal Code': -1
         }
+
+    def __del__(self):
+        # Remove from existingInstances
+        try:
+            if self.type == 'output' and self.year in self.existingInstances:
+                self.existingInstances.remove(self.year)
+            elif self.type == 'postal' and self.type in self.existingInstances:
+                self.existingInstances.remove(self.type)
+        except Exception:
+            pass
 
     # Gets the core indexes for the postal file
     def get_postal_index(self, column_list):
@@ -170,6 +196,21 @@ class Parser:
         else:
             return value
 
+    def get_counts(self):
+        cur_counts = {}
+        if self.type == 'output':
+            cur_counts = {'agencies': models.Agencies.objects.all().count(),
+                          'program': models.Program.objects.all().count(),
+                          'donor': models.Donor_Engagement.objects.all().count(),
+                          'totals': models.Totals.objects.all().count(),
+                          'target': models.Target_Population.objects.all().count(),
+                          'gfa': models.Geo_Focus_Area.objects.all().count(),
+                          'pe': models.Program_Elements.objects.all().count()}
+        elif self.type == 'postal':
+            cur_counts = {'locations': models.Location.objects.all().count()}
+
+        return cur_counts
+
     def generate_primary_key(self, program_andar_number, year):
         andar = str(program_andar_number)
         year = str(year)
@@ -179,28 +220,42 @@ class Parser:
     def get_locations(self, row):
         index = self.postal_index['# Locations']
         locations = []
+        # Set keys
+        keys = ['AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE', 'AIzaSyBBWJr307hih9gb5nFlklp-9Ogik4EEs7w']
+        pkey = random.choice(keys)
+        keys.remove(pkey)
+        bkey = keys[0]
         if row[index] != "None" and row[index] != '':
             for num in range(0, int(row[index])):
                 location = row[(index + num * 2) + 1]
                 postcode = row[(index + num * 2) + 2]
-                params = {'address': str(postcode)}
-                url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE&address=' + str(
-                    postcode+',ca')
-                r = requests.get(url, params=params)
-                results = r.json()['results']
-                # try:
                 if postcode != '':
-                    # results[0]['geometry']['location']
-                    glocation = results[0]['geometry']['location']
-                    address = results[0]['formatted_address']
-                    # Temp fix for google api not being able to query properly
-                    if '0' in postcode[4]:
-                        result = address.split('BC ', 1)
-                        address = result[0]+'BC '+postcode+', Canada'
-                    locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
+                    check = models.Location.objects.filter(
+                            location=location,
+                            postal_code=postcode).exists()
+                    if not check:
+                        # try:
+                        params = {'address': str(postcode)}
+                        url = 'https://maps.googleapis.com/maps/api/geocode/json?key=%s&address=%s,ca' %(pkey, str(postcode))
+                        r = requests.get(url, params=params)
+                        if 'OVER_QUERY_LIMIT' in r.json()['status']:
+                            # Try again with backup key and deal with timing
+                            time.sleep(1)
+                            url = 'https://maps.googleapis.com/maps/api/geocode/json?key=%s&address=%s,ca' % (
+                            bkey, str(postcode))
+                            r = requests.get(url, params=params)
+                            # Raise Exception
+                            if 'OVER_QUERY_LIMIT' in r.json()['status']:
+                                raise Exception("Error in updating: OVER_QUERY_LIMIT returned by google api")
+                        results = r.json()['results']
+                        glocation = results[0]['geometry']['location']
+                        address = results[0]['formatted_address']
+                        # Temp fix for google api not being able to query properly
+                        if '0' in postcode[4]:
+                            result = address.split('BC ', 1)
+                            address = result[0]+'BC '+postcode+', Canada'
+                        locations.append([location, postcode, glocation['lat'], glocation['lng'], address])
                     # print(str(glocation['lat']) + "," + str(glocation['lng']))
-                # except IndexError, e:
-                #     print("Can't geocode" + str(postcode))
         return locations
 
     def get_city_grouping(self, city):
@@ -386,7 +441,6 @@ class Parser:
     # Should only need to insert since program table will be dropped if overwrite; during append we should just update if there are no tables existing
     def insert_program(self):
         program_list = []
-        # prgrm_andar_year
         for row in self.content:
             andar = row[self.output_index['Program Andar #']]
             andar_year = self.generate_primary_key(andar, self.year)
@@ -492,20 +546,24 @@ class Parser:
                 if len(columns) != 37:
                     print "Columns have been removed or added, system may not work"
                 for col_name in program_postal_columns:
-                    if col_name not in columns:
-                        raise Exception('Column: %s is missing' % col_name)
+                    if col_name == '' or col_name is None:
+                        raise Exception('Error in parsing: Empty column name found in file')
+                    elif col_name not in columns:
+                        raise Exception('Error in parsing: Column %s is missing' % col_name)
             elif self.type == 'output':
                 if len(columns) != 159:
                     print "Columns have been removed or added, system may not work"
                 for col_name in output_columns:
-                    if col_name not in columns:
-                        raise Exception('Column: %s is missing' % col_name)
+                    if '' in columns or col_name is None:
+                        raise Exception('Error in parsing: Empty column name found in file')
+                    elif col_name not in columns:
+                        raise Exception('Error in parsing: Column %s is missing' % col_name)
         return True
 
     # checks that the type of the file is either postal or output
     def check_type(self):
         if str(self.type) != 'postal' and str(self.type) != 'output':
-            raise Exception('File type is incorrect')
+            raise Exception('Error in parsing: File type is incorrect')
         return True
 
     # Checks that the file is a CSV
@@ -514,7 +572,7 @@ class Parser:
         if pfile.endswith('.csv') and self.check_columns() and self.check_type():
             return True
         else:
-            return False
+            raise Exception("Error in parsing: Failed to validate file")
 
     # Inserts the parsed contents into the database
     def insert_file(self):
@@ -522,13 +580,28 @@ class Parser:
             if 'output' in self.type:
                 if self.overwrite:
                     self.drop_program_table()
+                prev_counts = self.get_counts()
                 self.insert_data()
+                new_counts = self.get_counts()
             elif 'postal' in self.type:
                 if self.overwrite:
                     self.drop_location_table()
+                prev_counts = self.get_counts()
                 self.insert_program_location()
+                new_counts = self.get_counts()
+
+            # Return success messages
+            if self.overwrite and prev_counts != new_counts:
+                return "Upload complete, data has been overwritten"
+            elif prev_counts != new_counts:
+                return "Upload complete, new data has been added to database "
+            elif prev_counts == new_counts:
+                return "Upload complete, no new data has been added to database"
+            else:
+                return "Update complete, database has been overwritten but no data added"
+
         else:
-            raise Exception("Nothing to insert")
+            raise Exception("Error in parsing: Nothing to insert")
 
     # Parses the file
     def parse_file(self):

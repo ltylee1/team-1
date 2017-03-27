@@ -149,6 +149,10 @@ label {
     margin: 0 auto;
 }
 
+.buttons-search{
+    display: inline-block;
+}
+
 .inside-title {
   display: table; 
 }
@@ -157,6 +161,7 @@ label {
 
     font-size: 20px;
 /*    line-height: 45px;*/
+font-family: "Helvetica Neue", Helvetica, Arial;
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
