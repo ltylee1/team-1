@@ -9,9 +9,9 @@
     </div>
     <div class="text-center title-text">United Way Program and Agency Database</div>
     <div class="text-center-home title-text">
-      <a class="btn btn-primary" href="/homepage.html">Home Page</a>
+        <a class="btn btn-primary" href="/homepage.html">Home Page</a>
     </div>
-    </div>
+</div>
 </div>
 <script>
 function Hide(){
@@ -32,6 +32,9 @@ function Load() {
         $('#spinner').show();
     }
 }
+
+
+
 </script>
 
 <div id="spinner" class="spin" style="display:none;">
@@ -40,29 +43,34 @@ function Load() {
 </div>
 
 <legend class="text-center">Upload file</legend>
+
 <div class="upload-section">
-    <div class="dropdown col-md-2 col-md-offset-3">
-        <form id="ulfourum" method="post" enctype="multipart/form-data">
+    <form id="ulfourum" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <p><label for="{{ form.File_To_Upload.id_for_label }}">File to upload:</label>
-            {{ form.File_To_Upload }}
-        </p>
 
-        <p><label for="{{ form.Overwrite_data.id_for_label }}">Overwrite data:</label>
-            {{ form.Overwrite_data }}
-        </p>
+        {{form.File_To_Upload}}
+        <label style="overflow: hidden;"class="button_example" id="upload" for="{{form.File_To_Upload.id_for_label}}">Choose a file</label>
+        <br/><br/>
 
-        <p><label for="id_File_type">File type:</label>
-            <select id="id_File_type" onchange="Hide()" name="File_type" required="">
-            <option value="output">Inventory and Outputs</option>
-            <option value="postal">Program Locations</option>
-        </select>
-        </p>
+        <label for="{{ form.File_Type.id_for_label }}">Specify the file type:</label>
+        {{form.File_type}}
+        <br/><br/>
 
-        <p><label for="{{ form.Funding_Year.id_for_label }}" id="funding_year_id">Funding year:</label>
-            {{ form.Funding_Year }}
-        </p>
+        <label for="{{ form.Funding_Year.id_for_label }}" id="funding_year_id">Funding year:</label>
+        {{ form.Funding_Year }}
+        <br/><br/>
+
+        <b>Check to overwrite data: </b> {{ form.Overwrite_data }}<br/>
         <button type="submit" onclick="Load()">Upload</button>
     </form>
 </div>
+<script>
+$("#id_File_To_Upload").change(function (e) {
+    var filename = $('input[type=file]')[0].files[0].name;
+    $('#upload').text(filename);
+})
+
+
+
+</script>
 {% endblock %}
