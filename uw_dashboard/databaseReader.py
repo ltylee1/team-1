@@ -62,8 +62,11 @@ class DatabaseReader(models.Model):
 
 		if 'gfa' in filters.keys():
 			query += " ("
-			for i in range(len(filters['gfa'])):
-				query += " gfa.city = '" + str(filters['gfa'][i]) + "' OR"
+			for i in filters['gfa']:
+				if "Level -" in i:
+					query += " gfa.level_name = '" + str(i) + "' OR"
+				else:
+					query += " gfa.city = '" + str(i) + "' OR"
 			query = query[:-2]
 			query += ") AND"
 
