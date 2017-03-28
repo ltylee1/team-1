@@ -57,7 +57,7 @@ class DatabaseReader(models.Model):
 			query += " ("
 			for i in filters['program_elements']:
 				if "Name -" in i:
-					i = string.replace(i, "Name - ", "")
+					i = i.replace("Name - ", "")
 					query += " pe.element_name = '" + str(i) + "' OR"
 				elif "%" in i:
 					parts = i.split(" % ")
@@ -71,7 +71,7 @@ class DatabaseReader(models.Model):
 			query += " ("
 			for i in filters['gfa']:
 				if "Level -" in i:
-					i = string.replace(i, "Level - ", "")
+					i = i.replace("Level - ", "")
 					query += " gfa.level_name = '" + str(i) + "' OR"
 				else:
 					query += " gfa.city = '" + str(i) + "' OR"
