@@ -55,8 +55,14 @@ class DatabaseReader(models.Model):
 
 		if 'program_elements' in filters.keys():
 			query += " ("
-			for i in range(len(filters['program_elements'])):
-				query += " pe.specific_element = '" + str(filters['program_elements'][i]) + "' OR"
+			for i in filters['program_elements']:
+				if "Name -" in i:
+					query += " pe.element_name = '" + str(i) + "' OR"
+				elif "%" in i:
+					parts = i.split("%")
+					query += " (pe.element_name = '" + str(parts[0]) + "' AND pe.specific_element = '" + str(parts[1]) + "') OR"
+				else:
+					query += " pe.specific_element = '" + str(i) + "' OR"
 			query = query[:-2]
 			query += ") AND"
 
