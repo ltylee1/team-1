@@ -42,7 +42,7 @@ class DatabaseReader(models.Model):
 		if 'focus_area' in filters.keys():
 			query += " ("
 			for i in range(len(filters['focus_area'])):
-				query += " p.focus_area = '" + str(filters['focus_area'][i]) + "' OR"
+				query += " p.focus_area = '" + str(filters['focus_area'][i]) + "' OR p.strategic_outcome = '" + str(filters['focus_area'][i]) + "' OR"
 			query = query[:-2]
 			query += " ) AND"
 
