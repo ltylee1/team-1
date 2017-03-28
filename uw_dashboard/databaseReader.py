@@ -60,7 +60,7 @@ class DatabaseReader(models.Model):
 					i.replace("Name - ", "")
 					query += " pe.element_name = '" + str(i) + "' OR"
 				elif "%" in i:
-					parts = i.split("%")
+					parts = i.split(" % ")
 					query += " (pe.element_name = '" + str(parts[0]) + "' AND pe.specific_element = '" + str(parts[1]) + "') OR"
 				else:
 					query += " pe.specific_element = '" + str(i) + "' OR"
