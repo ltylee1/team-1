@@ -179,7 +179,7 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             messages.error(request, "No data for selected filters")
             return redirect(reverse_lazy('search-page'))
 
-        self.addFiltersToDatabase(context["filters"], request.user)
+        self.addFiltersToDatabase(self.parseFilters(context['filters']), request.user)
         dt = self.getDataTable(context["results"])
         pt = self.getPieTable(context["results"])
         tt = self.getTotalsTable(context["totals"])
@@ -264,13 +264,46 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
         return results
 
+    def parseFilters(self, filterList):
+        removeList = []
+        appendList = []
+        if 'gfa' in filterList:
+            for gfa in filterList['gfa']:
+                if "Level -" in gfa:
+                    removeList.append(gfa)
+                    appendList.append(gfa.replace("Level - ", ""))
+                elif 'Other:' in gfa:
+                    removeList.append(gfa)
+                    gfa = gfa.replace('"', '')
+                    olist = gfa.replace("Other: ", "")
+                    appendList + olist.split(' + ')
+            for x in removeList:
+                filterList['gfa'].remove(x)
+            filterList['gfa'] = filterList['gfa'] + appendList
+            removeList = []
+            appendList = []
+
+        if 'program_elements' in filterList:
+            for pe in filterList['program_elements']:
+                if "Name -" in pe:
+                    removeList.append(pe)
+                    appendList.append(pe.replace('Name - ', ""))
+                elif '%' in pe:
+                    removeList.append(pe)
+                    olist = pe.replace ('%', '-')
+                    appendList.append(olist)
+            for x in removeList:
+                filterList['program_elements'].remove(x)
+            filterList['program_elements'] = filterList['program_elements'] + appendList
+        return filterList
+
     def getFiltersTable(self, results):
         keyNames = {"funding_year" : "Funding Year",
                     "focus_area" : "Focus Area",
                     "target_population" : "Target Population",
                     "program_elements" : "Program Elements",
                     "city" : "City Grouping",
-                    "gfa" : "Geogrphic Focus Area",
+                    "gfa" : "Geographic Focus Area",
                     "donor" : "Donor Engagement",
                     "money_invested" : "Money Invested"
                     }
