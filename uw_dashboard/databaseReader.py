@@ -73,6 +73,12 @@ class DatabaseReader(models.Model):
 				if "Level -" in i:
 					i = i.replace("Level - ", "")
 					query += " gfa.level_name = '" + str(i) + "' OR"
+				elif ":" in i:
+					i = i.replace("Other: ", "")
+					cities = i.split(" + ")
+					for k in cities:
+						k = k.replace("\"", "")
+						query += " gfa.city = '" + str(k) + "' OR"
 				else:
 					query += " gfa.city = '" + str(i) + "' OR"
 			query = query[:-2]
