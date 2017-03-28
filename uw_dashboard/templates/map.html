@@ -51,7 +51,7 @@
 function plotMap(resultsMap, address, name, pro_name, latlng){
         contentString = '<div><b>Location name: </b>'.concat(name)+'</div>'+
                         '<div><b>Program name: </b>'.concat(pro_name)+'</div>'+
-                        '<div><b>Address: </b>'.concat(address)+'</div>';
+                        '<b>Address: </b><a href="https://maps.google.com/maps?q='.concat(latlng)+'">'.concat(address)+'</a>';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
