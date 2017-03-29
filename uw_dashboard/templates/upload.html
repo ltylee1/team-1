@@ -14,26 +14,12 @@
 </div>
 </div>
 <script>
-function Hide(){
-    if(document.getElementById('id_File_type').options[document.getElementById('id_File_type').selectedIndex].value == "postal")
-    {
-         document.getElementById('id_Funding_Year').style.display = 'none';
-         document.getElementById('funding_year_id').style.display = 'none';
-    }
-    else{
-        document.getElementById('id_Funding_Year').style.display = '';
-        document.getElementById('funding_year_id').style.display = '';
-    }
-
-}
 $('#ulfourum').validate();
 function Load() {
     if ($('#ulfourum').valid()) {
         $('#spinner').show();
     }
 }
-
-
 
 </script>
 
@@ -52,16 +38,18 @@ function Load() {
         <label style="overflow: hidden;"class="button_example" id="upload" for="{{form.File_To_Upload.id_for_label}}">Choose a file</label>
         <br/><br/>
 
-        <label for="{{ form.File_Type.id_for_label }}">Specify the file type:</label>
-        {{form.File_type}}
-        <br/><br/>
+        <p><label for="{{ form.File_Type.id_for_label }}">Specify the file type:</label>
+            {{form.File_type}}
+        </p>
 
-        <label for="{{ form.Funding_Year.id_for_label }}" id="funding_year_id">Funding year:</label>
-        {{ form.Funding_Year }}
-        <br/><br/>
+        <p><label for="{{ form.Funding_Year.id_for_label }}" id="funding_year_id">Funding year:</label>
+            {{ form.Funding_Year }}
+        </p>
 
-        <b>Check to overwrite data: </b> {{ form.Overwrite_data }}<br/>
+        <p><b>Check to overwrite data: </b> {{ form.Overwrite_data }}<br/></p>
         <button type="submit" onclick="Load()">Upload</button>
+        <br></br>
+        <p>{{ history }}</p>
     </form>
 </div>
 <script>
@@ -70,7 +58,17 @@ $("#id_File_To_Upload").change(function (e) {
     $('#upload').text(filename);
 })
 
-
+$("#id_File_type").change(function (e) {
+    if(document.getElementById('id_File_type').options[document.getElementById('id_File_type').selectedIndex].value == "postal")
+    {
+         document.getElementById('id_Funding_Year').style.display = 'none';
+         document.getElementById('funding_year_id').style.display = 'none';
+    }
+    else{
+        document.getElementById('id_Funding_Year').style.display = '';
+        document.getElementById('funding_year_id').style.display = '';
+    }
+})
 
 </script>
 {% endblock %}

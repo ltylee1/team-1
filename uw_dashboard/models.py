@@ -93,6 +93,12 @@ class Search_History(models.Model):
     funding_year = models.CharField(max_length=512)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+class Upload_History(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file_type = models.CharField(max_length=50)
+    overwrite = models.BooleanField()
+    year = models.CharField(max_length=20)
+    upload_time = models.DateTimeField()
 
 # Separate table for extra user information we need that is not used for authentication
 class Profile(models.Model):

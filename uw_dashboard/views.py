@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, FormView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
+from django.utils import timezone
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseRedirect
@@ -58,8 +60,13 @@ class UploadView(LoginRequiredMixin, TemplateView):
             filename = fs.save(myfile.name, myfile)
             file_path = fs.path(filename)
             try:
-                result = reporting.import_data(str(file_path), int(form.cleaned_data['Funding_Year']),
-                                  form.cleaned_data['Overwrite_data'], str(form.cleaned_data['File_type']))
+                fp = str(file_path)
+                fy = int(form.cleaned_data['Funding_Year'])
+                fo = form.cleaned_data['Overwrite_data']
+                ft = str(form.cleaned_data['File_type'])
+                result = reporting.import_data(fp, fy, fo, ft)
+                self.addUploadHistory(ft, fy, fo, request.user)
+
             except Exception as e:
                 fs.delete(filename)
                 if 'parsing' in str(e):
@@ -80,10 +87,45 @@ class UploadView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = UploadFileForm()
-        return render(request, 'upload.html', {'form': form})
+        history = self.getLastUploaded()
+        return render(request, 'upload.html', {'form': form, 'history': history})
 
     def post(self, request, *args, **kwargs):
         return self.upload(request)
+
+    def addUploadHistory(self,file_type,year,overwrite, user):
+        if file_type == 'postal':
+            file_type = 'Program Locations'
+        elif file_type == 'output':
+            file_type = 'Inventory and Outputs'
+
+        year = '%s/%s' % (year, year+1)
+        time = timezone.make_aware(datetime.datetime.now())
+
+        user = models.User.objects.get(username=user)
+        history = models.Upload_History(file_type=file_type,
+                                        overwrite=overwrite,
+                                        year=year,
+                                        user=user,
+                                        upload_time=time)
+        history.save()
+
+    def getLastUploaded(self):
+        if 0 == models.Upload_History.objects.all().count():
+            return "No upload history found"
+        else:
+            history = models.Upload_History.objects.latest('upload_time')
+            un = history.user
+            ft = history.file_type
+            ut = history.upload_time.strftime("%B %d %Y %H:%M:%S")
+            if ft == "Inventory and Outputs":
+                fy = ' %s' % history.year
+            else:
+                fy = ''
+            if history.overwrite:
+                return "Last user to upload was %s at %s for %s%s with overwrite" % (un, ut, ft, fy)
+            else:
+                return "Last user to upload was %s at %s for %s%s without overwrite" % (un, ut, ft, fy)
 
 
 class LoginView(FormView):
