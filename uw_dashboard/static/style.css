@@ -373,23 +373,6 @@ font-family: 'FC Kaiser Cond', sans-serif;
 	z-index: -1;
 }
 
-.upload_btn + label {
-    font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: red;
-    display: inline-block;
-    cursor: pointer;
-    padding: 6px 12px;
-}
-
-.upload_btn:focus + label,
-.upload_btn + label:hover {
-    background-color: DarkRed;
-    outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
-}
-
 table {
     border-collapse: collapse;
     width: 100%;
