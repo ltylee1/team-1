@@ -1,4 +1,7 @@
 import csv
+
+from django.db import transaction
+
 import models
 import requests
 import time
@@ -577,18 +580,24 @@ class Parser:
     # Inserts the parsed contents into the database
     def insert_file(self):
         if self.content:
-            if 'output' in self.type:
-                if self.overwrite:
-                    self.drop_program_table()
-                prev_counts = self.get_counts()
-                self.insert_data()
-                new_counts = self.get_counts()
-            elif 'postal' in self.type:
-                if self.overwrite:
-                    self.drop_location_table()
-                prev_counts = self.get_counts()
-                self.insert_program_location()
-                new_counts = self.get_counts()
+            try:
+                with transaction.atomic():
+                    if 'output' in self.type:
+                        if self.overwrite:
+                            self.drop_program_table()
+                        prev_counts = self.get_counts()
+                        self.insert_data()
+                        new_counts = self.get_counts()
+                    elif 'postal' in self.type:
+                        if self.overwrite:
+                            self.drop_location_table()
+                        prev_counts = self.get_counts()
+                        self.insert_program_location()
+                        new_counts = self.get_counts()
+                        raise Exception("panick")
+            except Exception as e:
+                raise Exception("Error in updating, %s returned" % e)
+
 
             # Return success messages
             if self.overwrite and prev_counts != new_counts:
