@@ -27,6 +27,8 @@
 </div>
 <div id="map"></div>
 <script>
+var previousMarker = false;
+
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
@@ -58,10 +60,12 @@ function plotMap(resultsMap, address, name, pro_name, latlng){
         var marker = new google.maps.Marker({
             map: resultsMap,
             position: latlng,
-            title: 'United Way Program'
+            title: 'United Way Program',
         });
         marker.addListener('click', function() {
             infowindow.open(map, marker, name);
+            if(previousMarker) previousMarker.close();
+            previousMarker = infowindow;
         });
 }
 
