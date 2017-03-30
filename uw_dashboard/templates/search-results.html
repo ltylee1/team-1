@@ -19,15 +19,17 @@
         <div class="title-text-map">United Way Program and</div>
         <div class="title-text-map">Agency Database</div>
     </div>
+    <div class="buttons-search">
         <div>
-            <a class="buttons-search btn btn-primary" href="{% url 'search-page' %}">New Search</a>
+            <a class="btn btn-primary" href="{% url 'search-page' %}">New Search</a>
         </div>
         <div>
-            <a class="buttons-search btn btn-primary" href="{% url 'genpdf' %}">PDF</a>
+            <button class="btn btn-primary" onclick="print()">Print Page</button>
         </div>
         <div>
-            <a class="buttons-search btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
+            <a class="btn btn-primary" href="{% url 'homepage' %}">Home Page</a>
         </div>
+    </div>
 </div>
     {% include 'filters.html' %}
     {% include 'search-result-total.html' %}
