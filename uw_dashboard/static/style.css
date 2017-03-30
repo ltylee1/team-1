@@ -149,7 +149,9 @@ label {
 }
 
 .buttons-search{
-    display: inline-block;
+    margin-left: auto;
+    margin-right: 0;
+    display: flex;
 }
 
 .inside-title {
