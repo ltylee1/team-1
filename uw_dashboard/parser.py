@@ -594,7 +594,6 @@ class Parser:
                         prev_counts = self.get_counts()
                         self.insert_program_location()
                         new_counts = self.get_counts()
-                        raise Exception("panick")
             except Exception as e:
                 raise Exception("Error in updating, %s returned" % e)
 
