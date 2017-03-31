@@ -11,16 +11,60 @@
         <th>Program Locations</th>
         <th>Links</th>
     </thead>
-
     <tbody>
     {% for row in data_table %}
         <tr>
             {% for value in row %}
                 {% if forloop.last %}
-                    <form action="/map.html" method="post" target="/map.html">
-                    {% csrf_token %}
-                        <td><button type="submit" name="postalcodes" value="{{ value }}" id="postalcodes" class="btn btn-primary">Program Map</button></td>
-                    </form>
+                    <td id="map{{ forloop.parentloop.counter0 }}" start="{{ forloop.parentloop.counter0 }}" height="300" width="300">
+                        <script type="text/javascript">
+                        var previousMarker = false;
+                        $(function(){
+                            var data = {{row|safe}};
+                            var index = {{ forloop.parentloop.counter0 }}
+                            var id = "map".concat(index);
+                            var map = new google.maps.Map(document.getElementById(id), {
+                                zoom: 9,
+                                center: {
+                                    lat: 49.1609273,
+                                    lng: -122.74400347
+                                }
+                            });
+
+                            var post = data[9]
+                            var addresses = post[0];
+                            var loc_names = post[1];
+                            var pro_names = post[2];
+                            var latitudes = post[3];
+                            var longitudes = post[4];
+
+                            for (count = 0; count < addresses.length; count++) {
+                                var latlng = new google.maps.LatLng(latitudes[count], longitudes[count]);
+                                plotMap(map, addresses[count], loc_names[count], pro_names[count], latlng);
+                            }
+                        });
+
+                         function plotMap(resultsMap, address, name, pro_name, latlng){
+                            contentString = '<div><b>Location name: </b>'.concat(name)+'</div>'+
+                                            '<div><b>Program name: </b>'.concat(pro_name)+'</div>'+
+                                            '<b>Address: </b><a href="https://maps.google.com/maps?q='.concat(latlng)+'" target="_blank">'.concat(address)+'</a>';
+                            var infowindow = new google.maps.InfoWindow({
+                                content: contentString
+                            });
+                            var marker = new google.maps.Marker({
+                                map: resultsMap,
+                                position: latlng,
+                                title: 'United Way Program',
+                            });
+                            marker.addListener('click', function() {
+                                infowindow.open(resultsMap, marker);
+                                if(previousMarker) previousMarker.close();
+                                previousMarker = infowindow;
+                            });
+                        }
+
+                        </script>
+                    </td>
                 {% else %}
                     <td>{{ value }}</td>
                 {% endif %}
@@ -29,4 +73,6 @@
     {% endfor %}
     </tbody>
 </table>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvN-VnGnbsgVsF5aDaNtlmqWisnJ0AoE">
+</script>
 

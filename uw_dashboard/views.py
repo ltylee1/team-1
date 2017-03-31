@@ -261,7 +261,14 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
             array = [str(data[key]) for key in keys]
             dataTable.append(array)
 
+        self.getMapInfo(dataTable)
         return dataTable
+
+    def getMapInfo(self, list):
+        for thing in list:
+            postlist = thing[-1].split(',')
+            location_list = reporting.queryMap(postlist)
+            thing[-1] = location_list
 
     def getPieTable(self, results):
         keys = [
