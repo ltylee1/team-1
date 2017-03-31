@@ -23,20 +23,24 @@
                             var data = {{row|safe}};
                             var index = {{ forloop.parentloop.counter0 }}
                             var id = "map".concat(index);
-                            var map = new google.maps.Map(document.getElementById(id), {
-                                zoom: 9,
-                                center: {
-                                    lat: 49.1609273,
-                                    lng: -122.74400347
-                                }
-                            });
-
                             var post = data[9]
                             var addresses = post[0];
                             var loc_names = post[1];
                             var pro_names = post[2];
                             var latitudes = post[3];
                             var longitudes = post[4];
+
+                            var lati = 49.1609273;
+                            var long = -122.74400347
+                            if(addresses[0]){
+                                var lati = latitudes[0]
+                                var long = longitudes[0]
+                            }
+                            var latlng = new google.maps.LatLng(lati, long);
+                            var map = new google.maps.Map(document.getElementById(id), {
+                                zoom: 10,
+                                center: latlng
+                            });
 
                             for (count = 0; count < addresses.length; count++) {
                                 var latlng = new google.maps.LatLng(latitudes[count], longitudes[count]);
