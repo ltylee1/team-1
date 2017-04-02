@@ -272,12 +272,14 @@ class SearchResultsView(LoginRequiredMixin, TemplateView):
 
     def getPieTable(self, results):
         keys = [
-             "city",
+            "city",
+            "city_grouping"
         ]
 
         dataTable = [[
             "Allocation",
-            "City"
+            "City",
+            "City Grouping"
         ]]
 
         for data in results:
