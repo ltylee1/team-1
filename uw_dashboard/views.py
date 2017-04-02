@@ -73,7 +73,10 @@ class UploadView(LoginRequiredMixin, TemplateView):
                 elif 'overwriting' in str(e):
                     messages.error(request, "%s, please wait for current updates to system to finish." % (str(e)))
                 elif 'updating' in str(e):
-                    messages.error(request, '%s, please try again later.' % (str(e)))
+                    if 'CSV' in str(e):
+                        messages.error(request, '%s and try again later.' % (str(e)))
+                    else:
+                        messages.error(request, '%s, please try again later.' % (str(e)))
                 else:
                     messages.error(request, "Something went wrong, %s returned" % str(e))
                 return redirect(reverse_lazy('upload'))
