@@ -22,8 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '&dew+9cr-@+uwd$7c!@ppf9+l2d%q292$u99hnx2f_s8(i(y+m'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['54.190.37.76', '127.0.0.1', 'localhost']
 
@@ -103,7 +104,7 @@ MESSAGE_TAGS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'unitedWayTest',
+        'NAME': 'unitedWay',
         'USER': 'unitedWay',
         'PASSWORD': 'Etfhg8893',
         'HOST': 'uw-test.cromnho1ocid.us-west-2.rds.amazonaws.com',
