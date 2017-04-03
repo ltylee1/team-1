@@ -19,8 +19,15 @@
         [{'column': 0, 'aggregation': google.visualization.data.sum, 'type': 'number'}])
   };
 
-  function drawPieChart(id, title, data) {
-    var chart = new google.visualization.PieChart(document.getElementById(id));
+  function drawPieChart(id, title, data, counter) {
+    var chart = 0;
+
+    if(counter % 2 == 0){
+        chart = new google.visualization.BarChart(document.getElementById(id));
+    } else {
+        chart = new google.visualization.PieChart(document.getElementById(id));
+    }
+
     var options = {
       title: title
     };
@@ -43,7 +50,7 @@
         var groupByIndex = i + 1;
         var data = aggregateData(dataTable, groupByIndex);
 
-        drawPieChart(id, title, data)
+        drawPieChart(id, title, data, i);
     });
   }
 </script>

@@ -582,6 +582,8 @@ class Parser:
         if self.content:
             try:
                 with transaction.atomic():
+                    prev_counts = 0
+                    new_counts = 0
                     if 'output' in self.type:
                         if self.overwrite:
                             self.drop_program_table()
@@ -595,8 +597,7 @@ class Parser:
                         self.insert_program_location()
                         new_counts = self.get_counts()
             except Exception as e:
-                raise Exception("Error in updating, %s returned" % e)
-
+                raise Exception("Error in updating, %s returned please verify CSV data is correct" % e)
 
             # Return success messages
             if self.overwrite and prev_counts != new_counts:
