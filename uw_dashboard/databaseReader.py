@@ -21,7 +21,7 @@ class DatabaseReader(models.Model):
 	def readData(self):
 		filters = self.filters
 		filters = dict(filters.iterlists())
-		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.element_name SEPARATOR ', ') as element_names, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ',') as postal_codes, COUNT(DISTINCT l.postal_code) as postal_count, SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), t.target_population, gfa.city, gfa.city_grouping as city_grouping, a.agency_name"
+		query = "SELECT p.*, GROUP_CONCAT(DISTINCT pe.element_name SEPARATOR ', ') as element_names, GROUP_CONCAT(DISTINCT pe.specific_element SEPARATOR ','), GROUP_CONCAT(DISTINCT de.donor_engagement SEPARATOR ','), GROUP_CONCAT(DISTINCT t.target_population SEPARATOR ','), GROUP_CONCAT(DISTINCT l.postal_code SEPARATOR ',') as postal_codes, COUNT(DISTINCT l.postal_code) as postal_count, SUM(DISTINCT p.allocation), MIN(DISTINCT p.grant_start_date), MAX(DISTINCT p.grant_end_date), GROUP_CONCAT(DISTINCT gfa.city SEPARATOR ','), GROUP_CONCAT(DISTINCT gfa.city_grouping SEPARATOR ',') as city_grouping, GROUP_CONCAT(DISTINCT a.agency_name SEPARATOR ',')"
 		
 		query += " FROM uw_dashboard_program AS p"
 		query += " LEFT JOIN uw_dashboard_program_elements AS pe ON p.prgrm_andar_year = pe.prgrm_andar_year_id"
