@@ -34,13 +34,8 @@
 
     chart.draw(data, options);
   }
-</script>
 
-<script type="text/javascript">
-   google.setOnLoadCallback(drawGraphs);
-
-
-  function drawGraphs() {
+    $(function() {
     var data = {{pie_table | safe}};
     var dataTable = google.visualization.arrayToDataTable(data);
 
@@ -52,7 +47,7 @@
 
         drawPieChart(id, title, data, i);
     });
-  }
+  });
 </script>
 
 </body>
